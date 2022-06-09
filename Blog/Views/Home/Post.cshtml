@@ -2,4 +2,9 @@
 @{
 }
 <h2>@Model.Title</h2>
+@if(string.IsNullOrWhiteSpace(Model.Image) is false)
+{
+    var imagePath = $"/Image/{Model.Image}";
+    <img src="@imagePath"/>
+}
 <p>@Model.Body</p>

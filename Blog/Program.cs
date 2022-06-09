@@ -1,4 +1,5 @@
 using Blog.Data;
+using Blog.Data.FileManager;
 using Blog.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +19,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddTransient<IRepository, Repository>();
+builder.Services.AddTransient<IFileManager, FileManager>();
 
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 
 var app = builder.Build();
 
-
+app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
