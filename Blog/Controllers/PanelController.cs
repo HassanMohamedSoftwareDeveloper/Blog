@@ -53,12 +53,13 @@ public class PanelController:Controller
         Id = post.Id,
         Title = post.Title,
         Body = post.Body,
+        CurrentImage=post.Image
     };
     private async Task<Post> MapToPost(PostViewModel post) => new Post
     {
         Id = post.Id,
         Title = post.Title,
         Body = post.Body,
-        Image = await _fileManager.SaveImageAsync(post.Image)
+        Image =post.Image==null?post.CurrentImage: await _fileManager.SaveImageAsync(post.Image)
     };
 }
