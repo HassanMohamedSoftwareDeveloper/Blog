@@ -22,7 +22,7 @@ public class AuthController : Controller
     public async Task<IActionResult> Login(LoginViewModel login)
     {
         var result = await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, false);
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Panel");
     }
     public async Task<IActionResult> Logout()
     {
