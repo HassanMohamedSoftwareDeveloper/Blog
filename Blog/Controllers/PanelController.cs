@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers;
 
-[Authorize(Roles ="Admin")]
-public class PanelController:Controller
+[Authorize(Roles = "Admin")]
+public class PanelController : Controller
 {
     private readonly IRepository _repo;
     private readonly IFileManager _fileManager;
@@ -31,7 +31,7 @@ public class PanelController:Controller
     [HttpPost]
     public async Task<IActionResult> Edit(PostViewModel postVm)
     {
-        var post =await MapToPost(postVm);
+        var post = await MapToPost(postVm);
 
         if (post.Id.Equals(0))
             _repo.AddPost(post);
@@ -53,13 +53,19 @@ public class PanelController:Controller
         Id = post.Id,
         Title = post.Title,
         Body = post.Body,
-        CurrentImage=post.Image
+        CurrentImage = post.Image,
+        Description = post.Description,
+        Tags = post.Tags,
+        Category = post.Category
     };
     private async Task<Post> MapToPost(PostViewModel post) => new Post
     {
         Id = post.Id,
         Title = post.Title,
         Body = post.Body,
-        Image =post.Image==null?post.CurrentImage: await _fileManager.SaveImageAsync(post.Image)
+        Image = post.Image == null ? post.CurrentImage : await _fileManager.SaveImageAsync(post.Image),
+        Description = post.Description,
+        Tags = post.Tags,
+        Category = post.Category
     };
 }

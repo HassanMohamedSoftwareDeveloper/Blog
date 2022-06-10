@@ -6,6 +6,7 @@ public interface IRepository
 {
     Post GetPost(int id);
     List<Post> GetAllPosts();
+    List<Post> GetAllPosts(string category);
     void AddPost(Post post);
     void UpdatePost(Post post);
     void RemovePost(int id);
