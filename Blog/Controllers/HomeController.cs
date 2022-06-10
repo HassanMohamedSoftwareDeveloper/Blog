@@ -14,20 +14,12 @@ public class HomeController : Controller
         _repo = repo;
         _fileManager = fileManager;
     }
-    public IActionResult Index(string category)
-    {
-        var posts = string.IsNullOrWhiteSpace(category) ? _repo.GetAllPosts() : _repo.GetAllPosts(category);
-        return View(posts);
-    }
-    public IActionResult Post(int id)
-    {
-        var post = _repo.GetPost(id);
-        return View(post);
-    }
+    public IActionResult Index(string category) =>
+        View(string.IsNullOrWhiteSpace(category) ? _repo.GetAllPosts() : _repo.GetAllPosts(category));
+    public IActionResult Post(int id) =>
+        View(_repo.GetPost(id));
     [HttpGet("/Image/{image}")]
-    public IActionResult Image(string image)
-    {
-        var mime = image[(image.LastIndexOf('.') + 1)..];//Range Operator
-        return new FileStreamResult(_fileManager.ImageStream(image),$"image/{mime}");
-    }
+    public IActionResult Image(string image) =>
+        //Range Operator
+        new FileStreamResult(_fileManager.ImageStream(image), $"image/{image[(image.LastIndexOf('.') + 1)..]}");
 }

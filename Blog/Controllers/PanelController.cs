@@ -18,16 +18,9 @@ public class PanelController : Controller
         _repo = repo;
         _fileManager = fileManager;
     }
-    public IActionResult Index()
-    {
-        var posts = _repo.GetAllPosts();
-        return View(posts);
-    }
-    public IActionResult Edit(int? id)
-    {
-        var post = id == null ? new PostViewModel() : MapToPostViewModel(_repo.GetPost((int)id));
-        return View(post);
-    }
+    public IActionResult Index() => View(_repo.GetAllPosts());
+    public IActionResult Edit(int? id) =>
+        View(id == null ? new PostViewModel() : MapToPostViewModel(_repo.GetPost((int)id)));
     [HttpPost]
     public async Task<IActionResult> Edit(PostViewModel postVm)
     {
