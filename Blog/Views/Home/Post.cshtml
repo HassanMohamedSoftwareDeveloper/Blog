@@ -3,6 +3,7 @@
     ViewBag.Title = Model.Title;
     ViewBag.Description = Model.Description;
     ViewBag.keywords = $"{Model.Tags?.Replace(",", " ")} {Model.Category}";
+    var basePath = Context.Request.PathBase;
 }
 @*<h2>@Model.Title</h2>
 @if(string.IsNullOrWhiteSpace(Model.Image) is false)
@@ -17,7 +18,7 @@
     <div class="post no-shadow">
         @if (string.IsNullOrWhiteSpace(Model.Image) is false)
         {
-            var imagePath = $"/Image/{Model.Image}";
+            var imagePath = $"{basePath}/Image/{Model.Image}";
             <img src="@imagePath" />
             <span class="title">@Model.Title</span>
         }

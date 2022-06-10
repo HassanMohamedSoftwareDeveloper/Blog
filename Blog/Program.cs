@@ -24,7 +24,7 @@ builder.Services.AddTransient<IFileManager, FileManager>();
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 
 var app = builder.Build();
-
+app.UseDeveloperExceptionPage();
 app.UseStaticFiles();
 app.UseRouting();
 
