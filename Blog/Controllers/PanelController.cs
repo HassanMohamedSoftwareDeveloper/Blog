@@ -24,7 +24,7 @@ public class PanelController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(PostViewModel postVm)
     {
-        var post = await MapToPost(postVm);
+        var post = MapToPost(postVm);
 
         if (post.Id.Equals(0))
             _repo.AddPost(post);
@@ -51,14 +51,24 @@ public class PanelController : Controller
         Tags = post.Tags,
         Category = post.Category
     };
-    private async Task<Post> MapToPost(PostViewModel post) => new Post
+    private Post MapToPost(PostViewModel post) => new Post
     {
         Id = post.Id,
         Title = post.Title,
         Body = post.Body,
-        Image = post.Image == null ? post.CurrentImage : await _fileManager.SaveImageAsync(post.Image),
+        Image = SaveNewImageAndGetNameAsync(post),
         Description = post.Description,
         Tags = post.Tags,
         Category = post.Category
     };
+    private string SaveNewImageAndGetNameAsync(PostViewModel post)
+    {
+        if (post.Image is null)
+            return post.CurrentImage;
+
+        if (string.IsNullOrWhiteSpace(post.CurrentImage) is false)
+            _fileManager.RemoveImage(post.CurrentImage);
+
+        return _fileManager.SaveImageAsync(post.Image);
+    }
 }
