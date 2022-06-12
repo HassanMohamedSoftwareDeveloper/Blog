@@ -1,4 +1,5 @@
 ﻿using Blog.Models;
+using Blog.Models.Comments;
 
 namespace Blog.Data.Repositories;
 
@@ -10,5 +11,6 @@ public interface IRepository
     void AddPost(Post post);
     void UpdatePost(Post post);
     void RemovePost(int id);
+    void AddSubComment(SubComment comment);
     Task<bool> SaveChangesAsync();
 }
