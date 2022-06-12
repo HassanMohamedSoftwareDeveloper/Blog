@@ -16,8 +16,13 @@ public class HomeController : Controller
         _repo = repo;
         _fileManager = fileManager;
     }
-    public IActionResult Index(string category) =>
-        View(string.IsNullOrWhiteSpace(category) ? _repo.GetAllPosts() : _repo.GetAllPosts(category));
+    public IActionResult Index(int pageNumber, string category)
+    {
+        if (pageNumber < 1)
+            return RedirectToAction("Index", new { pageNumber = 1, category });
+        var vm = _repo.GetAllPosts(pageNumber, category);
+        return View(vm);
+    }
     public IActionResult Post(int id) =>
         View(_repo.GetPost(id));
     [HttpGet("/Image/{image}")]
