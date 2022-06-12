@@ -19,6 +19,7 @@ public class HomeController : Controller
     public IActionResult Post(int id) =>
         View(_repo.GetPost(id));
     [HttpGet("/Image/{image}")]
+    [ResponseCache(CacheProfileName = "Monthly")]
     public IActionResult Image(string image) =>
         //Range Operator
         new FileStreamResult(_fileManager.ImageStream(image), $"image/{image[(image.LastIndexOf('.') + 1)..]}");

@@ -21,7 +21,14 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddTransient<IRepository, Repository>();
 builder.Services.AddTransient<IFileManager, FileManager>();
 
-builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
+builder.Services.AddMvc(options =>
+{
+    options.EnableEndpointRouting = false;
+    options.CacheProfiles.Add("Monthly", new Microsoft.AspNetCore.Mvc.CacheProfile
+    {
+        Duration = 60 * 60 * 24 * 7 * 4
+    });
+});
 
 var app = builder.Build();
 app.UseDeveloperExceptionPage();
@@ -54,7 +61,7 @@ static async Task SeedAdmin(IServiceProvider serviceProvider)
         {
             await roleManager.CreateAsync(adminRole);
         }
-        if (ctx.Users.Any(u => u.UserName=="admin") is false)
+        if (ctx.Users.Any(u => u.UserName == "admin") is false)
         {
             var adminUser = new IdentityUser
             {
