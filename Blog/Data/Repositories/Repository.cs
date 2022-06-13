@@ -41,7 +41,7 @@ public class Repository : IRepository
             NextPage = postsCount > capacity,
             Pages = PageHelper.PageNumbers(pageNumber, pageCount).ToList(),
             Category = category,
-            Posts = query.Skip(skipAmount).Take(pageSize).ToList(),
+            Posts = query.Include(p => p.MainComments).Skip(skipAmount).Take(pageSize).ToList(),
         };
     }
 
