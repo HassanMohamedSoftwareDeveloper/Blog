@@ -1,15 +1,18 @@
+using Blog.Configuration;
 using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Data.Repositories;
+using Blog.Services.Email;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection(nameof(SmtpSettings)));
+
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["DefaultConnetion"]));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    //.AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -20,6 +23,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddTransient<IRepository, Repository>();
 builder.Services.AddTransient<IFileManager, FileManager>();
+builder.Services.AddSingleton<IEmailService, EmailService>();
 
 builder.Services.AddMvc(options =>
 {
