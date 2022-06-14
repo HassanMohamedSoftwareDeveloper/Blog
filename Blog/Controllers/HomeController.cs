@@ -8,23 +8,24 @@ namespace Blog.Controllers;
 
 public class HomeController : Controller
 {
+    #region Fields :
     private readonly IRepository _repo;
     private readonly IFileManager _fileManager;
+    #endregion
 
+    #region CTORS :
     public HomeController(IRepository repo, IFileManager fileManager)
     {
         _repo = repo;
         _fileManager = fileManager;
     }
-    public IActionResult Index(int pageNumber, string category)
+    #endregion
+    #region Actions :
+    public IActionResult Index()
     {
-        if (pageNumber < 1)
-            return RedirectToAction("Index", new { pageNumber = 1, category });
-        var vm = _repo.GetAllPosts(pageNumber, category);
-        return View(vm);
+        return View(_repo.GetLatestPosts(4));
     }
-    public IActionResult Post(int id) =>
-        View(_repo.GetPost(id));
+
     [HttpGet("/Image/{image}")]
     [ResponseCache(CacheProfileName = "Monthly")]
     public IActionResult Image(string image) =>
@@ -35,7 +36,7 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid is false)
             return RedirectToAction("Post", new { id = vm.PostId });
-        var post = _repo.GetPost(vm.PostId);
+        var post = _repo.GetPostEntity(vm.PostId);
         if (vm.MainCommentId == 0)
         {
             post.MainComments ??= new List<MainComment>(); //compound assignment
@@ -54,4 +55,10 @@ public class HomeController : Controller
         await _repo.SaveChangesAsync();
         return RedirectToAction("Post", new { id = vm.PostId });
     }
+
+    public IActionResult LatestPosts()
+    {
+        return PartialView("_LatestPosts", _repo.GetLatestPosts(3));
+    }
+    #endregion
 }

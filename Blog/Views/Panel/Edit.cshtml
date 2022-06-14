@@ -2,39 +2,48 @@
 @{
 }
 <link rel="stylesheet" href="~/lib/Trumbowyg-main/dist/ui/trumbowyg.min.css">
-<div>
+<div class="container">
     <form asp-action="Edit" asp-controller="Panel" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="CurrentImage" />
-        <div>
-            <label>Title</label>
-            <input asp-for="Title" />
+        <div class="form-group">
+            <label asp-for="Title" class="label-control"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title"></span>
         </div>
-        <div>
-            <label>Description</label>
-            <input asp-for="Description" />
+        <div class="form-group">
+            <label asp-for="Description" class="label-control"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description"></span>
         </div>
-        <div>
-            <label>Tags</label>
-            <input asp-for="Tags" />
+        <div class="form-group">
+            <label asp-for="Tags" class="label-control"></label>
+            <input asp-for="Tags" class="form-control" />
+            <span asp-validation-for="Tags"></span>
         </div>
-        <div>
-            <label>Category</label>
-            <select asp-for="Category">
+        <div class="form-group">
+            <label asp-for="Tags" class="label-control"></label>
+            <select asp-for="Category" class="form-control">
                 <option value="Travel">Travel</option>
                 <option value="Programming">Programming</option>
                 <option value="Photography">Photography</option>
             </select>
         </div>
-        <div>
-            <label>Body</label>
-            <textarea id="editor" asp-for="Body"></textarea>
+        <div class="form-group">
+            <label asp-for="Body" class="label-control"></label>
+            <textarea id="editor" asp-for="Body" class="form-control"></textarea>
+            <span asp-validation-for="Body"></span>
         </div>
-        <div>
-            <label>Image</label>
-            <input asp-for="Image" />
+        <div class="form-group">
+            <label asp-for="Image" class="label-control"></label>
+            <input asp-for="Image" class="form-control" />
+            <span asp-validation-for="Image"></span>
         </div>
-        <input type="submit" value="Submit" />
+        <div class="form-group">
+            <input type="submit" value="Save Post Data" class="btn btn-success" />
+            <a asp-controller="Panel" asp-action="Index" class="btn btn-primary">Back To List</a>
+        </div>
+
     </form>
 </div>
 

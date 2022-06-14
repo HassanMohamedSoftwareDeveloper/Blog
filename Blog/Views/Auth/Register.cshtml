@@ -2,22 +2,22 @@
 @{
 }
 <form class="sign-in-form" asp-action="Register" asp-controller="Auth" method="post">
-    <div>
-        <label>Email</label>
-        <input asp-for="Email" />
+    <div class="form-group">
+        <label asp-for="Email" class="label-control"></label>
+        <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email"></span>
     </div>
-    <div>
-        <label>Password</label>
-        <input asp-for="Password" />
+    <div class="form-group">
+        <label asp-for="Password" class="label-control"></label>
+        <input asp-for="Password" class="form-control" />
         <span asp-validation-for="Password"></span>
     </div>
-    <div>
-        <label>Confirm Password</label>
-        <input asp-for="ConfirmPassword" />
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="label-control"></label>
+        <input asp-for="ConfirmPassword" class="form-control" />
         <span asp-validation-for="ConfirmPassword"></span>
     </div>
-    <div>
-        <input type="submit" value="Sign Up" />
+    <div class="form-group">
+        <input type="submit" value="Sign Up" class="btn btn-success" />
     </div>
 </form>

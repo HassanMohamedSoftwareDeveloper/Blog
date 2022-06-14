@@ -1,4 +1,5 @@
-﻿using Blog.Models;
+﻿using Blog.DTOS;
+using Blog.Models;
 using Blog.Models.Comments;
 using Blog.ViewModels;
 
@@ -6,12 +7,18 @@ namespace Blog.Data.Repositories;
 
 public interface IRepository
 {
-    Post GetPost(int id);
-    List<Post> GetAllPosts();
+    Post GetPostEntity(int id);
+    PostDto GetPost(int id);
+    PostDto GetPreviousPost(int id, string userId);
+    PostDto GetNextPost(int id, string userId);
+    List<PostDto> GetAllPosts();
+    List<PostDto> GetLatestPosts(int count);
     IndexViewModel GetAllPosts(int pageNumber, string category);
     void AddPost(Post post);
     void UpdatePost(Post post);
     void RemovePost(int id);
     void AddSubComment(SubComment comment);
     Task<bool> SaveChangesAsync();
+    List<CategoryDto> GetCategories();
+    List<string> GetTags();
 }

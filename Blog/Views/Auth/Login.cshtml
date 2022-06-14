@@ -2,18 +2,18 @@
 @{
 }
 <form class="sign-in-form" asp-action="Login" asp-controller="Auth" method="post">
-    <div>
-        <label>UserName</label>
-        <input asp-for="UserName" />
+    <div class="form-group">
+        <label asp-for="UserName" class="label-control"></label>
+        <input asp-for="UserName" class="form-control" />
         <span asp-validation-for="UserName"></span>
     </div>
-    <div>
-        <label>Password</label>
-        <input asp-for="Password" />
+    <div class="form-group">
+        <label asp-for="Password" class="label-control"></label>
+        <input asp-for="Password" class="form-control" />
         <span asp-validation-for="Password"></span>
     </div>
-    <div>
-        <input type="submit" value="Sign In" />
-        <a asp-controller="Auth" asp-action="Register">Register</a>
+    <div class="form-group">
+        <input type="submit" value="Sign In" class="btn btn-success" />
+        <a asp-controller="Auth" asp-action="Register" class="btn btn-primary">Register</a>
     </div>
 </form>

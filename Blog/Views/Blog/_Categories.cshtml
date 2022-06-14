@@ -1,0 +1,18 @@
+﻿@model IEnumerable<CategoryDto>
+
+@{
+
+}
+
+<div class="widget categories">
+    <header>
+        <h3 class="h6">Categories</h3>
+    </header>
+    @foreach (var category in Model)
+    {
+        <div class="item d-flex justify-content-between">
+            <a asp-controller="Blog" asp-action="Index" asp-route-category="@category.Description">@category.Description</a>
+            <span>@category.PostsCount</span>
+        </div>
+    }
+</div>

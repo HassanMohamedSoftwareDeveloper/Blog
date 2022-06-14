@@ -1,0 +1,75 @@
+﻿@model IndexViewModel
+@{
+    ViewBag.Title = "Blog Website";
+    ViewBag.Description = "This Blog has everything";
+    ViewBag.keywords = "Blog Programming Travel Photography";
+    var basePath = Context.Request.PathBase;
+}
+
+<div class="container">
+    <div class="row">
+        <main class="posts-listing col-lg-8">
+            <div class="container">
+                <div class="row">
+                    @foreach (var post in Model.Posts)
+                    {
+                        var imagePath = $"{basePath}/Image/{post.Image}";
+                        <div class="post col-xl-6">
+                            <div class="post-thumbnail">
+                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Id">
+                                    <img src="@imagePath" alt="..." class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="post-details">
+                                <div class="post-meta d-flex justify-content-between">
+                                    <div class="date meta-last">@post.PostDate</div>
+                                    <div class="category">
+                                        <a asp-controller="Blog" asp-action="Index" asp-route-category="@post.Category">@post.Category</a>
+                                    </div>
+                                </div><a href="post.html">
+                                    <h3 class="h4">@post.Title</h3>
+                                </a>
+                                <p class="text-muted">@post.Description</p>
+                                <footer class="post-footer d-flex align-items-center">
+                                    <a href="#" class="author d-flex align-items-center flex-wrap">
+                                        <div class="avatar"><img src="~/img/avatar-3.jpg" alt="..." class="img-fluid"></div>
+                                        <div class="title"><span>John Doe</span></div>
+                                    </a>
+                                    <div class="date"><i class="icon-clock"></i> 2 months ago</div>
+                                    <div class="comments meta-last"><i class="icon-comment"></i>@post.CommentsCount</div>
+                                </footer>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+                <partial name="_BlogPagination" model="Model" />
+            </div>
+        </main>
+
+
+
+        <aside class="col-lg-4">
+            <!-- Widget [Search Bar Widget]-->
+            <div class="widget search">
+                <header>
+                    <h3 class="h6">Search the blog</h3>
+                </header>
+                <form action="#" class="search-form">
+                    <div class="form-group">
+                        <input type="search" placeholder="What are you looking for?">
+                        <button type="submit" class="submit"><i class="icon-search"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Widget [Latest Posts Widget]        -->
+            @Html.Action("LatestPosts","Blog")
+            <!-- Widget [Categories Widget]-->
+            @Html.Action("Categories","Blog")
+            <!-- Widget [Tags Cloud Widget]-->
+            @Html.Action("Tags","Blog")
+        </aside>
+    </div>
+</div>

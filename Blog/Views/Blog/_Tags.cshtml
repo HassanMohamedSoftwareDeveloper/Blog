@@ -1,0 +1,18 @@
+﻿@model IEnumerable<string>
+@{
+
+}
+<div class="widget tags">
+    <header>
+        <h3 class="h6">Tags</h3>
+    </header>
+    <ul class="list-inline">
+        @foreach (var tag in Model)
+        {
+            <li class="list-inline-item">
+                <a href="#" class="tag">#@tag</a>
+            </li>
+
+        }
+    </ul>
+</div>

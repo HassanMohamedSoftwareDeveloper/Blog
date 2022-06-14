@@ -1,0 +1,22 @@
+﻿@model IEnumerable<PostDto>
+@{
+    var basePath = Context.Request.PathBase;
+}
+
+<div class="latest-posts">
+    @foreach (var post in Model)
+    {
+        var imagePath = $"{basePath}/Image/{post.Image}";
+        <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Id">
+            <div class="post d-flex align-items-center">
+                <div class="image">
+                    <img src="@imagePath" alt="..." class="img-fluid"/>
+                    </div>
+                <div class="title">
+                    <strong>@post.Title</strong>
+                    <span class="date last-meta">@post.PostDate</span>
+                </div>
+            </div>
+        </a>
+    }
+</div>

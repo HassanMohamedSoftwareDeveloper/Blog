@@ -1,25 +1,10 @@
-﻿@model IndexViewModel
+﻿@model IEnumerable<PostDto>
 @{
     ViewBag.Title = "Blog Website";
     ViewBag.Description = "This Blog has everything";
     ViewBag.keywords = "Blog Programming Travel Photography";
     var basePath = Context.Request.PathBase;
 }
-
-@*<div class="main-img">
-    <span class="title">Amazing Blog Site</span>
-</div>
-<div class="container">
-    <partial name="_BlogPagination" model="Model" />
-    @foreach (var post in Model.Posts)
-    {
-        var imagePath = $"{basePath}/Image/{post.Image}";
-        <a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
-            <img src="@imagePath" />
-            <span class="title">@post.Title</span>
-        </a>
-    }
-</div>*@
 
 <!-- Hero Section-->
 <section style="background: url(/img/hero.jpg); background-size: cover; background-position: center center" class="hero">
@@ -49,7 +34,7 @@
         @{
             int index = 1;
         }
-        @foreach (var post in Model.Posts)
+        @foreach (var post in Model)
         {
             var imagePath = $"{basePath}/Image/{post.Image}";
             bool isRight = index % 2 == 0;
@@ -66,9 +51,9 @@
                         <div class="content">
                             <header class="post-header">
                                 <div class="category">
-                                    <a asp-controller="Home" asp-action="Index" asp-route-category="@post.Category">@post.Category</a>
+                                    <a asp-controller="Blog" asp-action="Index" asp-route-category="@post.Category">@post.Category</a>
                                 </div>
-                                <a asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
+                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Id">
                                     <h2 class="h4">@post.Title</h2>
                                 </a>
                             </header>
@@ -78,8 +63,8 @@
                                     <div class="avatar"><img src="~/img/avatar-1.jpg" alt="..." class="img-fluid"></div>
                                     <div class="title"><span>User Name</span></div>
                                 </a>
-                                <div class="date"><i class="icon-clock"></i>@(DateTime.Now.Subtract(post.Created).TotalDays) days ago</div>
-                                <div class="comments"><i class="icon-comment"></i>@post.MainComments.Count</div>
+                                <div class="date"><i class="icon-clock"></i>10 days ago</div>
+                                <div class="comments"><i class="icon-comment"></i>@post.CommentsCount</div>
                             </footer>
                         </div>
                     </div>
@@ -96,9 +81,6 @@
             index++;
         }
 
-    </div>
-    <div class="container">
-        <partial name="_BlogPagination" model="Model" />
     </div>
 </section>
 
