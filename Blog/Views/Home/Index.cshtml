@@ -37,6 +37,7 @@
         @foreach (var post in Model)
         {
             var imagePath = $"{basePath}/Image/{post.Image}";
+            var userImagePath = $"{basePath}/Image/{post.User.Image}";
             bool isRight = index % 2 == 0;
             <div class="row d-flex align-items-stretch">
 
@@ -60,10 +61,10 @@
                             <p>@post.Description</p>
                             <footer class="post-footer d-flex align-items-center">
                                 <a href="#" class="author d-flex align-items-center flex-wrap">
-                                    <div class="avatar"><img src="~/img/avatar-1.jpg" alt="..." class="img-fluid"></div>
-                                    <div class="title"><span>User Name</span></div>
+                                    <div class="avatar"><img src="@userImagePath" alt="..." class="img-fluid"></div>
+                                    <div class="title"><span>@post.User.FullName</span></div>
                                 </a>
-                                <div class="date"><i class="icon-clock"></i>10 days ago</div>
+                                <div class="date"><i class="icon-clock"></i> @post.TimeAgo</div>
                                 <div class="comments"><i class="icon-comment"></i>@post.CommentsCount</div>
                             </footer>
                         </div>

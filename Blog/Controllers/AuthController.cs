@@ -1,4 +1,6 @@
-﻿using Blog.Services.Email;
+﻿using Blog.Data.FileManager;
+using Blog.Models;
+using Blog.Services.Email;
 using Blog.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,15 +9,17 @@ namespace Blog.Controllers;
 
 public class AuthController : Controller
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<User> _signInManager;
+    private readonly UserManager<User> _userManager;
     private readonly IEmailService _emailService;
+    private readonly IFileManager _fileManager;
 
-    public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IEmailService emailService)
+    public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IEmailService emailService, IFileManager fileManager)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _emailService = emailService;
+        _fileManager = fileManager;
     }
 
     [HttpGet]
@@ -37,15 +41,19 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult Register() => View(new RegisterViewModel());
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterViewModel register)
+    public async Task<IActionResult> Register(RegisterViewModel vm)
     {
-        if (ModelState.IsValid is false) return View(register);
-        var user = new IdentityUser
+        if (ModelState.IsValid is false) return View(vm);
+
+        var user = new User
         {
-            UserName = register.Email,
-            Email = register.Email,
+            FirstName = vm.FirstName,
+            LastName = vm.LastName,
+            UserName = vm.UserName,
+            Email = vm.Email,
+            Image = vm.Image == null ? "avatar.jpg" : SaveNewImageAndGetNameAsync(vm.Image)
         };
-        var result = await _userManager.CreateAsync(user);
+        var result = await _userManager.CreateAsync(user, vm.Password);
         if (result.Succeeded)
         {
             await _signInManager.SignInAsync(user, false);
@@ -53,11 +61,17 @@ public class AuthController : Controller
             return RedirectToAction("Index", "Home");
         }
 
-        return View(register);
+        return View(vm);
     }
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
+    }
+
+
+    private string SaveNewImageAndGetNameAsync(IFormFile image)
+    {
+        return _fileManager.SaveImageAsync(image);
     }
 }

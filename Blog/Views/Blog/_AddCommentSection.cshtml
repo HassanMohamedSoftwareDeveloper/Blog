@@ -1,0 +1,31 @@
+﻿@model CommentViewModel
+<div class="add-comment">
+    <header>
+        <h3 class="h6">Leave a comment</h3>
+    </header>
+    <form asp-controller="Home" asp-action="Comment" method="post" class="commenting-form">
+        <input asp-for="PostId" type="hidden">
+        <div class="row">
+            @if (User.Identity.IsAuthenticated is false)
+            {
+                <div class="form-group col-md-6">
+                    <input asp-for="Username" placeholder="Name" class="form-control">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <input asp-for="Email" placeholder="Email Address (will not be published)" class="form-control">
+                </div>
+
+                <div class="form-group col-md-12">
+                    <textarea asp-for="Message" placeholder="Type your comment" class="form-control"></textarea>
+                </div>
+            }
+
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-secondary">Comment</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+

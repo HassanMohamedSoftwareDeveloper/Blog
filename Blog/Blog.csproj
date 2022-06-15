@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
+    <Content Remove="Views\Home\_AddCommentSection.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="Views\Blog\_AddCommentSection.cshtml" />
+    <None Include="wwwroot\content\blog\user.svg" />
     <None Include="wwwroot\fonts\blog.svg" />
     <None Include="wwwroot\icons-reference\fonts\blog.svg" />
     <None Include="wwwroot\img\user.svg" />
@@ -53,6 +56,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
       <PrivateAssets>all</PrivateAssets>

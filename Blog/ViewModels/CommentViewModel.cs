@@ -10,4 +10,7 @@ public class CommentViewModel
     public int MainCommentId { get; set; }
     [Required]
     public string Message { get; set; }
+    [EmailAddress]
+    public string Email { get; set; }
+    public string Username { get; set; }
 }

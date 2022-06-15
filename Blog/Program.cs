@@ -2,6 +2,7 @@ using Blog.Configuration;
 using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Data.Repositories;
+using Blog.Models;
 using Blog.Services.Email;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -12,9 +13,9 @@ builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection(nameof(SmtpSettings)));
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["DefaultConnetion"]));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration["DefaultConnetion"]));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -23,8 +24,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/Auth/Logout";
 });
 
-builder.Services.AddTransient<IRepository, Repository>();
-builder.Services.AddTransient<IFileManager, FileManager>();
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IFileManager, FileManager>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 
 builder.Services.AddMvc(options =>
@@ -58,7 +59,7 @@ static async Task SeedAdmin(IServiceProvider serviceProvider)
     {
         var scope = serviceProvider.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         ctx.Database.EnsureCreated();
         var adminRole = new IdentityRole("Admin");
@@ -69,10 +70,13 @@ static async Task SeedAdmin(IServiceProvider serviceProvider)
         }
         if (ctx.Users.Any(u => u.UserName == "admin") is false)
         {
-            var adminUser = new IdentityUser
+            var adminUser = new User
             {
                 UserName = "admin",
                 Email = "admin@test.com",
+                FirstName = "Hassan",
+                LastName = "Mohamed",
+                Image = "user.svg"
             };
             await userManager.CreateAsync(adminUser, "P@ssw0rd");
             await userManager.AddToRoleAsync(adminUser, adminRole.Name);

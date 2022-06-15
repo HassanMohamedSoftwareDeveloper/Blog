@@ -13,11 +13,12 @@ public interface IRepository
     PostDto GetNextPost(int id, string userId);
     List<PostDto> GetAllPosts();
     List<PostDto> GetLatestPosts(int count);
-    IndexViewModel GetAllPosts(int pageNumber, string category);
+    IndexViewModel GetAllPosts(int pageNumber, string category, string searcg);
     void AddPost(Post post);
     void UpdatePost(Post post);
     void RemovePost(int id);
     void AddSubComment(SubComment comment);
+    void AddViewer(Viewer viewer);
     Task<bool> SaveChangesAsync();
     List<CategoryDto> GetCategories();
     List<string> GetTags();

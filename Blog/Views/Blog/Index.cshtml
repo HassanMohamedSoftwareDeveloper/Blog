@@ -14,6 +14,7 @@
                     @foreach (var post in Model.Posts)
                     {
                         var imagePath = $"{basePath}/Image/{post.Image}";
+                        var userImagePath = $"{basePath}/Image/{post.User.Image}";
                         <div class="post col-xl-6">
                             <div class="post-thumbnail">
                                 <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Id">
@@ -26,16 +27,17 @@
                                     <div class="category">
                                         <a asp-controller="Blog" asp-action="Index" asp-route-category="@post.Category">@post.Category</a>
                                     </div>
-                                </div><a href="post.html">
+                                </div>
+                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Id">
                                     <h3 class="h4">@post.Title</h3>
                                 </a>
                                 <p class="text-muted">@post.Description</p>
                                 <footer class="post-footer d-flex align-items-center">
                                     <a href="#" class="author d-flex align-items-center flex-wrap">
-                                        <div class="avatar"><img src="~/img/avatar-3.jpg" alt="..." class="img-fluid"></div>
-                                        <div class="title"><span>John Doe</span></div>
+                                        <div class="avatar"><img src="@userImagePath" alt="..." class="img-fluid"></div>
+                                        <div class="title"><span>@post.User.FullName</span></div>
                                     </a>
-                                    <div class="date"><i class="icon-clock"></i> 2 months ago</div>
+                                    <div class="date"><i class="icon-clock"></i> @post.TimeAgo</div>
                                     <div class="comments meta-last"><i class="icon-comment"></i>@post.CommentsCount</div>
                                 </footer>
                             </div>
@@ -56,14 +58,8 @@
                 <header>
                     <h3 class="h6">Search the blog</h3>
                 </header>
-                <form action="#" class="search-form">
-                    <div class="form-group">
-                        <input type="search" placeholder="What are you looking for?">
-                        <button type="submit" class="submit"><i class="icon-search"></i></button>
-                    </div>
-                </form>
+                <partial name="../Shared/_SearchForm.cshtml" />
             </div>
-
             <!-- Widget [Latest Posts Widget]        -->
             @Html.Action("LatestPosts","Blog")
             <!-- Widget [Categories Widget]-->

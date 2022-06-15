@@ -5,6 +5,7 @@
     ViewBag.keywords = $"{string.Join(" ", Model.Post.Tags)} {Model.Post.Category}";
     var basePath = Context.Request.PathBase;
     var imagePath = $"{basePath}/Image/{Model.Post.Image}";
+    var userImagePath = $"{basePath}/Image/{Model.Post.User.Image}";
 }
 
 
@@ -75,11 +76,11 @@
                         <h1>@Model.Post.Title<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
                         <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
                             <a href="#" class="author d-flex align-items-center flex-wrap">
-                                <div class="avatar"><img src="~/img/avatar-1.jpg" alt="..." class="img-fluid"></div>
-                                <div class="title"><span>User Name</span></div>
+                                <div class="avatar"><img src="@userImagePath" alt="..." class="img-fluid"></div>
+                                <div class="title"><span>@Model.Post.User.FullName</span></div>
                             </a>
                             <div class="d-flex align-items-center flex-wrap">
-                                <div class="date"><i class="icon-clock"></i> 2 months ago</div>
+                                <div class="date"><i class="icon-clock"></i>  @Model.Post.TimeAgo</div>
                                 <div class="views"><i class="icon-eye"></i> @Model.Post.ViewsCount</div>
                                 <div class="comments meta-last"><i class="icon-comment"></i>@Model.Post.CommentsCount</div>
                             </div>
@@ -125,12 +126,13 @@
                             </header>
                             @foreach (var comment in Model.Post.Comments)
                             {
+                                var commentUserImagePath = $"{basePath}/Image/{comment.User.Image}";
                                 <div class="comment">
                                     <div class="comment-header d-flex justify-content-between">
                                         <div class="user d-flex align-items-center">
-                                            <div class="image"><img src="~/img/user.svg" alt="..." class="img-fluid rounded-circle"></div>
+                                            <div class="image"><img src="@commentUserImagePath" alt="..." class="img-fluid rounded-circle"></div>
                                             <div class="title">
-                                                <strong>User Name</strong>
+                                                <strong>@comment.User.FullName</strong>
                                                 <span class="date">@comment.CommentDate</span>
                                             </div>
                                         </div>
@@ -141,27 +143,7 @@
                                 </div>
                             }
                         </div>
-                        <div class="add-comment">
-                            <header>
-                                <h3 class="h6">Leave a reply</h3>
-                            </header>
-                            <form action="#" class="commenting-form">
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <input type="text" name="username" id="username" placeholder="Name" class="form-control">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <input type="email" name="username" id="useremail" placeholder="Email Address (will not be published)" class="form-control">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <textarea name="usercomment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <button type="submit" class="btn btn-secondary">Submit Comment</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <partial name="_AddCommentSection" model="new CommentViewModel(){PostId=Model.Post.Id}" />
                     </div>
                 </div>
             </div>
@@ -172,12 +154,7 @@
                 <header>
                     <h3 class="h6">Search the blog</h3>
                 </header>
-                <form action="#" class="search-form">
-                    <div class="form-group">
-                        <input type="search" placeholder="What are you looking for?">
-                        <button type="submit" class="submit"><i class="icon-search"></i></button>
-                    </div>
-                </form>
+                <partial name="../Shared/_SearchForm.cshtml" />
             </div>
 
             <!-- Widget [Latest Posts Widget]        -->

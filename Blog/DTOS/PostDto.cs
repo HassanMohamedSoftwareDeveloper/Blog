@@ -12,6 +12,7 @@ public class PostDto
     public int CommentsCount { get; set; }
     public int ViewsCount { get; set; }
     public string PostDate { get; set; }
+    public string TimeAgo { get; set; }
     public UserDto User { get; set; }
     public List<CommentDto> Comments { get; set; }
 }

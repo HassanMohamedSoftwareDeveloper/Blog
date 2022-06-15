@@ -1,6 +1,7 @@
 ﻿@model LoginViewModel
 @{
 }
+<div class="container">
 <form class="sign-in-form" asp-action="Login" asp-controller="Auth" method="post">
     <div class="form-group">
         <label asp-for="UserName" class="label-control"></label>
@@ -17,3 +18,4 @@
         <a asp-controller="Auth" asp-action="Register" class="btn btn-primary">Register</a>
     </div>
 </form>
+</div>

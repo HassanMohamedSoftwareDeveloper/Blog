@@ -57,7 +57,7 @@ public class FileManager : IFileManager
         {
             Width = 800,
             Height = 500,
-            ResizeMode = CropScaleMode.Crop,
+            ResizeMode = CropScaleMode.Stretch,
             EncoderOptions = new JpegEncoderOptions
             {
                 Quality = 100,

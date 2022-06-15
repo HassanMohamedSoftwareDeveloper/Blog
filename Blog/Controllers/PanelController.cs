@@ -3,6 +3,7 @@ using Blog.Data.Repositories;
 using Blog.Models;
 using Blog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers;
@@ -12,11 +13,13 @@ public class PanelController : Controller
 {
     private readonly IRepository _repo;
     private readonly IFileManager _fileManager;
+    private readonly UserManager<User> _userManager;
 
-    public PanelController(IRepository repo, IFileManager fileManager)
+    public PanelController(IRepository repo, IFileManager fileManager, UserManager<User> userManager)
     {
         _repo = repo;
         _fileManager = fileManager;
+        _userManager = userManager;
     }
     public IActionResult Index() => View(_repo.GetAllPosts());
     public IActionResult Edit(int? id) => View(id == null ? new PostViewModel() : MapToPostViewModel(_repo.GetPostEntity((int)id)));
@@ -24,6 +27,8 @@ public class PanelController : Controller
     public async Task<IActionResult> Edit(PostViewModel postVm)
     {
         var post = MapToPost(postVm);
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        post.UserId = user.Id;
 
         if (post.Id.Equals(0))
             _repo.AddPost(post);
@@ -58,7 +63,7 @@ public class PanelController : Controller
         Image = SaveNewImageAndGetNameAsync(post),
         Description = post.Description,
         Tags = post.Tags,
-        Category = post.Category
+        Category = post.Category,
     };
     private string SaveNewImageAndGetNameAsync(PostViewModel post)
     {

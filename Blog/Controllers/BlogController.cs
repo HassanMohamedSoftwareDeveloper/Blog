@@ -1,6 +1,7 @@
-﻿using Blog.Data.FileManager;
-using Blog.Data.Repositories;
+﻿using Blog.Data.Repositories;
+using Blog.Models;
 using Blog.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers;
@@ -9,27 +10,32 @@ public class BlogController : Controller
 {
     #region Fields :
     private readonly IRepository _repo;
-    private readonly IFileManager _fileManager;
+    private readonly UserManager<User> _userManager;
     #endregion
 
     #region CTORS :
-    public BlogController(IRepository repo, IFileManager fileManager)
+    public BlogController(IRepository repo, UserManager<User> userManager)
     {
         _repo = repo;
-        _fileManager = fileManager;
+        _userManager = userManager;
     }
     #endregion
 
     #region Actions :
-    public IActionResult Index(int pageNumber, string category)
+    public IActionResult Index(int pageNumber, string category, string search)
     {
         if (pageNumber < 1)
-            return RedirectToAction("Index", new { pageNumber = 1, category });
-        var vm = _repo.GetAllPosts(pageNumber, category);
+            return RedirectToAction("Index", new { pageNumber = 1, category, search });
+        var vm = _repo.GetAllPosts(pageNumber, category, search);
         return View(vm);
     }
-    public IActionResult Post(int id)
+    public async Task<IActionResult> Post(int id)
     {
+        User user = null;
+        if (User.Identity.IsAuthenticated)
+            await _userManager.FindByNameAsync(User.Identity.Name);
+        _repo.AddViewer(new Viewer { PostId = id, UserId = user?.Id });
+        await _repo.SaveChangesAsync();
         PostPageViewModel vm = new PostPageViewModel()
         {
             Post = _repo.GetPost(id),
@@ -38,7 +44,6 @@ public class BlogController : Controller
         };
         return View(vm);
     }
-
     public IActionResult LatestPosts()
     {
         return PartialView("_LatestPosts", _repo.GetLatestPosts(3));
@@ -51,6 +56,5 @@ public class BlogController : Controller
     {
         return PartialView("_Tags", _repo.GetTags());
     }
-
     #endregion
 }

@@ -2,5 +2,5 @@
 
 public class MainComment : Comment
 {
-    public List<SubComment> SubComments { get; set; }
+    public virtual ICollection<SubComment> SubComments { get; set; }
 }

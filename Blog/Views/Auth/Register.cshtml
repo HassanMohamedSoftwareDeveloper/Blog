@@ -1,23 +1,45 @@
 ﻿@model RegisterViewModel
 @{
 }
-<form class="sign-in-form" asp-action="Register" asp-controller="Auth" method="post">
-    <div class="form-group">
-        <label asp-for="Email" class="label-control"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password" class="label-control"></label>
-        <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword" class="label-control"></label>
-        <input asp-for="ConfirmPassword" class="form-control" />
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Sign Up" class="btn btn-success" />
-    </div>
-</form>
+<div class="container">
+    <form  asp-action="Register" asp-controller="Auth" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="FirstName" class="label-control"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="label-control"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserName" class="label-control"></label>
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="label-control"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="label-control"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="label-control"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Image" class="label-control"></label>
+            <input asp-for="Image" class="form-control" />
+            <span asp-validation-for="Image"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Sign Up" class="btn btn-success" />
+        </div>
+    </form>
+</div>
