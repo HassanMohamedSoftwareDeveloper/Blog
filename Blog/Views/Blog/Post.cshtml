@@ -140,6 +140,25 @@
                                     <div class="comment-body">
                                         <p>@comment.Message</p>
                                     </div>
+                                    @foreach (var reply in comment.Replies)
+                                    {
+                                        var replyUserImagePath = $"{basePath}/Image/{reply.User.Image}";
+                                        <div class="comment">
+                                            <div class="comment-header d-flex justify-content-between">
+                                                <div class="user d-flex align-items-center">
+                                                    <div class="image"><img src="@replyUserImagePath" alt="..." class="img-fluid rounded-circle"></div>
+                                                    <div class="title">
+                                                        <strong>@reply.User.FullName</strong>
+                                                        <span class="date">@reply.ReplyDate</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="comment-body">
+                                                <p>@reply.Message</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    <partial name="_AddCommentSection" model="new CommentViewModel(){PostId=Model.Post.Id,MainCommentId=comment.Id}" />
                                 </div>
                             }
                         </div>

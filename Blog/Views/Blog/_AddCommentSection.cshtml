@@ -1,10 +1,18 @@
 ﻿@model CommentViewModel
+
+@{
+    string description = Model.MainCommentId == 0 ? "Comment" : "Reply";
+}
 <div class="add-comment">
-    <header>
-        <h3 class="h6">Leave a comment</h3>
-    </header>
+    @if (Model.MainCommentId == 0)
+    {
+        <header>
+            <h3 class="h6">Leave a comment</h3>
+        </header>
+    }
     <form asp-controller="Home" asp-action="Comment" method="post" class="commenting-form">
         <input asp-for="PostId" type="hidden">
+        <input asp-for="MainCommentId" type="hidden">
         <div class="row">
             @if (User.Identity.IsAuthenticated is false)
             {
@@ -16,13 +24,13 @@
                     <input asp-for="Email" placeholder="Email Address (will not be published)" class="form-control">
                 </div>
 
-                <div class="form-group col-md-12">
-                    <textarea asp-for="Message" placeholder="Type your comment" class="form-control"></textarea>
-                </div>
             }
+            <div class="form-group col-md-12">
+                <textarea style="min-height:auto;" asp-for="Message" placeholder="Type your @description" class="form-control"></textarea>
+            </div>
 
             <div class="form-group col-md-12">
-                <button type="submit" class="btn btn-secondary">Comment</button>
+                <button type="submit" class="btn btn-secondary">@description</button>
             </div>
 
         </div>
