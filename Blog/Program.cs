@@ -2,6 +2,7 @@ using Blog.Configuration;
 using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Data.Repositories;
+using Blog.Middlewares;
 using Blog.Models;
 using Blog.Services.Email;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,11 @@ builder.Services.AddMvc(options =>
 });
 
 var app = builder.Build();
-app.UseDeveloperExceptionPage();
+app.UseMiddleware<ExceptionHandler>();
+if (builder.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 app.UseStaticFiles();
 app.UseRouting();
 
@@ -76,7 +81,7 @@ static async Task SeedAdmin(IServiceProvider serviceProvider)
                 Email = "admin@test.com",
                 FirstName = "Hassan",
                 LastName = "Mohamed",
-                Image = "user.svg"
+                Image = "avatar.jpg"
             };
             await userManager.CreateAsync(adminUser, "P@ssw0rd");
             await userManager.AddToRoleAsync(adminUser, adminRole.Name);
