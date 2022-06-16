@@ -1,5 +1,4 @@
 ﻿using NLog;
-using System.Net;
 using ILogger = NLog.ILogger;
 namespace Blog.Middlewares;
 
@@ -26,7 +25,7 @@ public class ExceptionHandler
             context.Request.Body.Position = 0;
             await _next(context);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             _logger.Error(ex, "Error occurred check the (Error Details) for more details.");
             HandleException(context);
@@ -37,8 +36,13 @@ public class ExceptionHandler
     #region Private Methods :
     private static void HandleException(HttpContext httpContext)
     {
-        httpContext.Response.ContentType = "application/json";
-        httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        httpContext.Response.Redirect("Home/Error_404");
+        //if(httpContext.Response.StatusCode==(int)HttpStatusCode.NotFound)
+        //{
+        //    httpContext.Response.Redirect("Home/Error_404");
+        //}
+        //httpContext.Response.ContentType = "application/json";
+        //httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
     }
     #endregion
 

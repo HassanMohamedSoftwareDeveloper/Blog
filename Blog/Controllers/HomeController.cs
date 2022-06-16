@@ -36,6 +36,7 @@ public class HomeController : Controller
     #region Actions :
     public IActionResult Index()
     {
+        throw new Exception();
         return View(_repo.GetLatestPosts(4));
     }
 
@@ -93,6 +94,11 @@ public class HomeController : Controller
     public IActionResult LatestPosts()
     {
         return PartialView("_LatestPosts", _repo.GetLatestPosts(3));
+    }
+    //[HttpGet("/NotFound")]
+    public IActionResult Error_404()
+    {
+        return View();
     }
     #endregion
 }

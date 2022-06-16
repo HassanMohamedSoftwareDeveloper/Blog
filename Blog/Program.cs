@@ -13,7 +13,7 @@ using NLog;
 using NLog.Web;
 using HttpContextAccessor = Blog.Helper.HttpContextAccessor;
 
-var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
 try
@@ -57,7 +57,7 @@ try
     app.UseMiddleware<ExceptionHandler>();
     if (builder.Environment.IsDevelopment())
     {
-        app.UseDeveloperExceptionPage();
+        // app.UseDeveloperExceptionPage();
     }
     app.UseStaticFiles();
     app.UseRouting();
