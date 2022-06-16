@@ -36,7 +36,6 @@ public class HomeController : Controller
     #region Actions :
     public IActionResult Index()
     {
-        throw new Exception();
         return View(_repo.GetLatestPosts(4));
     }
 
