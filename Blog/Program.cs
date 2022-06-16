@@ -2,59 +2,86 @@ using Blog.Configuration;
 using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Data.Repositories;
+using Blog.Helper;
 using Blog.Middlewares;
 using Blog.Models;
 using Blog.Services.Email;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using NLog;
+using NLog.Web;
+using HttpContextAccessor = Blog.Helper.HttpContextAccessor;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection(nameof(SmtpSettings)));
+var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+logger.Debug("init main");
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration["DefaultConnetion"]));
-
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
-
-builder.Services.ConfigureApplicationCookie(options =>
+try
 {
-    options.LoginPath = "/Auth/Login";
-    options.LogoutPath = "/Auth/Logout";
-});
+    var builder = WebApplication.CreateBuilder(args);
+    builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+    builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection(nameof(SmtpSettings)));
 
-builder.Services.AddScoped<IRepository, Repository>();
-builder.Services.AddScoped<IFileManager, FileManager>();
-builder.Services.AddSingleton<IEmailService, EmailService>();
+    builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration["DefaultConnetion"]));
 
-builder.Services.AddMvc(options =>
-{
-    options.EnableEndpointRouting = false;
-    options.CacheProfiles.Add("Monthly", new Microsoft.AspNetCore.Mvc.CacheProfile
+    builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<AppDbContext>();
+
+    builder.Services.ConfigureApplicationCookie(options =>
     {
-        Duration = 60 * 60 * 24 * 7 * 4
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
     });
-});
 
-var app = builder.Build();
-app.UseMiddleware<ExceptionHandler>();
-if (builder.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
+    builder.Services.AddScoped<IRepository, Repository>();
+    builder.Services.AddScoped<IFileManager, FileManager>();
+    builder.Services.AddSingleton<IEmailService, EmailService>();
+    builder.Services.AddScoped<IPasswordGenerator, PasswordGenerator>();
+
+    builder.Services.AddMvc(options =>
+    {
+        options.EnableEndpointRouting = false;
+        options.CacheProfiles.Add("Monthly", new Microsoft.AspNetCore.Mvc.CacheProfile
+        {
+            Duration = 60 * 60 * 24 * 7 * 4
+        });
+    });
+
+    // NLog: Setup NLog for Dependency injection
+    builder.Logging.ClearProviders();
+    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+    builder.Host.UseNLog();
+
+    var app = builder.Build();
+    app.UseMiddleware<ExceptionHandler>();
+    if (builder.Environment.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+    app.UseStaticFiles();
+    app.UseRouting();
+
+    app.UseAuthentication();
+
+    app.UseMvcWithDefaultRoute();
+
+
+    await SeedAdmin(app.Services);
+
+    app.Run();
 }
-app.UseStaticFiles();
-app.UseRouting();
-
-app.UseAuthentication();
-
-app.UseMvcWithDefaultRoute();
-
-
-await SeedAdmin(app.Services);
-
-app.Run();
+catch (Exception exception)
+{
+    // NLog: catch setup errors
+    logger.Error(exception, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+    // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+    NLog.LogManager.Shutdown();
+}
 
 
 

@@ -1,9 +1,6 @@
-﻿using System.Net;
-//using Microsoft.AspNetCore.Http;
-//using NLog;
-//using System.IO;
-//using System.Threading.Tasks;
-//using ILogger = NLog.ILogger;
+﻿using NLog;
+using System.Net;
+using ILogger = NLog.ILogger;
 namespace Blog.Middlewares;
 
 public class ExceptionHandler
@@ -16,7 +13,7 @@ public class ExceptionHandler
     public ExceptionHandler(RequestDelegate next)
     {
         _next = next;
-        //this._logger = LogManager.GetCurrentClassLogger();
+        this._logger = LogManager.GetCurrentClassLogger();
     }
     #endregion
     #region Methods :
@@ -31,14 +28,14 @@ public class ExceptionHandler
         }
         catch (System.Exception ex)
         {
-            // _logger.Error(ex, "Error occured check the (Error Details) for more details.");
+            _logger.Error(ex, "Error occurred check the (Error Details) for more details.");
             HandleException(context);
-            await context.Response.WriteAsync($"Error occured ,{ex.Message}");
+            //await context.Response.WriteAsync($"Error occured ,{ex.Message}");
         }
     }
     #endregion
     #region Private Methods :
-    private void HandleException(HttpContext httpContext)
+    private static void HandleException(HttpContext httpContext)
     {
         httpContext.Response.ContentType = "application/json";
         httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

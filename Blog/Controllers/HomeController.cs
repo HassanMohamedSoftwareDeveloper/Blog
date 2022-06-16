@@ -1,5 +1,6 @@
 ﻿using Blog.Data.FileManager;
 using Blog.Data.Repositories;
+using Blog.Helper;
 using Blog.Models;
 using Blog.Models.Comments;
 using Blog.Services.Email;
@@ -17,17 +18,18 @@ public class HomeController : Controller
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
     private readonly IEmailService _emailService;
-
+    private readonly IPasswordGenerator _passwordGenerator;
     #endregion
 
     #region CTORS :
-    public HomeController(IRepository repo, IFileManager fileManager, UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService)
+    public HomeController(IRepository repo, IFileManager fileManager, UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService, IPasswordGenerator passwordGenerator)
     {
         _repo = repo;
         _fileManager = fileManager;
         _userManager = userManager;
         _signInManager = signInManager;
         _emailService = emailService;
+        _passwordGenerator = passwordGenerator;
     }
     #endregion
 
@@ -42,6 +44,7 @@ public class HomeController : Controller
     public IActionResult Image(string image) =>
         //Range Operator
         new FileStreamResult(_fileManager.ImageStream(image), $"image/{image[(image.LastIndexOf('.') + 1)..]}");
+
     [HttpPost]
     public async Task<IActionResult> Comment(CommentViewModel vm)
     {
@@ -58,7 +61,7 @@ public class HomeController : Controller
             if (user is null)
             {
                 user = new User { UserName = vm.Username, Email = vm.Email, Image = "avatar.jpg" };
-                string pass = "P@ssw0rd";
+                string pass = _passwordGenerator.GeneratePassword(true, true, true, true, 8);
                 var result = await _userManager.CreateAsync(user, pass);
                 if (result.Succeeded)
                     await _emailService.SendEmailAsync(user.Email, "Welcome", $"Thank you for registration  and your permanent password {pass}");
