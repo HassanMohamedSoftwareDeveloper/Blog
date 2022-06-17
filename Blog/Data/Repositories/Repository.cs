@@ -90,7 +90,7 @@ public class Repository : IRepository
             Body = post.Body,
             Description = post.Description,
             Category = post.Category,
-            Tags = post.Tags.Split(',').ToList(),
+            Tags = post.Tags?.Split(',').ToList(),
             Comments = post.MainComments?.Select(comment => MapToCommentDto(comment)).ToList(),
             CommentsCount = post.MainComments?.Count ?? 0,
             ViewsCount = post.Viewers?.Count ?? 0,

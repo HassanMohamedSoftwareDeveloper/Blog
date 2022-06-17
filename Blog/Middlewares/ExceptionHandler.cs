@@ -36,7 +36,7 @@ public class ExceptionHandler
     #region Private Methods :
     private static void HandleException(HttpContext httpContext)
     {
-        httpContext.Response.Redirect("Home/Error_404");
+        httpContext.Response.Redirect($"{httpContext.Request.PathBase}/Home/Error_404");
         //if(httpContext.Response.StatusCode==(int)HttpStatusCode.NotFound)
         //{
         //    httpContext.Response.Redirect("Home/Error_404");
