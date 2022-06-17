@@ -20,6 +20,7 @@ public class ExceptionHandler
     {
         try
         {
+            _logger.Info("Begin request");
             context.Request.EnableBuffering();
             using var reader = new StreamReader(context.Request.Body);
             context.Request.Body.Position = 0;
