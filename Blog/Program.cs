@@ -23,6 +23,17 @@ try
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection(nameof(SmtpSettings)));
 
+
+    //builder.Services.AddControllers()
+    //            .AddFluentValidation(options =>
+    //            {
+    //                // Validate child properties and root collection elements
+    //                options.ImplicitlyValidateChildProperties = true;
+    //                options.ImplicitlyValidateRootCollectionElements = true;
+    //                // Automatic registration of validators in assembly
+    //                options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+    //            });
+
     builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration["DefaultConnetion"]));
 
     builder.Services.AddIdentity<User, IdentityRole>()
