@@ -1,9 +1,9 @@
 ﻿namespace Shared.Abstractions.Domain;
 
-public interface IRepository<TEntity> where TEntity : class
+public interface IRepository<TRoot, TKey> where TRoot : class, IAggregateRoot<TKey>
 {
-    Task<TEntity> GetAsync(Func<TEntity, bool> criteria);
-    void Create(TEntity entity);
-    void Update(TEntity entity);
-    void Delete(TEntity entity);
+    Task<TRoot> GetAsync(Func<TRoot, bool> criteria);
+    void Create(TRoot entity);
+    void Update(TRoot entity);
+    void Delete(TRoot entity);
 }
