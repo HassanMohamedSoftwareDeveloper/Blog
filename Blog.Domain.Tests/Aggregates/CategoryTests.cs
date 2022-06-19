@@ -8,7 +8,7 @@ namespace Blog.Domain.Tests.Aggregates;
 public class CategoryTests
 {
     [Fact]
-    public void CategoryId_ShouldBeFail_With_EmptyCategoryIdExceptionWithMessage_WhenIdIsEmpty()
+    public void CategoryId_ShouldThrowException_EmptyCategoryIdExceptionWithMessage_WhenIdIsEmpty()
     {
         //Arrange
         Guid idValue = Guid.Empty;
@@ -19,7 +19,7 @@ public class CategoryTests
             .And.Should().BeOfType(typeof(EmptyCategoryIdException));
     }
     [Fact]
-    public void CategoryName_ShouldBeFail_With_EmptyCategoryNameExceptionWithMessage_WhenNameIsEmpty()
+    public void CategoryName_ShouldThrowException_EmptyCategoryNameExceptionWithMessage_WhenNameIsEmpty()
     {
         //Arrange
         string nameValue = string.Empty;
@@ -31,7 +31,7 @@ public class CategoryTests
     }
 
     [Fact]
-    public void CategoryId_ShouldBeSuccess_WhenIdHasValue()
+    public void CategoryId_ShouldNotThrowException_WhenIdHasValue()
     {
         //Arrange
         Guid idValue = Guid.NewGuid();
@@ -41,7 +41,7 @@ public class CategoryTests
         action.Should().NotThrow<BlogException>();
     }
     [Fact]
-    public void CategoryName_ShouldBeSuccess_WhenNameHasValue()
+    public void CategoryName_ShouldNotThrowException_WhenNameHasValue()
     {
         //Arrange
         string nameValue = "Programming";
@@ -52,7 +52,7 @@ public class CategoryTests
     }
 
     [Fact]
-    public void Category_ShouldBeFail_With_EmptyCategoryIdExceptionWithMessage_WhenIdIsEmpty()
+    public void Category_ShouldThrowException_EmptyCategoryIdExceptionWithMessage_WhenIdIsEmpty()
     {
         //Arrange
         Guid id = Guid.Empty;
@@ -64,7 +64,7 @@ public class CategoryTests
             .And.Should().BeOfType(typeof(EmptyCategoryIdException));
     }
     [Fact]
-    public void Category_ShouldBeFail_With_EmptyCategoryNameExceptionWithMessage_WhenNameIsEmpty()
+    public void Category_ShouldThrowException_EmptyCategoryNameExceptionWithMessage_WhenNameIsEmpty()
     {
         //Arrange
         Guid id = Guid.NewGuid();
@@ -76,7 +76,7 @@ public class CategoryTests
             .And.Should().BeOfType(typeof(EmptyCategoryNameException));
     }
     [Fact]
-    public void Category_ShouldBeSuccess_WhenIdHasValueAndNameHasValue()
+    public void Category_ShouldNotThrowException_WhenIdHasValueAndNameHasValue()
     {
         //Arrange
         Guid id = Guid.NewGuid();

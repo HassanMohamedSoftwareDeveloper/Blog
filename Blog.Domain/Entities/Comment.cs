@@ -5,7 +5,7 @@ namespace Blog.Domain.Entities;
 public class Comment : CommentBase
 {
     #region Fields :
-    private List<Reply> _replies = new List<Reply>();
+    private List<Reply> _replies = new();
     #endregion
 
     #region CTORS :

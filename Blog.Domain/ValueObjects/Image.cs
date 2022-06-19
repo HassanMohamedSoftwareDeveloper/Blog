@@ -8,6 +8,7 @@ public record Image
     public Image(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) throw new EmptyImageException();
+        if (value.Split('.').Length != 2) throw new InvalidImageException();
         Value = value;
     }
 

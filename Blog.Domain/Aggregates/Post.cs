@@ -17,12 +17,12 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
     private CategoryId _categoryId;
     private DateTime _created;
     private DateTime? _updated;
-    private List<Comment> _comments = new List<Comment>();
+    private List<Comment> _comments = new();
     #endregion
 
     #region CTORS :
-    public Post(PostId postId, Title title, Description description, Tag tag, Body body, UserId userId, CategoryId categoryId)
-        => SetPostData(postId, title, description, tag, body, userId, categoryId);
+    public Post(PostId postId, Title title, Description description, Tag tag, Body body, Image image, UserId userId, CategoryId categoryId)
+        => SetPostData(postId, title, description, tag, body, image, userId, categoryId);
     #endregion
 
     #region Methods :
@@ -36,13 +36,14 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
     #endregion
 
     #region Helpers :
-    private void SetPostData(PostId postId, Title title, Description description, Tag tag, Body body, UserId userId, CategoryId categoryId)
+    private void SetPostData(PostId postId, Title title, Description description, Tag tag, Body body, Image image, UserId userId, CategoryId categoryId)
     {
         this.Id = postId;
         this._title = title;
         this._description = description;
         this._tag = tag;
         this._body = body;
+        this._image = image;
         this._userId = userId;
         this._categoryId = categoryId;
         this._created = DateTime.Now;
