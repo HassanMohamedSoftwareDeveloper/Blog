@@ -9,7 +9,7 @@ public class Comment : CommentBase
     #endregion
 
     #region CTORS :
-    public Comment(Message message, UserId userId) : base(message, userId) { }
+    public Comment(CommentId commentId, Message message, UserId userId) : base(commentId, message, userId) { }
     #endregion
 
     #region Methods :

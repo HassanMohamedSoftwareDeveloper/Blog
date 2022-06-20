@@ -16,8 +16,9 @@ public abstract class CommentBase : IEntity<CommentId>
     #endregion
 
     #region CTORS :
-    public CommentBase(Message message, UserId userId)
+    public CommentBase(CommentId commentId, Message message, UserId userId)
     {
+        this.Id = commentId;
         this._message = message;
         this._userId = userId;
         this._created = DateTime.Now;

@@ -1,4 +1,5 @@
-﻿using Blog.Domain.Exceptions;
+﻿using Blog.Domain.Aggregates;
+using Blog.Domain.Exceptions;
 using Blog.Domain.ValueObjects;
 using Shared.Abstractions.Exceptions;
 
@@ -6,7 +7,7 @@ namespace Blog.Domain.Tests.Aggregates;
 
 public class PostTests
 {
-    #region Title_Tests :
+    #region PostId_Tests :
     [Fact]
     public void PostId_ShouldThrowException_EmptyTitleException_WithMessage_WhenValueIsEmpty()
     {
@@ -40,7 +41,7 @@ public class PostTests
         Assert.Equal(guid, guidPostId);
     }
     [Fact]
-    public void PostId_ShouldBe_Return_Title()
+    public void PostId_ShouldBe_Return_PostId()
     {
         //Arrange
         Guid guidPostId = Guid.NewGuid();
@@ -296,6 +297,261 @@ public class PostTests
         //Assert
         Assert.Equal("Image.jpg", image.Value);
         Assert.Equal(new Image("Image.jpg"), image);
+    }
+    #endregion
+
+    #region UserId_Tests :
+    [Fact]
+    public void UserId_ShouldThrowException_EmptyUserIdException_WithMessage_WhenValueIsEmpty()
+    {
+        //Arrange
+        string value = string.Empty;
+        //Act
+        var action = () => { UserId id = new(value); };
+        //Assert
+        action.Should().Throw<BlogException>().WithMessage("User Id can't be empty.")
+            .And.Should().BeOfType(typeof(EmptyUserIdException));
+    }
+    [Fact]
+    public void UserId_ShouldNotThrowException_WhenHasValue()
+    {
+        //Arrange
+        string value = "UserId";
+        //Act
+        var action = () => { UserId id = new(value); };
+        //Assert
+        action.Should().NotThrow<BlogException>();
+    }
+    [Fact]
+    public void UserId_ShouldBe_Return_String()
+    {
+        //Arrange
+        UserId userId = new("UserId");
+        //Act
+        string stringUserId = userId;
+        //Assert
+        Assert.Equal("UserId", stringUserId);
+    }
+    [Fact]
+    public void UserId_ShouldBe_Return_Title()
+    {
+        //Arrange
+        string stringUserId = "UserId";
+        //Act
+        UserId userId = stringUserId;
+        //Assert
+        Assert.Equal("UserId", userId.Value);
+        Assert.Equal(new UserId("UserId"), userId);
+    }
+    #endregion
+
+    #region CategoryId_Tests :
+    [Fact]
+    public void CategoryId_ShouldThrowException_EmptyCategoryIdException_WithMessage_WhenValueIsEmpty()
+    {
+        //Arrange
+        Guid value = Guid.Empty;
+        //Act
+        var action = () => { CategoryId id = new(value); };
+        //Assert
+        action.Should().Throw<BlogException>().WithMessage("Category Id can't be empty.")
+            .And.Should().BeOfType(typeof(EmptyCategoryIdException));
+    }
+    [Fact]
+    public void CategoryId_ShouldNotThrowException_WhenHasValue()
+    {
+        //Arrange
+        Guid value = Guid.NewGuid();
+        //Act
+        var action = () => { CategoryId id = new(value); };
+        //Assert
+        action.Should().NotThrow<BlogException>();
+    }
+    [Fact]
+    public void CategoryId_ShouldBe_Return_String()
+    {
+        Guid guid = Guid.NewGuid();
+        //Arrange
+        CategoryId categoryId = new(guid);
+        //Act
+        Guid guidCategoryId = categoryId;
+        //Assert
+        Assert.Equal(guid, guidCategoryId);
+    }
+    [Fact]
+    public void CategoryId_ShouldBe_Return_CategoryId()
+    {
+        //Arrange
+        Guid guidCategoryId = Guid.NewGuid();
+        //Act
+        CategoryId categoryId = guidCategoryId;
+        //Assert
+        Assert.Equal(guidCategoryId, categoryId.Value);
+        Assert.Equal(new CategoryId(guidCategoryId), categoryId);
+    }
+    #endregion
+
+    #region Post_Tests :
+    [Fact]
+    public void Initiate_Post_ShouldBe_Has_Values()
+    {
+        var postId = new PostId(Guid.NewGuid());
+        var title = new Title("Title");
+        var description = new Description("Description");
+        var tag = new Tag("Tag1,Tag2");
+        var body = new Body("Body");
+        var image = new Image("Image.jpg");
+        var userId = new UserId(Guid.NewGuid().ToString());
+        var categoryId = new CategoryId(Guid.NewGuid());
+
+        var post = new Post(postId, title, description, tag, body, image, userId, categoryId);
+
+        Assert.Equal(postId, post.Id);
+        //Assert.Equal(title, post._title);
+        //Assert.Equal(description, post._description);
+        //Assert.Equal(tag, post._tag);
+        //Assert.Equal(body, post._body);
+        //Assert.Equal(image, post._image);
+        //Assert.Equal(userId, post._userId);
+        //Assert.Equal(categoryId, post._categoryId);
+        //Assert.True(post._created.Date == DateTime.Now.Date);
+        //Assert.Null(post._updated);
+
+
+    }
+    [Fact]
+    public void Post_AddComment_ShouldbeThrowException_EmptyCommentIdException_WithMessage_When_CommentIdIsEmpty()
+    {
+        var postId = new PostId(Guid.NewGuid());
+        var title = new Title("Title");
+        var description = new Description("Description");
+        var tag = new Tag("Tag1,Tag2");
+        var body = new Body("Body");
+        var image = new Image("Image.jpg");
+        var userId = new UserId(Guid.NewGuid().ToString());
+        var categoryId = new CategoryId(Guid.NewGuid());
+
+        var post = new Post(postId, title, description, tag, body, image, userId, categoryId);
+        var action = () =>
+        {
+            var comment = new Entities.Comment(new CommentId(Guid.Empty), new Message("Message"), new UserId(Guid.NewGuid().ToString()));
+            post.AddComment(comment);
+        };
+        action.Should().Throw<BlogException>().WithMessage("Comment Id can't be empty.")
+          .And.Should().BeOfType(typeof(EmptyCommentIdException));
+    }
+    [Fact]
+    public void Post_AddComment_ShouldbeThrowException_EmptyMessageException_WithMessage_When_MessageIsEmpty()
+    {
+        var postId = new PostId(Guid.NewGuid());
+        var title = new Title("Title");
+        var description = new Description("Description");
+        var tag = new Tag("Tag1,Tag2");
+        var body = new Body("Body");
+        var image = new Image("Image.jpg");
+        var userId = new UserId(Guid.NewGuid().ToString());
+        var categoryId = new CategoryId(Guid.NewGuid());
+
+        var post = new Post(postId, title, description, tag, body, image, userId, categoryId);
+        var action = () =>
+        {
+            var comment = new Entities.Comment(new CommentId(Guid.NewGuid()), new Message(String.Empty), new UserId(Guid.NewGuid().ToString()));
+            post.AddComment(comment);
+        };
+        action.Should().Throw<BlogException>().WithMessage("Message can't be empty.")
+          .And.Should().BeOfType(typeof(EmptyMessageException));
+    }
+    [Fact]
+    public void Post_AddComment_ShouldbeThrowException_EmptyUserIdException_WithMessage_When_UserIdIsEmpty()
+    {
+        var postId = new PostId(Guid.NewGuid());
+        var title = new Title("Title");
+        var description = new Description("Description");
+        var tag = new Tag("Tag1,Tag2");
+        var body = new Body("Body");
+        var image = new Image("Image.jpg");
+        var userId = new UserId(Guid.NewGuid().ToString());
+        var categoryId = new CategoryId(Guid.NewGuid());
+
+        var post = new Post(postId, title, description, tag, body, image, userId, categoryId);
+        var action = () =>
+        {
+            var comment = new Entities.Comment(new CommentId(Guid.NewGuid()), new Message("Message"), new UserId(String.Empty));
+            post.AddComment(comment);
+        };
+        action.Should().Throw<BlogException>().WithMessage("User Id can't be empty.")
+          .And.Should().BeOfType(typeof(EmptyUserIdException));
+    }
+    [Fact]
+    public void Post_AddComment_ShouldbeNotThrowException_When_HasAllValues()
+    {
+        var postId = new PostId(Guid.NewGuid());
+        var title = new Title("Title");
+        var description = new Description("Description");
+        var tag = new Tag("Tag1,Tag2");
+        var body = new Body("Body");
+        var image = new Image("Image.jpg");
+        var userId = new UserId(Guid.NewGuid().ToString());
+        var categoryId = new CategoryId(Guid.NewGuid());
+
+        var post = new Post(postId, title, description, tag, body, image, userId, categoryId);
+        var action = () =>
+        {
+            var comment = new Entities.Comment(new CommentId(Guid.NewGuid()), new Message("Message"), new UserId(Guid.NewGuid().ToString()));
+            post.AddComment(comment);
+        };
+        action.Should().NotThrow<BlogException>();
+    }
+    [Fact]
+    public void Post_AddComment_Shouldbe_AddedToCommentsList()
+    {
+        var postId = new PostId(Guid.NewGuid());
+        var title = new Title("Title");
+        var description = new Description("Description");
+        var tag = new Tag("Tag1,Tag2");
+        var body = new Body("Body");
+        var image = new Image("Image.jpg");
+        var userId = new UserId(Guid.NewGuid().ToString());
+        var categoryId = new CategoryId(Guid.NewGuid());
+
+        var post = new Post(postId, title, description, tag, body, image, userId, categoryId);
+        var action = () =>
+        {
+            var comment = new Entities.Comment(new CommentId(Guid.NewGuid()), new Message("Message"), new UserId(Guid.NewGuid().ToString()));
+            post.AddComment(comment);
+        };
+        action.Should().NotThrow<BlogException>();
+        //Assert.Single(post._comments);
+        //var comment = post._comments.Single();
+        //Assert.NotNull(comment.Id);
+    }
+    [Fact]
+    public void Post_AddReply_Shouldbe_AddedToCommentsList()
+    {
+        var postId = new PostId(Guid.NewGuid());
+        var title = new Title("Title");
+        var description = new Description("Description");
+        var tag = new Tag("Tag1,Tag2");
+        var body = new Body("Body");
+        var image = new Image("Image.jpg");
+        var userId = new UserId(Guid.NewGuid().ToString());
+        var categoryId = new CategoryId(Guid.NewGuid());
+
+        var post = new Post(postId, title, description, tag, body, image, userId, categoryId);
+        var action = () =>
+        {
+            var commentId = new CommentId(Guid.NewGuid());
+            var comment = new Entities.Comment(commentId, new Message("Message"), new UserId(Guid.NewGuid().ToString()));
+            post.AddComment(comment);
+            post.AddReply(commentId, new Entities.Reply(new CommentId(Guid.NewGuid()), new Message("Reply"), new UserId(Guid.NewGuid().ToString())));
+        };
+        action.Should().NotThrow<BlogException>();
+        //Assert.Single(post._comments);
+        //var comment = post._comments.Single();
+        //Assert.NotNull(comment.Id);
+        //Assert.Single(comment._replies);
+        //var reply = comment._replies.Single();
+        //Assert.NotNull(reply.Id);
     }
     #endregion
 }

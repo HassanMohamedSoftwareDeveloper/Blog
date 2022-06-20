@@ -2,7 +2,7 @@
 
 namespace Blog.Domain.ValueObjects;
 
-public class CategoryId
+public record CategoryId
 {
     public Guid Value { get; }
     public CategoryId(Guid value)
