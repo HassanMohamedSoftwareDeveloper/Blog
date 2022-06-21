@@ -7,6 +7,10 @@ namespace Blog.Domain.Aggregates;
 
 public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
 {
+    #region PROPS :
+    public Image Image => _image;
+    #endregion
+
     #region Fields :
     private Title _title;
     private Description _description;
@@ -22,10 +26,18 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
 
     #region CTORS :
     public Post(PostId postId, Title title, Description description, Tag tag, Body body, Image image, UserId userId, CategoryId categoryId)
-        => SetPostData(postId, title, description, tag, body, image, userId, categoryId);
+    {
+        this.Id = postId;
+        SetPostData(title, description, tag, body, image, userId, categoryId);
+        this._created = DateTime.Now;
+    }
     #endregion
 
     #region Methods :
+    public void Update(Title title, Description description, Tag tag, Body body, Image image, UserId userId, CategoryId categoryId)
+    {
+        SetPostData(title, description, tag, body, image, userId, categoryId);
+    }
     public void AddComment(Comment comment) => _comments.Add(comment);
     public void AddReply(CommentId commentId, Reply reply)
     {
@@ -36,9 +48,8 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
     #endregion
 
     #region Helpers :
-    private void SetPostData(PostId postId, Title title, Description description, Tag tag, Body body, Image image, UserId userId, CategoryId categoryId)
+    private void SetPostData(Title title, Description description, Tag tag, Body body, Image image, UserId userId, CategoryId categoryId)
     {
-        this.Id = postId;
         this._title = title;
         this._description = description;
         this._tag = tag;
@@ -46,7 +57,6 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
         this._image = image;
         this._userId = userId;
         this._categoryId = categoryId;
-        this._created = DateTime.Now;
     }
     #endregion
 }

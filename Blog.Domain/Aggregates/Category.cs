@@ -16,5 +16,9 @@ namespace Blog.Domain.Aggregates
             this._categoryName = categoryName;
         }
         #endregion
+
+        #region Methods :
+        public void Update(CategoryName categoryName) => this._categoryName = categoryName;
+        #endregion
     }
 }

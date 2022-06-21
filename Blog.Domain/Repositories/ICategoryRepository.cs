@@ -6,4 +6,5 @@ namespace Blog.Domain.Repositories;
 
 public interface ICategoryRepository : IRepository<Category, CategoryId>
 {
+    Task<Category> GetAsync(CategoryId categoryId);
 }

@@ -4,7 +4,7 @@ using Shared.Abstractions.Domain;
 
 namespace Blog.Domain.Repositories;
 
-public interface IBlogRepository : IRepository<Post, PostId>
+public interface IPostRepository : IRepository<Post, PostId>
 {
-
+    Task<Post> GetAsync(PostId id);
 }

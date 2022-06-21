@@ -6,4 +6,5 @@ public interface IRepository<TRoot, TKey> where TRoot : class, IAggregateRoot<TK
     void Create(TRoot entity);
     void Update(TRoot entity);
     void Delete(TRoot entity);
+    Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
