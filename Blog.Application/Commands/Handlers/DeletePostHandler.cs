@@ -10,11 +10,11 @@ public class DeletePostHandler : IRequestHandler<DeletePost, bool>
 {
     #region Fields :
     private readonly IPostRepository _postRepository;
-    private readonly IFileService _fileService;
+    private readonly IFileManagerService _fileService;
     #endregion
 
     #region CTORS :
-    public DeletePostHandler(IPostRepository postRepository, IFileService fileService)
+    public DeletePostHandler(IPostRepository postRepository, IFileManagerService fileService)
     {
         _postRepository = postRepository;
         _fileService = fileService;

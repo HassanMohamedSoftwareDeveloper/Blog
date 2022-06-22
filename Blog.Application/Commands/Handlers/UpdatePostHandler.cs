@@ -10,11 +10,11 @@ public class UpdatePostHandler : IRequestHandler<UpdatePost, bool>
 {
     #region Fields :
     private readonly IPostRepository _postRepository;
-    private readonly IFileService _fileService;
+    private readonly IFileManagerService _fileService;
     #endregion
 
     #region CTORS :
-    public UpdatePostHandler(IPostRepository postRepository, IFileService fileService)
+    public UpdatePostHandler(IPostRepository postRepository, IFileManagerService fileService)
     {
         _postRepository = postRepository;
         _fileService = fileService;

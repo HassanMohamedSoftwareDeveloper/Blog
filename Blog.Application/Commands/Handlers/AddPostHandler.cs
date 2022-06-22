@@ -11,11 +11,11 @@ public class AddPostHandler : IRequestHandler<AddPost, bool>
 {
     #region Fields :
     private readonly IPostRepository _postRepository;
-    private readonly IFileService _fileService;
+    private readonly IFileManagerService _fileService;
     #endregion
 
     #region CTORS :
-    public AddPostHandler(IPostRepository postRepository, IFileService fileService)
+    public AddPostHandler(IPostRepository postRepository, IFileManagerService fileService)
     {
         _postRepository = postRepository;
         _fileService = fileService;

@@ -2,7 +2,7 @@
 
 namespace Blog.Application.Services;
 
-public interface IFileService
+public interface IFileManagerService
 {
     FileStream FileStream(string fileName, FileType fileType);
     string SaveFile(string sourcePath, FileType fileType);

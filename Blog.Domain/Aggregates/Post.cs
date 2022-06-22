@@ -8,7 +8,7 @@ namespace Blog.Domain.Aggregates;
 public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
 {
     #region PROPS :
-    public Image Image => _image;
+    public Image Image { get; set; }
     #endregion
 
     #region Fields :
@@ -16,11 +16,11 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
     private Description _description;
     private Tag _tag;
     private Body _body;
-    private Image _image;
     private UserId _userId;
     private CategoryId _categoryId;
     private DateTime _created;
     private DateTime? _updated;
+    private int _viewersCount;
     private List<Comment> _comments = new();
     #endregion
 
@@ -37,6 +37,7 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
     public void Update(Title title, Description description, Tag tag, Body body, Image image, UserId userId, CategoryId categoryId)
     {
         SetPostData(title, description, tag, body, image, userId, categoryId);
+        this._updated = DateTime.Now;
     }
     public void AddComment(Comment comment) => _comments.Add(comment);
     public void AddReply(CommentId commentId, Reply reply)
@@ -45,6 +46,7 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
         if (comment is null) throw new InvalidCommentId();
         comment.AddReply(reply);
     }
+    public void AddViewer() => _viewersCount += 1;
     #endregion
 
     #region Helpers :
@@ -54,7 +56,7 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
         this._description = description;
         this._tag = tag;
         this._body = body;
-        this._image = image;
+        this.Image = image;
         this._userId = userId;
         this._categoryId = categoryId;
     }

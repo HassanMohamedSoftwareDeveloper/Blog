@@ -171,26 +171,17 @@ public class PostTests
         //Arrange
         Tag tag = new("Tag1,Tag2,Tag3");
         //Act
-        List<string> tagList = tag;
+        string tagList = tag;
         //Assert
-        var tags = new List<string>()
-        {
-            "Tag1",
-            "Tag2",
-            "Tag3",
-        };
+        var tags = "Tag1,Tag2,Tag3";
+
         Assert.Equal(tags, tagList);
     }
     [Fact]
     public void Tagn_ShouldBe_Return_Tag()
     {
         //Arrange
-        List<string> tagList = new()
-        {
-            "Tag1",
-            "Tag2",
-            "Tag3",
-        };
+        string tagList = "Tag1,Tag2,Tag3";
         //Act
         Tag tag = tagList;
         //Assert

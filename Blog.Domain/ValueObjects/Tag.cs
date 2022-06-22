@@ -11,6 +11,6 @@ public record Tag
         Value = value;
     }
 
-    public static implicit operator List<string>(Tag tag) => tag.Value.Split(',').ToList();
-    public static implicit operator Tag(List<string> tags) => new(string.Join(",", tags));
+    public static implicit operator string(Tag tag) => tag.Value;
+    public static implicit operator Tag(string tags) => new(tags);
 }
