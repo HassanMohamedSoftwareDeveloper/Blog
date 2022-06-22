@@ -1,5 +1,7 @@
 ﻿using Blog.Application.Consts;
 using Blog.Application.Services;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace Blog.Infrastructure.Services;
 
@@ -16,7 +18,16 @@ public class FileManagerService : IFileManagerService
     }
     public string SaveFile(string sourcePath, FileType fileType)
     {
-        throw new NotImplementedException();
+        using var image = Image.Load(sourcePath);
+        ResizeOptions resizeOptions = new()
+        {
+            Size = new Size(256, 256),
+            Mode = ResizeMode.Stretch,
+        };
+        image.Mutate(x => x.Resize(resizeOptions));
+
+
+        image.Save()"filename");
     }
     #endregion
 }
