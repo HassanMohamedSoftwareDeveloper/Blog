@@ -24,6 +24,7 @@ internal class WriteDbContext : IdentityDbContext
     #region Methods :
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        base.OnModelCreating(builder);
         builder.ApplyConfiguration(new PostConfiguration());
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new CommentConfiguration());

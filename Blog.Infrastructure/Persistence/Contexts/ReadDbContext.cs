@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Persistence.Contexts;
 
-internal class ReadDbContext : IdentityDbContext
+internal sealed class ReadDbContext : IdentityDbContext
 {
     #region CTORS :
     public ReadDbContext(DbContextOptions<ReadDbContext> options) : base(options)
@@ -23,6 +23,7 @@ internal class ReadDbContext : IdentityDbContext
     #region Methods :
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        base.OnModelCreating(builder);
         builder.ApplyConfiguration(new PostConfiguration());
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new CommentConfiguration());

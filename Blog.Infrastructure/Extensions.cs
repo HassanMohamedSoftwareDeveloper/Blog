@@ -1,7 +1,10 @@
 ﻿using Blog.Application.Services;
 using Blog.Infrastructure.Persistence;
+using Blog.Infrastructure.Persistence.Contexts;
+using Blog.Infrastructure.Persistence.Models.Write;
 using Blog.Infrastructure.Services;
 using Blog.Infrastructure.Settings;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -14,9 +17,12 @@ public static class Extensions
     {
         @this.AddPersistence(configuration);
         @this.Configure<SmtpSettings>(configuration.GetSection(nameof(SmtpSettings)));
-        @this.AddSingleton<IEmailService, EmailService>();
+        @this.AddScoped<IEmailService, EmailService>();
         @this.AddScoped<IUserManagerService, UserManagerService>();
+        @this.AddScoped<IFileManagerService, FileManagerService>();
         @this.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+        @this.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ReadDbContext>();
         return @this;
     }
 }
