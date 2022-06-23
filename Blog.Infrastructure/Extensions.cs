@@ -22,7 +22,7 @@ public static class Extensions
         @this.AddScoped<IFileManagerService, FileManagerService>();
         @this.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        @this.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ReadDbContext>();
+        @this.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<WriteDbContext>();
         return @this;
     }
 }

@@ -1,12 +1,13 @@
 ﻿using Blog.Domain.Aggregates;
 using Blog.Domain.Entities;
 using Blog.Infrastructure.Persistence.Config.Write;
+using Blog.Infrastructure.Persistence.Models.Write;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Persistence.Contexts;
 
-internal class WriteDbContext : IdentityDbContext
+internal class WriteDbContext : IdentityDbContext<User>
 {
     #region CTORS :
     public WriteDbContext(DbContextOptions<WriteDbContext> options) : base(options)

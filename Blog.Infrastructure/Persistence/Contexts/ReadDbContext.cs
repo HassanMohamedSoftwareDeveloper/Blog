@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Persistence.Contexts;
 
-internal sealed class ReadDbContext : IdentityDbContext
+internal sealed class ReadDbContext : IdentityDbContext<UserReadModel>
 {
     #region CTORS :
     public ReadDbContext(DbContextOptions<ReadDbContext> options) : base(options)
@@ -28,6 +28,7 @@ internal sealed class ReadDbContext : IdentityDbContext
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new CommentConfiguration());
         builder.ApplyConfiguration(new ReplyConfiguration());
+        builder.ApplyConfiguration(new UserConfiguration());
     }
     #endregion
 }
