@@ -1,5 +1,4 @@
-﻿using Blog.Application.Consts;
-using Blog.Application.Exceptions;
+﻿using Blog.Application.Exceptions;
 using Blog.Application.Services;
 using Blog.Domain.Repositories;
 using MediatR;
@@ -27,7 +26,7 @@ public class DeletePostHandler : IRequestHandler<DeletePost, bool>
         var post = await _postRepository.GetAsync(request.Id);
         if (post is null) throw new InvalidPostIdException(request.Id);
 
-        _fileService.RemoveFile(post.Image, FileType.BlogImage);
+        _fileService.RemoveFile(post.Image);
 
         _postRepository.Delete(post);
         return await _postRepository.SaveChangesAsync(cancellationToken);

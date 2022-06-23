@@ -31,8 +31,8 @@ public class UpdatePostHandler : IRequestHandler<UpdatePost, bool>
 
         if (string.IsNullOrWhiteSpace(request.ImageSourcePath) is false)
         {
-            _fileService.RemoveFile(imageFileName, FileType.BlogImage);
-            imageFileName = _fileService.SaveFile(request.ImageSourcePath, FileType.BlogImage);
+            _fileService.RemoveFile(imageFileName);
+            imageFileName = await _fileService.SaveFileAsync(request.ImageSourcePath, FileType.BlogImage);
         }
 
         post.Update(request.Title, request.Description, request.Tags, request.Body, imageFileName, request.UserId, request.CategoryId);

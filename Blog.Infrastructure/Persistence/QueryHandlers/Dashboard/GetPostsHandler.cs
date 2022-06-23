@@ -1,4 +1,6 @@
-﻿using Blog.Application.DTOS.Dashboard;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Blog.Application.DTOS.Dashboard;
 using Blog.Application.Pagination;
 using Blog.Application.Queries.Dashboard;
 using Blog.Infrastructure.Helpers;
@@ -13,10 +15,15 @@ internal sealed class GetPostsHandler : IRequestHandler<GetPosts, PaginationMode
 {
     #region Fields :
     private readonly DbSet<PostReadModel> _posts;
+    private readonly IConfigurationProvider _configurationProvider;
     #endregion
 
     #region CTORS :
-    public GetPostsHandler(ReadDbContext context) => _posts = context.Posts;
+    public GetPostsHandler(ReadDbContext context, IMapper mapper)
+    {
+        _posts = context.Posts;
+        _configurationProvider = mapper.ConfigurationProvider;
+    }
     #endregion
 
     #region Methods :
@@ -28,23 +35,7 @@ internal sealed class GetPostsHandler : IRequestHandler<GetPosts, PaginationMode
         if (string.IsNullOrWhiteSpace(request.Search) is false)
             query = query.Where(x => (x.Title + x.Description + x.Category.Name).ToLower().Contains(request.Search.ToLower()));
 
-        var mappedQuery = query.Select(x => new BlogPostDto
-        {
-            Id = x.Id,
-            Category = x.Category.Name,
-            Title = x.Title,
-            Description = x.Description,
-            PostDate = x.Created.ToString("dd MMMMM yyyy"),
-            CommentsCount = x.Comments.Count,
-            Image = x.Image,
-            TimeAgo = TimeAgoHelper.Create(x.Created),
-            User = new UserDto
-            {
-                Id = x.User.Id,
-                FullName = String.Join(" ", x.User.FirstName, x.User.LastName),
-                Image = x.User.Image,
-            },
-        });
+        var mappedQuery = query.ProjectTo<BlogPostDto>(_configurationProvider);
 
         return await new PaginationHelper<BlogPostDto>(request.PageNumber, request.PageSize, mappedQuery).CreateAsync(cancellationToken);
     }

@@ -9,7 +9,7 @@ public class PostDto
     public string TimeAgo { get; set; }
     public string PostDate { get; set; }
     public string Image { get; set; }
-    public int ViewsCount { get; set; }
+    public int ViewersCount { get; set; }
 
     public int CommentsCount { get; set; }
 

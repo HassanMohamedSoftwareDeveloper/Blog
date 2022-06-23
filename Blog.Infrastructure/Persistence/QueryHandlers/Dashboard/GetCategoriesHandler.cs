@@ -1,4 +1,6 @@
-﻿using Blog.Application.DTOS.Dashboard;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Blog.Application.DTOS.Dashboard;
 using Blog.Application.Queries.Dashboard;
 using Blog.Infrastructure.Persistence.Contexts;
 using Blog.Infrastructure.Persistence.Models.Read;
@@ -11,16 +13,22 @@ internal sealed class GetCategoriesHandler : IRequestHandler<GetCategories, List
 {
     #region Fields :
     private readonly DbSet<CategoryReadModel> _categories;
+    private readonly IConfigurationProvider _configurationProvider;
     #endregion
 
     #region CTORS :
-    public GetCategoriesHandler(ReadDbContext context) => _categories = context.Categories;
+    public GetCategoriesHandler(ReadDbContext context, IMapper mapper)
+    {
+        _categories = context.Categories;
+        _configurationProvider = mapper.ConfigurationProvider;
+    }
     #endregion
 
     #region Methods :
     public async Task<List<CategoryDto>> Handle(GetCategories request, CancellationToken cancellationToken)
     {
-        return await _categories.AsNoTracking().Select(x => new CategoryDto { Id = x.Id, Name = x.Name, PostsCount = x.Posts.Count }).ToListAsync(cancellationToken: cancellationToken);
+        return await _categories.AsNoTracking().ProjectTo<CategoryDto>(_configurationProvider)
+            .ToListAsync(cancellationToken: cancellationToken);
     }
     #endregion
 }

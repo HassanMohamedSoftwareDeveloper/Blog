@@ -1,4 +1,6 @@
-﻿using Blog.Application.DTOS.Dashboard;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Blog.Application.DTOS.Dashboard;
 using Blog.Application.Queries.Dashboard;
 using Blog.Infrastructure.Persistence.Contexts;
 using Blog.Infrastructure.Persistence.Models.Read;
@@ -11,10 +13,15 @@ internal sealed class GetPreviousPostHandler : IRequestHandler<GetPreviousPost, 
 {
     #region Fields :
     private readonly DbSet<PostReadModel> _posts;
+    private readonly IConfigurationProvider _configurationProvider;
     #endregion
 
     #region CTORS :
-    public GetPreviousPostHandler(ReadDbContext context) => _posts = context.Posts;
+    public GetPreviousPostHandler(ReadDbContext context, IMapper mapper)
+    {
+        _posts = context.Posts;
+        _configurationProvider = mapper.ConfigurationProvider;
+    }
     #endregion
 
     #region Methods :
@@ -23,11 +30,7 @@ internal sealed class GetPreviousPostHandler : IRequestHandler<GetPreviousPost, 
         return await _posts.AsNoTracking()
             .Where(x => x.UserId.Equals(request.UserId))
             .SkipWhile(x => !x.Id.Equals(request.PostId))
-            .Select(x => new NextPrevPostDto
-            {
-                Id = x.Id,
-                Title = x.Title
-            })
+            .ProjectTo<NextPrevPostDto>(_configurationProvider)
             .LastOrDefaultAsync(cancellationToken);
     }
     #endregion

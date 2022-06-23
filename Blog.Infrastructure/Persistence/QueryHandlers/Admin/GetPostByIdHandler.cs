@@ -1,4 +1,6 @@
-﻿using Blog.Application.DTOS.Admin;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Blog.Application.DTOS.Admin;
 using Blog.Application.Queries.Admin;
 using Blog.Infrastructure.Persistence.Contexts;
 using Blog.Infrastructure.Persistence.Models.Read;
@@ -11,17 +13,21 @@ internal sealed class GetPostByIdHandler : IRequestHandler<GetPostById, PostDto>
 {
     #region Fields :
     private readonly DbSet<PostReadModel> _posts;
+    private readonly IConfigurationProvider _configurationProvider;
     #endregion
 
     #region CTORS :
-    public GetPostByIdHandler(ReadDbContext context) => _posts = context.Posts;
+    public GetPostByIdHandler(ReadDbContext context, IMapper mapper)
+    {
+        _posts = context.Posts;
+        _configurationProvider = mapper.ConfigurationProvider;
+    }
     #endregion
 
     #region Methods :
     public async Task<PostDto> Handle(GetPostById request, CancellationToken cancellationToken)
     {
-        return await _posts.AsNoTracking().Where(x => x.Id.Equals(request.Id))
-            .Select(x => new PostDto { Id = x.Id, Title = x.Title, Body = x.Body, CategoryId = x.CategoryId, Description = x.Description, Tags = x.Tags, CurrentImagePath = x.Image })
+        return await _posts.AsNoTracking().Where(x => x.Id.Equals(request.Id)).ProjectTo<PostDto>(_configurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
     }
     #endregion
