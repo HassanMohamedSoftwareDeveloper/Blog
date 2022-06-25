@@ -40,7 +40,7 @@ internal sealed class PaginationHelper<TModel>
             PagesCount = pagesCount,
             TotalCount = totalCount,
             Pages = PageNumbers(_pageNumber, pagesCount).ToList(),
-            Data = await _sourceQuery.Skip(skipAmount).Take(_pageSize).ToListAsync(cancellationToken),
+            Data = (await _sourceQuery.Skip(skipAmount).Take(_pageSize).ToListAsync(cancellationToken)) ?? new List<TModel>(),
         };
     }
     #endregion
