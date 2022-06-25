@@ -18,6 +18,6 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
 
         builder.Property(p => p.Id).HasConversion(id => id.Value, id => new CategoryId(id));
 
-        builder.Property(typeof(Title), "_categoryName").HasConversion(nameConverter).HasColumnName("Name");
+        builder.Property(typeof(CategoryName), "_categoryName").HasConversion(nameConverter).HasColumnName("Name");
     }
 }

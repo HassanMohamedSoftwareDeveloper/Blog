@@ -29,10 +29,10 @@ public class UpdatePostHandler : IRequestHandler<UpdatePost, bool>
 
         string imageFileName = post.Image;
 
-        if (string.IsNullOrWhiteSpace(request.ImageSourcePath) is false)
+        if (request.ImageSourceStream != null)
         {
             _fileService.RemoveFile(imageFileName);
-            imageFileName = await _fileService.SaveFileAsync(request.ImageSourcePath, FileType.BlogImage);
+            imageFileName = await _fileService.SaveFileAsync(request.ImageSourceStream, FileType.BlogImage);
         }
 
         post.Update(request.Title, request.Description, request.Tags, request.Body, imageFileName, request.UserId, request.CategoryId);

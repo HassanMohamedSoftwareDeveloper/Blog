@@ -28,14 +28,19 @@ internal sealed class UserManagerService : IUserManagerService
     #region Methods :
     public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
     {
-        var result = await _signInManager.PasswordSignInAsync(username, password, isPersistent, false);
+        var user = await _userManager.FindByEmailAsync(username);
+        if (user is null)
+            user = await _userManager.FindByNameAsync(username);
+        if (user is null) return false;
+
+        var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent, false);
         return result.Succeeded;
     }
     public async Task LogoutAsync()
     {
         await _signInManager.SignOutAsync();
     }
-    public async Task RegisterAsync(string username, string email, string firstName, string lastName, string password, string imageFullPath)
+    public async Task RegisterAsync(string username, string email, string firstName, string lastName, string password, Stream imageSourceStream)
     {
         var user = new User
         {
@@ -43,7 +48,7 @@ internal sealed class UserManagerService : IUserManagerService
             LastName = lastName,
             UserName = username,
             Email = email,
-            Image = String.IsNullOrWhiteSpace(imageFullPath) ? DefaultFileNames.User : await _fileManager.SaveFileAsync(imageFullPath, FileType.UserImage)
+            Image = imageSourceStream == null ? DefaultFileNames.User : await _fileManager.SaveFileAsync(imageSourceStream, FileType.UserImage)
         };
 
         var result = await _userManager.CreateAsync(user, password);

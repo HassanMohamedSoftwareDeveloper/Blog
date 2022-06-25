@@ -1,0 +1,119 @@
+﻿@page
+@model Blog.Portal.Pages.Auth.RegisterModel
+@{
+    Layout = "_AuthLayout";
+    ViewBag.Title = "Registration Page";
+}
+
+
+<div class="register-box">
+    <div class="register-logo">
+        <a asp-page="index" asp-area="dashboard"><b>Hassan</b>Blog</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body ">
+            <p class="login-box-msg">Register a new membership</p>
+
+            <form method="post" id="reqisterForm" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input asp-for="Register.FirstName" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Register.FirstName)">
+                    </div>
+                    <span asp-validation-for="Register.FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input asp-for="Register.LastName" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Register.LastName)">
+                    </div>
+                    <span asp-validation-for="Register.LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input asp-for="Register.Username" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Register.Username)">
+                    </div>
+                    <span asp-validation-for="Register.Username" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input asp-for="Register.Email" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Register.Email)">
+                    </div>
+                    <span asp-validation-for="Register.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input asp-for="Register.Password" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Register.Password)">
+                    </div>
+                    <span asp-validation-for="Register.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input asp-for="Register.ConfirmPassword" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Register.ConfirmPassword)">
+                    </div>
+                    <span asp-validation-for="Register.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                        </div>
+                        <input asp-for="Register.ImageFile" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Register.ImageFile)">
+                    </div>
+                    <span asp-validation-for="Register.ImageFile" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="Register.AgreeTerms" type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label" asp-for="Register.AgreeTerms">I agree to the <a href="#">terms of service</a>.</label>
+                            <span asp-validation-for="Register.AgreeTerms" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <p>- OR -</p>
+                <a href="#" class="btn btn-block btn-primary">
+                    <i class="fab fa-facebook mr-2"></i>
+                    Sign up using Facebook
+                </a>
+                <a href="#" class="btn btn-block btn-danger">
+                    <i class="fab fa-google-plus mr-2"></i>
+                    Sign up using Google+
+                </a>
+            </div>
+
+            <a asp-page="login" class="text-center">I already have a membership</a>
+        </div>
+    </div>
+</div>

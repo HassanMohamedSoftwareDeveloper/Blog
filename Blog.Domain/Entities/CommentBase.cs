@@ -16,6 +16,10 @@ public abstract class CommentBase : IEntity<CommentId>
     #endregion
 
     #region CTORS :
+    protected CommentBase()
+    {
+
+    }
     public CommentBase(CommentId commentId, Message message, UserId userId)
     {
         this.Id = commentId;

@@ -9,6 +9,10 @@ public class Comment : CommentBase
     #endregion
 
     #region CTORS :
+    private Comment() : base()
+    {
+
+    }
     public Comment(CommentId commentId, Message message, UserId userId) : base(commentId, message, userId) { }
     #endregion
 

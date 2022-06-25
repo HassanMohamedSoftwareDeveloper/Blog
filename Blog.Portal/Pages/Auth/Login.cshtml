@@ -1,0 +1,72 @@
+﻿@page 
+@model Blog.Portal.Pages.Auth.LoginModel
+@{
+    Layout = "_AuthLayout";
+    ViewBag.Title = "Log in";
+}
+
+<div class="login-box">
+    <div class="login-logo">
+        <a asp-page="~/dashboard/index"><b>Hassan</b>Blog</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body ">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            <form method="post" id="loginForm">
+                <input type="hidden" asp-for="Login.ReturnUrl" />
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input asp-for="Login.Email" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Login.Email)">
+                    </div>
+                    <span asp-validation-for="Login.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input asp-for="Login.Password" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Login.Password)">
+                    </div>
+                    <span asp-validation-for="Login.Password" class="text-danger"></span>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="Login.RememberMe" type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label" asp-for="Login.RememberMe"></label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <p>- OR -</p>
+                <a href="#" class="btn btn-block btn-primary">
+                    <i class="fab fa-facebook mr-2"></i>
+                    Sign in using Facebook
+                </a>
+                <a href="#" class="btn btn-block btn-danger">
+                    <i class="fab fa-google-plus mr-2"></i>
+                    Sign in using Google+
+                </a>
+            </div>
+            <p class="mb-1">
+                <a asp-page="ForgotPassword" class="text-center">I forgot my password</a>
+            </p>
+            <p class="mb-0">
+                <a asp-page="register" class="text-center">Register a new membership</a>
+            </p>
+        </div>
+    </div>
+</div>

@@ -25,7 +25,7 @@ public class AddPostHandler : IRequestHandler<AddPost, bool>
     #region Methods :
     public async Task<bool> Handle(AddPost request, CancellationToken cancellationToken)
     {
-        string imageFileName = await _fileService.SaveFileAsync(request.ImageSourcePath, FileType.BlogImage);
+        string imageFileName = await _fileService.SaveFileAsync(request.ImageSourceStream, FileType.BlogImage);
 
         var id = new PostId(Guid.NewGuid());
         var post = new Post(id, request.Title, request.Description, request.Tags, request.Body, imageFileName, request.UserId, request.CategoryId);

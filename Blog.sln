@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Domain.Tests", "Blog.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Blog.Shared\Shared.csproj", "{432C74BB-F570-4C68-98B3-D2B3E0EBEBEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Portal", "Blog.Portal\Blog.Portal.csproj", "{406E914D-11A0-41E9-BDC9-A1213BCC4E1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Portal", "Blog.Portal\Blog.Portal.csproj", "{406E914D-11A0-41E9-BDC9-A1213BCC4E1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,10 +1,20 @@
 using Blog.Infrastructure;
+using Blog.Infrastructure.Helpers;
+using Blog.Portal.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddInfrasturcture(builder.Configuration);
+builder.Services.AddValidators();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Auth/Login";
+    options.LogoutPath = "/Auth/Logout";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,5 +33,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+await SeedDataHelper.SeedAdmin(app.Services);
 app.Run();
+
+

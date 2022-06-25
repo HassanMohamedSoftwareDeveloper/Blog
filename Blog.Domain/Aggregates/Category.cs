@@ -10,6 +10,10 @@ namespace Blog.Domain.Aggregates
         #endregion
 
         #region CTORS :
+        private Category()
+        {
+
+        }
         public Category(CategoryId categoryId, CategoryName categoryName)
         {
             this.Id = categoryId;

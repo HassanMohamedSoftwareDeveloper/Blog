@@ -25,6 +25,10 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
     #endregion
 
     #region CTORS :
+    private Post()
+    {
+
+    }
     public Post(PostId postId, Title title, Description description, Tag tag, Body body, Image image, UserId userId, CategoryId categoryId)
     {
         this.Id = postId;

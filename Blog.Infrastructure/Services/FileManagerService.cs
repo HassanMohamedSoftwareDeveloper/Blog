@@ -45,7 +45,7 @@ internal sealed class FileManagerService : IFileManagerService
             return false;
         }
     }
-    public async Task<string> SaveFileAsync(string sourcePath, FileType fileType)
+    public async Task<string> SaveFileAsync(Stream sourceStream, FileType fileType)
     {
         try
         {
@@ -55,7 +55,7 @@ internal sealed class FileManagerService : IFileManagerService
 
             var fileName = GetFileName(fileType);
 
-            using var image = Image.Load(sourcePath);
+            using var image = Image.Load(sourceStream);
 
             ResizeOptions resizeOptions = new()
             {

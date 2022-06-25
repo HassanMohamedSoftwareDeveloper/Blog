@@ -2,15 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.0.3" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,5 +22,20 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Blog.Infrastructure\Blog.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Pages\Blog\" />
+	  <Folder Include="wwwroot\Content\blog\" />
+	  <Folder Include="wwwroot\Content\user\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\Content\default\avatar.jpg">
+	    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+	  </Content>
+	  <Content Update="wwwroot\Content\default\blog.jpg">
+	    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+	  </Content>
 	</ItemGroup>
 </Project>
