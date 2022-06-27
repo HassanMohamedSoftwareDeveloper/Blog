@@ -35,6 +35,6 @@ public class AddPostModel : PageModel
         }
         var response = await _mediator.Send(new AddPost(Post.Title, Post.Description, Post.Tags, Post.Body,
             Post.ImageFile.OpenReadStream(), User.Identity.Name, Post.CategoryId));
-        return Page();
+        return RedirectToPage("Posts");
     }
 }

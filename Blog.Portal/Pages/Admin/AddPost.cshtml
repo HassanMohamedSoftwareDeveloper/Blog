@@ -78,8 +78,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="Post.ImageFile"></label>
-                                            <input asp-for="Post.ImageFile" class="form-control" />
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="Post_ImageFileAddOn"><i class="fas fa-upload"></i></span>
+                                                </div>
+                                                <div class="custom-file">
+                                                    <input asp-for="Post.ImageFile" onchange="DisplayFileName(this)" class="custom-file-input" aria-describedby="Post_ImageFileAddOn">
+                                                    <label class="custom-file-label" asp-for="Post.ImageFile" id="FileDesc">Choose file</label>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <button type="button" class="btn btn-primary" onclick="stepper.next()">Next</button>
                                     </div>
                                     <div id="tag-part" class="content" role="tabpanel" aria-labelledby="tag-part-trigger">
@@ -129,10 +138,21 @@
                 tabsize: 2,
                 height: 200
             });
+
+           
         })
 
         document.addEventListener('DOMContentLoaded', function () {
             window.stepper = new Stepper(document.querySelector('.bs-stepper'))
         })
+
+        function DisplayFileName(file) {
+            var fileName = "Choose file";
+            if ($(file).val()) {
+                var fileName = file.files[0].name;
+            }
+            $("#FileDesc").text(fileName);
+        }
+
     </script>
 }

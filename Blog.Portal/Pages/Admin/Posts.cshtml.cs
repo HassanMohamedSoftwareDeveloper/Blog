@@ -28,7 +28,7 @@ public class PostsModel : PageModel
     #region Actions :
     public async Task OnGet()
     {
-        Posts = await _mediator.Send(new GetPostsByUser(1, 10, "fb21e0f0-e692-43ca-b188-867c63e7f329"));
+        Posts = await _mediator.Send(new GetPostsByUser(1, 10, "admin"));
     }
     #endregion
 }

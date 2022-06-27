@@ -80,12 +80,16 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                            <span class="input-group-text" id="Register_ImageFileAddOn"><i class="fas fa-upload"></i></span>
                         </div>
-                        <input asp-for="Register.ImageFile" class="form-control" placeholder="@Html.DisplayNameFor(x=>Model.Register.ImageFile)">
+                        <div class="custom-file">
+                            <input onchange="DisplayFileName(this)" asp-for="Register.ImageFile" class="custom-file-input" aria-describedby="Register_ImageFileAddOn">
+                            <label class="custom-file-label" id="FileDesc" asp-for="Register.ImageFile">Choose file</label>
+                        </div>
                     </div>
                     <span asp-validation-for="Register.ImageFile" class="text-danger"></span>
                 </div>
+
 
                 <div class="row">
                     <div class="col-8">
@@ -117,3 +121,15 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        function DisplayFileName(file) {
+            var fileName = "Choose file";
+            if ($(file).val()) {
+                var fileName = file.files[0].name;
+            }
+            $("#FileDesc").text(fileName);
+        }
+    </script>
+                }
