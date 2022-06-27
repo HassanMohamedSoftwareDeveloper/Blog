@@ -17,8 +17,9 @@ internal sealed class CategoryReadService : ICategoryReadService
 
     #region Methods :
     public async Task<bool> ExistsByNameAsync(Guid id, string name)
-        => await _categories.Where(x => x.Id.Equals(id) == false && x.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).AnyAsync();
+        => await _categories.AsNoTracking()
+        .Where(x => x.Id.Equals(id) == false && x.Name.ToLower() == name.ToLower()).AnyAsync();
     public async Task<bool> CategoryHasPosts(Guid id)
-        => await _categories.Where(x => x.Id.Equals(id)).AnyAsync();
+        => await _categories.AsNoTracking().Where(x => x.Id.Equals(id)).AnyAsync();
     #endregion
 }

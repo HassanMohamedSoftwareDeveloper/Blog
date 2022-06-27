@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace Blog.Portal.Pages.Admin;
 
 [Authorize(Roles = "Admin")]
-public class IndexModel : PageModel
+public class PostsModel : PageModel
 {
     #region Fields :
     private readonly IMediator _mediator;
@@ -19,7 +19,7 @@ public class IndexModel : PageModel
     #endregion
 
     #region CTORS :
-    public IndexModel(IMediator mediator)
+    public PostsModel(IMediator mediator)
     {
         _mediator = mediator;
     }

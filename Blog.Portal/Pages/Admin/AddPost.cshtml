@@ -1,11 +1,13 @@
 ﻿@page
-@model Blog.Portal.Pages.Admin.CreateModel
+@model Blog.Portal.Pages.Admin.AddPostModel
 @{
     ViewData["Title"] = "Add Post";
     Layout = "_AdminLayout";
 }
-<!-- BS Stepper -->
 <link rel="stylesheet" href="../../lib/bs-stepper/css/bs-stepper.min.css">
+<link rel="stylesheet" href="../../lib/select2/css/select2.min.css">
+<link rel="stylesheet" href="../../lib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<link rel="stylesheet" href="../../lib/summernote/summernote-bs4.min.css">
 
 <div class="content-header">
     <div class="container-fluid">
@@ -25,82 +27,112 @@
 
 <section class="content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-default">
-                    <div class="card-header">
-                        <h3 class="card-title">bs-stepper</h3>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="bs-stepper">
-                            <div class="bs-stepper-header" role="tablist">
-                                <!-- your steps here -->
-                                <div class="step" data-target="#logins-part">
-                                    <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
-                                        <span class="bs-stepper-circle">1</span>
-                                        <span class="bs-stepper-label">Logins</span>
-                                    </button>
-                                </div>
-                                <div class="line"></div>
-                                <div class="step" data-target="#information-part">
-                                    <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
-                                        <span class="bs-stepper-circle">2</span>
-                                        <span class="bs-stepper-label">Various information</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="bs-stepper-content">
-                                <!-- your steps content here -->
-                                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Post Details</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="bs-stepper">
+                                <div class="bs-stepper-header" role="tablist">
+                                    <!-- your steps here -->
+                                    <div class="step" data-target="#basic-part">
+                                        <button type="button" class="step-trigger" role="tab" aria-controls="basic-part" id="basic-part-trigger">
+                                            <span class="bs-stepper-circle">1</span>
+                                            <span class="bs-stepper-label">Basic Info</span>
+                                        </button>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    <div class="line"></div>
+                                    <div class="step" data-target="#tag-part">
+                                        <button type="button" class="step-trigger" role="tab" aria-controls="tag-part" id="tag-part-trigger">
+                                            <span class="bs-stepper-circle">2</span>
+                                            <span class="bs-stepper-label">Tag Info</span>
+                                        </button>
                                     </div>
-                                    <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+                                    <div class="line"></div>
+                                    <div class="step" data-target="#body-part">
+                                        <button type="button" class="step-trigger" role="tab" aria-controls="body-part" id="body-part-trigger">
+                                            <span class="bs-stepper-circle">3</span>
+                                            <span class="bs-stepper-label">Body Info</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
-                                    <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                            </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">Upload</span>
-                                            </div>
+                                <div class="bs-stepper-content">
+                                    <!-- your steps content here -->
+                                    <div id="basic-part" class="content" role="tabpanel" aria-labelledby="basic-part-trigger">
+                                        <div class="form-group">
+                                            <label asp-for="Post.Title"></label>
+                                            <input asp-for="Post.Title" class="form-control">
                                         </div>
+                                        <div class="form-group">
+                                            <label asp-for="Post.Description"></label>
+                                            <textarea asp-for="Post.Description" class="form-control"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Post.CategoryId"></label>
+                                            <select asp-for="Post.CategoryId" asp-items='new SelectList(Model.Post.Categories,"Id","Name")' class="form-control select2bs4">
+                                                <option value="@null">Select Category</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Post.ImageFile"></label>
+                                            <input asp-for="Post.ImageFile" class="form-control" />
+                                        </div>
+                                        <button type="button" class="btn btn-primary" onclick="stepper.next()">Next</button>
                                     </div>
-                                    <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <div id="tag-part" class="content" role="tabpanel" aria-labelledby="tag-part-trigger">
+                                        <div class="form-group">
+                                            <label asp-for="Post.Tags"></label>
+                                            <input asp-for="Post.Tags" class="form-control" />
+                                        </div>
+                                        <button type="button" class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                        <button type="button" class="btn btn-primary" onclick="stepper.next()">Next</button>
+                                    </div>
+                                    <div id="body-part" class="content" role="tabpanel" aria-labelledby="body-part-trigger">
+                                        <div class="form-group">
+                                            <label asp-for="Post.Body"></label>
+                                            <textarea asp-for="Post.Body" id="summernote" class="form-control"> </textarea>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        Visit <a href="https://github.com/Johann-S/bs-stepper/#how-to-use-it">bs-stepper documentation</a> for more examples and information about the plugin.
+                        <div class="card-footer">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
-                <!-- /.card -->
             </div>
-        </div>
-
+        </form>
     </div>
 </section>
 
 @section Scripts{
-    <!-- BS-Stepper -->
+    <script src="../../lib/select2/js/select2.full.min.js"></script>
     <script src="../../lib/bs-stepper/js/bs-stepper.min.js"></script>
+    <script src="../../lib/summernote/summernote-bs4.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
-        // BS-Stepper Init
+        $.validator.setDefaults({ ignore: [] });
+
+        $(function () {
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            $('#summernote').summernote({
+                tabsize: 2,
+                height: 200
+            });
+        })
+
         document.addEventListener('DOMContentLoaded', function () {
             window.stepper = new Stepper(document.querySelector('.bs-stepper'))
         })
     </script>
-
 }

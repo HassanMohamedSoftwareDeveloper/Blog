@@ -23,11 +23,13 @@ internal static class Extensions
 
         var connectionString = configuration["DefaultConnetion"];
 
-        void optionsBuilder(DbContextOptionsBuilder options) => options./*UseLazyLoadingProxies().*/UseSqlServer(connectionString);
+        /*UseLazyLoadingProxies().*/
+        void optionsBuilder(DbContextOptionsBuilder options) => options.UseSqlServer(connectionString);
 
         @this.AddDbContext<WriteDbContext>(optionsBuilder);
         @this.AddDbContext<ReadDbContext>(optionsBuilder);
 
+        @this.AddMediatR(Assembly.Load("Blog.Application"));
         @this.AddMediatR(Assembly.GetExecutingAssembly());
 
 
