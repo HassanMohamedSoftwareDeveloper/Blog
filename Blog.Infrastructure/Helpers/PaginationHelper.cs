@@ -15,7 +15,7 @@ internal sealed class PaginationHelper<TModel>
     public PaginationHelper(int pageNumber, int pageSize, IQueryable<TModel> sourceQuery)
     {
         _pageNumber = pageNumber == 0 ? 1 : pageNumber;
-        _pageSize = pageSize;
+        _pageSize = pageSize == 0 ? 5 : pageSize;
         _sourceQuery = sourceQuery;
     }
     #endregion

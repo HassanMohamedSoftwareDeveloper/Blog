@@ -39,10 +39,19 @@
                         <td>@post.Id</td>
                         <td>@post.Title</td>
                         <td>@post.Category</td>
-                        <td>Edit|Delete</td>
+                        <td>
+                            <a asp-page="EditPost" asp-route-id="@post.Id">Edit</a>
+                            |
+                            Delete
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 </section>
+@section Scripts{
+    <script>
+
+    </script>
+}

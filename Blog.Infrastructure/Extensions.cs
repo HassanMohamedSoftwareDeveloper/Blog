@@ -23,6 +23,9 @@ public static class Extensions
         @this.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         @this.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<WriteDbContext>();
+
+
+
         return @this;
     }
 }

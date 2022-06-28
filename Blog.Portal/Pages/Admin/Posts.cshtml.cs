@@ -1,13 +1,14 @@
 ﻿using Blog.Application.DTOS.Admin;
 using Blog.Application.Pagination;
 using Blog.Application.Queries.Admin;
+using Blog.Portal.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Blog.Portal.Pages.Admin;
 
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin,Blogger")]
 public class PostsModel : PageModel
 {
     #region Fields :
@@ -26,9 +27,9 @@ public class PostsModel : PageModel
     #endregion
 
     #region Actions :
-    public async Task OnGet()
+    public async Task OnGet(int pageNumber, int pageSize)
     {
-        Posts = await _mediator.Send(new GetPostsByUser(1, 10, "admin"));
+        Posts = await _mediator.Send(new GetPostsByUser(pageNumber, pageSize, User.UserId()));
     }
     #endregion
 }

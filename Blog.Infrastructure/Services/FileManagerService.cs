@@ -49,6 +49,7 @@ internal sealed class FileManagerService : IFileManagerService
     {
         try
         {
+            if (sourceStream is null) return DefaultFileName(fileType);
             string savePath = GetFilePath(fileType);
 
             CreateDirectory(savePath);

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace Blog.Portal.Pages.Admin;
 
 [Authorize(Roles = "Admin,Blogger")]
-public class AddPostModel : PageModel
+public class EditPostModel : PageModel
 {
     #region Fields :
     private readonly IMediator _mediator;
@@ -22,20 +22,26 @@ public class AddPostModel : PageModel
     #endregion
 
     #region CTORS :
-    public AddPostModel(IMediator mediator)
+    public EditPostModel(IMediator mediator)
     {
         _mediator = mediator;
     }
     #endregion
 
-    #region Actions : 
-    public async Task OnGet()
+    #region Actions :
+    public async Task OnGet(Guid id)
     {
+        var post = await _mediator.Send(new GetPostById(id));
         Post = new PostViewModel
         {
+            Id = post.Id,
+            Title = post.Title,
+            Description = post.Description,
+            Body = post.Body,
+            CategoryId = post.CategoryId,
+            Tags = post.Tags,
             Categories = await _mediator.Send(new GetAllCategories())
         };
-
     }
     public async Task<IActionResult> OnPost()
     {
@@ -44,7 +50,7 @@ public class AddPostModel : PageModel
             Post.Categories = await _mediator.Send(new GetAllCategories());
             return Page();
         }
-        var response = await _mediator.Send(new AddPost(Post.Title, Post.Description, Post.Tags, Post.Body,
+        var response = await _mediator.Send(new UpdatePost(Post.Id, Post.Title, Post.Description, Post.Tags, Post.Body,
             Post?.ImageFile?.OpenReadStream(), User.UserId(), Post.CategoryId));
         return RedirectToPage("Posts");
     }

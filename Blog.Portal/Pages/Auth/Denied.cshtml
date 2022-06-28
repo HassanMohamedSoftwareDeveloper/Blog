@@ -1,0 +1,19 @@
+﻿@page
+@model Blog.Portal.Pages.Auth.DeniedModel
+@{
+    Layout = "_AuthLayout";
+    ViewData["Title"] = "Access Denied";
+}
+<div class="login-box">
+    <div class="login-logo">
+        <a asp-page="~/dashboard/index"><b>Hassan</b>Blog</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body ">
+            <h1 class="login-box-msg">Permission Denied</h1>
+
+           <p>You don't have rights to the page you were attempting to access.</p>
+        </div>
+    </div>
+</div>

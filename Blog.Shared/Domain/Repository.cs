@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shared.Abstractions.Exceptions;
+using System.Linq.Expressions;
 
 namespace Shared.Abstractions.Domain;
 
@@ -20,7 +21,7 @@ public abstract class Repository<TRoot, TKey> : IRepository<TRoot, TKey> where T
     #endregion
 
     #region Methods :
-    public async Task<TRoot> GetAsync(Func<TRoot, bool> criteria) => await _entities.Where(criteria).AsQueryable().FirstOrDefaultAsync();
+    public async Task<TRoot> GetAsync(Expression<Func<TRoot, bool>> criteria) => await _entities.Where(criteria).FirstOrDefaultAsync();
     public void Create(TRoot entity) => _entities.Add(entity);
     public void Update(TRoot entity) => _entities.Update(entity);
     public void Delete(TRoot entity) => _entities.Remove(entity);

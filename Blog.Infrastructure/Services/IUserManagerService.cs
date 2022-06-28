@@ -1,4 +1,4 @@
-﻿namespace Blog.Application.Services;
+﻿namespace Blog.Infrastructure.Services;
 
 public interface IUserManagerService
 {

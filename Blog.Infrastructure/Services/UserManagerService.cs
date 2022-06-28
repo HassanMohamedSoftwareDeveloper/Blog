@@ -33,19 +33,6 @@ internal sealed class UserManagerService : IUserManagerService
             user = await _userManager.FindByNameAsync(username);
         if (user is null) return false;
 
-        //var claims = new List<Claim>
-        //{
-        //    new Claim(Claims.FullName,string.Join(" ",user.FirstName,user.LastName)),
-        //    new Claim(ClaimTypes.Email, user.Email),
-        //    new Claim(Claims.Id, user.Id),
-
-        //};
-        //var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-
-        //var ctx = Request.GetOwinContext();
-        //var authenticationManager = ctx.Authentication;
-        //authenticationManager.SignIn(id);
-
         var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent, false);
         return result.Succeeded;
     }
@@ -69,7 +56,6 @@ internal sealed class UserManagerService : IUserManagerService
         if (result.Succeeded)
         {
             await _signInManager.SignInAsync(user, false);
-
             await _emailService.SendEmailAsync(user.Email, "Welcome", "Thank you for registration");
         }
     }

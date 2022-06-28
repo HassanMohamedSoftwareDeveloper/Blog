@@ -1,4 +1,4 @@
-using Blog.Application.Services;
+using Blog.Infrastructure.Services;
 using Blog.Portal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

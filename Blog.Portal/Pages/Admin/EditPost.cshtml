@@ -1,7 +1,7 @@
-﻿@page
-@model Blog.Portal.Pages.Admin.AddPostModel
+﻿@page "/Admin/Posts/{id:guid}"
+@model Blog.Portal.Pages.Admin.EditPostModel
 @{
-    ViewData["Title"] = "Add Post";
+    ViewData["Title"] = "Update Post";
     Layout = "_AdminLayout";
 }
 <link rel="stylesheet" href="../../lib/bs-stepper/css/bs-stepper.min.css">
@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Add Post</h1>
+                <h1 class="m-0">Update Post</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -28,6 +28,7 @@
 <section class="content">
     <div class="container-fluid">
         <form method="post" enctype="multipart/form-data">
+            <input asp-for="Post.Id" type="hidden" />
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-default">
@@ -139,7 +140,7 @@
                 height: 200
             });
 
-           
+
         })
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -156,3 +157,4 @@
 
     </script>
 }
+
