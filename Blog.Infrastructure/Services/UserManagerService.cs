@@ -3,6 +3,7 @@ using Blog.Application.Services;
 using Blog.Infrastructure.Consts;
 using Blog.Infrastructure.Persistence.Models.Write;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Blog.Infrastructure.Services;
 
@@ -32,9 +33,18 @@ internal sealed class UserManagerService : IUserManagerService
         if (user is null)
             user = await _userManager.FindByNameAsync(username);
         if (user is null) return false;
+        var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        if (result.Succeeded is false || result.IsNotAllowed) return false;
 
-        var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent, false);
-        return result.Succeeded;
+        IEnumerable<Claim> claims = new List<Claim>
+        {
+            new Claim(Claims.FullName,String.Join(" ",user.FirstName,user.LastName)),
+            new Claim(Claims.ImagePath,user.Image),
+        };
+        await _signInManager.SignInWithClaimsAsync(user, isPersistent, claims);
+
+        //await _signInManager.PasswordSignInAsync(user, password, isPersistent, false);
+        return true;
     }
     public async Task LogoutAsync()
     {

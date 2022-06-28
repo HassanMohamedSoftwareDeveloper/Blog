@@ -78,15 +78,20 @@ internal sealed class FileManagerService : IFileManagerService
             return DefaultFileName(fileType);
         }
     }
+
+    public string GetFileMime(string fileName)
+    {
+        return fileName[(fileName.LastIndexOf('.') + 1)..];
+    }
     #endregion
 
     #region Helpers :
-    private void CreateDirectory(string path)
+    private static void CreateDirectory(string path)
     {
         if (Directory.Exists(path) is false)
             Directory.CreateDirectory(path);
     }
-    private string GetFileName(FileType fileType)
+    private static string GetFileName(FileType fileType)
     {
         string fileName = $"{{0}}{DateTime.Now:dd-MM-yyyy-HH-mm-ss}.jpg";
         return fileType switch
@@ -107,7 +112,7 @@ internal sealed class FileManagerService : IFileManagerService
     }
     private string GetFilePath(string fileName)
     {
-        var filePrefix = fileName[0..fileName.IndexOf('_')];//Range Operator
+        var filePrefix = fileName[0..(fileName.IndexOf('_') + 1)];//Range Operator
         return filePrefix switch
         {
             FileNamePrefix.BlogPrefix => Path.Combine(_configuration["Path:BlogImages"]),
@@ -116,7 +121,7 @@ internal sealed class FileManagerService : IFileManagerService
         };
     }
 
-    private string DefaultFileName(FileType fileType)
+    private static string DefaultFileName(FileType fileType)
     {
         return fileType switch
         {
@@ -125,9 +130,6 @@ internal sealed class FileManagerService : IFileManagerService
             _ => string.Empty
         };
     }
-    private string GetFileMime(string fileName)
-    {
-        return fileName[fileName.LastIndexOf('.')..];//Range Operator
-    }
+
     #endregion
 }

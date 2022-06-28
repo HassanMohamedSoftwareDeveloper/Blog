@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 builder.Services.AddInfrasturcture(builder.Configuration);
 builder.Services.AddValidators();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -32,7 +33,7 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
+app.MapDefaultControllerRoute();
 app.MapRazorPages();
 await SeedDataHelper.SeedAdmin(app.Services);
 app.Run();
