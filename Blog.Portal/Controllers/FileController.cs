@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Portal.Controllers;
 
+[ApiController]
 public class FileController : ControllerBase
 {
     #region Fields :

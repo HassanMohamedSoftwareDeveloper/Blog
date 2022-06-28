@@ -32,7 +32,7 @@ internal sealed class GetPostsByUserHandler : IRequestHandler<GetPostsByUser, Pa
         var query = _posts.AsNoTracking().Where(x => x.UserId.Equals(request.UserId)).OrderBy(x => x.Created)
             .ProjectTo<UserPostDto>(_configurationProvider);
 
-        return await new PaginationHelper<UserPostDto>(request.PageNumber, request.PageNumber, query).CreateAsync(cancellationToken);
+        return await new PaginationHelper<UserPostDto>(request.PageNumber, request.PageSize, query).CreateAsync(cancellationToken);
     }
     #endregion
 }

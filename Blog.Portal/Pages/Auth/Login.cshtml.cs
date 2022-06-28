@@ -22,4 +22,9 @@ public class LoginModel : PageModel
         ModelState.AddModelError("msg", "Invalid username or password");
         return Page();
     }
+    public async Task<IActionResult> OnGetLogout([FromServices] IUserManagerService userManagerService)
+    {
+        await userManagerService.LogoutAsync();
+        return Redirect("../../dashboard/index");
+    }
 }

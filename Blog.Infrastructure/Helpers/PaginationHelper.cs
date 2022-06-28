@@ -32,7 +32,7 @@ internal sealed class PaginationHelper<TModel>
         bool hasPreviousPage = _pageNumber > 1;
         bool hasNextPage = totalCount > capacity;
 
-        return new PaginationModel<TModel>
+        var pageModel = new PaginationModel<TModel>
         {
             PageNumber = _pageNumber,
             HasPreviousPage = hasPreviousPage,
@@ -42,6 +42,7 @@ internal sealed class PaginationHelper<TModel>
             Pages = PageNumbers(_pageNumber, pagesCount).ToList(),
             Data = (await _sourceQuery.Skip(skipAmount).Take(_pageSize).ToListAsync(cancellationToken)) ?? new List<TModel>(),
         };
+        return pageModel;
     }
     #endregion
 

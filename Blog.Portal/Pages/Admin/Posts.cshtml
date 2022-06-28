@@ -5,6 +5,7 @@
     Layout = "_AdminLayout";
 }
 
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -23,35 +24,91 @@
 
 <section class="content">
     <div class="container-fluid">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var post in Model.Posts.Data)
-                {
+        <form method="get">
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Show</span>
+                        </div>
+                        <select style="max-width:fit-content" name="pageSize" class=" form-control">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">entries</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-12 col-md-8">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Search</span>
+                        </div>
+                        <input name="searchValue" type="text" class="form-control" />
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <a href="#"><i class="fas fa-search"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <table id="PostsTbl" class="table table-striped table-bordered dt-responsive nowrap">
+                <thead class="thead-dark">
                     <tr>
-                        <td>@post.Id</td>
-                        <td>@post.Title</td>
-                        <td>@post.Category</td>
-                        <td>
-                            <a asp-page="EditPost" asp-route-id="@post.Id">Edit</a>
-                            |
-                            Delete
-                        </td>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th style="max-width:fit-content"></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var post in Model.Posts.Data)
+                    {
+                        <tr>
+                            <td>@post.Title</td>
+                            <td>@post.Category</td>
+                            <td style="max-width:fit-content" class="text-right">
+                                <a class="btn btn-primary" asp-page="EditPost" asp-route-id="@post.Id"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-danger" asp-page="EditPost" asp-route-id="@post.Id"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="card-footer col-12" style="padding:2px !important;">
+                <nav aria-label="Page Navigation">
+                    <ul class="pagination justify-content-end m-0">
+                        @{
+                            string prevDisabled = Model.Posts.HasPreviousPage ? "" : "disabled";
+                            string nextDisabled = Model.Posts.HasNextPage ? "" : "disabled";
+                        }
+                        <li class="page-item @prevDisabled"> <a class="page-link" asp-page="Posts" asp-route-pageNumber="1">First</a></li>
+                        <li class="page-item @prevDisabled"> <a class="page-link" asp-page="Posts" asp-route-pageNumber="@Model.Posts.PageNumber-1"><i class="fas fa-chevron-left"></i></a></li>
+
+                        @foreach (var p in Model.Posts.Pages)
+                        {
+                            string activeClass = p == Model.Posts.PageNumber ? "active" : "";
+                            <li class="page-item @activeClass"><a class="page-link" asp-page="Posts" asp-route-pageNumber="@p">@p</a></li>
+                        }
+
+                        <li class="page-item @nextDisabled"> <a class="page-link" asp-page="Posts" asp-route-pageNumber="@Model.Posts.PageNumber+1"><i class="fas fa-chevron-right"></i></a></li>
+                        <li class="page-item @nextDisabled"> <a class="page-link" asp-route-pageNumber="@Model.Posts.PagesCount">Last</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </section>
 @section Scripts{
-    <script>
-
-    </script>
 }
