@@ -1,4 +1,222 @@
-﻿@page "/dashboard/Index"
+﻿@page "/Blog"
 @model Blog.Portal.Pages.Dashboard.IndexModel
 @{
+    var basePath = Request.PathBase;
+    ViewData["Title"] = "Blog";
+    Layout = "_BlogLayout";
+}
+<style>
+    .card-header {
+        background-color: rgba(0,0,0,0.05) !important;
+    }
+
+    .post-title {
+        color: #555;
+        font-size: 95% !important;
+    }
+    .card-header a{
+         color: #555;
+    }
+    .post-description {
+        color: #6c757d !important;
+        font-weight: 400;
+        font-size: 0.95em;
+        clear: both;
+        text-align: justify;
+    }
+
+    .post-image-container {
+        height: 200px;
+        margin-bottom: .5rem !important;
+    }
+
+    .post-image {
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
+    }
+
+    .post-category {
+        color: #999;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        margin: 10px 0;
+        background-color: rgba(0,0,0,.06) !important;
+    }
+
+        .post-category a {
+            font-size: 13px;
+            color: #999;
+        }
+
+    .post-date {
+        letter-spacing: 0.05em;
+        font-weight: 400;
+        color: #999;
+        text-transform: capitalize;
+        margin: 10px 0;
+        font-size: 0.8em;
+    }
+
+    .post-avatar {
+        max-width: 40px;
+        min-width: 40px;
+        height: 40px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .user-title {
+        font-weight: 400;
+        color: #999;
+        text-transform: capitalize;
+    }
+
+    .comments {
+        font-weight: 400;
+        color: #999;
+        text-transform: capitalize;
+        letter-spacing: 0.05em;
+    }
+
+    .card-body{
+        padding:0 .5rem ;
+    }
+</style>
+<div class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> Blog <small>Posts</small></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Blog</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    @foreach (var post in Model.PostsModel.Data)
+                    {
+                        string postImage = $"{basePath}/Image/{post.Image}";
+                        string userImage = $"{basePath}/Image/{post.User.Image}";
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a href="#"> <h5 class="card-title m-0 post-title">@post.Title</h5></a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row post-image-container">
+                                        <a href="#" class="post-image"><img src="@postImage" class="post-image img-fluid " alt=".."></a>
+                                    </div>
+
+                                    <div class="row" style="padding-right:.25rem;padding-left:.25rem;">
+
+                                        <div class="col-sm-12 d-flex justify-content-between align-items-center">
+                                            <div class="post-date">@post.PostDate</div>
+                                            <div class="post-category">
+                                                <a href="/Blog?category=Programming">@post.Category</a>
+                                            </div>
+                                        </div>
+
+                                        <div style="background-color: rgba(0,0,0,.03);" class="col-sm-12 d-flex justify-content-between align-items-center">
+                                            <a class="d-flex align-items-center flex-wrap" href="#">
+                                                <div class="post-avatar">
+                                                    <img src="@userImage" class="img-fluid" alt="..">
+                                                </div>
+                                                <div class="user-title">
+                                                    <span>@post.User.FullName</span>
+                                                </div>
+                                            </a>
+                                            <div class="post-date ">
+                                                <span><i class="fas fa-clock"></i> @post.TimeAgo</span>
+                                            </div>
+                                            <div class="comments ">
+                                                <i class="fas fa-comment"></i><b>@post.CommentsCount</b>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 desc">
+                                            <p class="post-description mt-2 text-muted">
+                                                @post.Description
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title m-0">Search the Blog</h5>
+                            </div>
+                            <div class="card-body" style="padding-top:1rem;">
+                                <form>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    Category :
+                                                </span>
+                                            </div>
+                                            <select class="form-control">
+                                                <option>Cat1</option>
+                                                <option>Cat2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="search" class="form-control" placeholder="Type your keywords here">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var maxHeight = -1;
+
+            $('.desc').each(function () {
+                maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+            });
+
+            $('.desc').each(function () {
+                $(this).height(maxHeight);
+            });
+        });
+    </script>
+
 }

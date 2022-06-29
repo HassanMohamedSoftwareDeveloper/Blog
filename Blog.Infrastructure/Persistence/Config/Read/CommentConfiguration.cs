@@ -12,6 +12,7 @@ internal sealed class CommentConfiguration : IEntityTypeConfiguration<CommentRea
         builder.HasKey(p => p.Id);
 
         builder.HasOne(p => p.User);
-        builder.HasMany(p => p.Replies);
+        builder.HasMany(p => p.Replies).WithOne(x => x.Comment).HasForeignKey(x => x.CommentId);
+
     }
 }
