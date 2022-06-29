@@ -29,10 +29,12 @@ internal sealed class GetPostsByUserHandler : IRequestHandler<GetPostsByUser, Pa
     #region Methods :
     public async Task<PaginationModel<UserPostDto>> Handle(GetPostsByUser request, CancellationToken cancellationToken)
     {
-        var query = _posts.AsNoTracking().Where(x => x.UserId.Equals(request.UserId)).OrderBy(x => x.Created)
-            .ProjectTo<UserPostDto>(_configurationProvider);
+        var query = _posts.AsNoTracking().Where(x => x.UserId.Equals(request.UserId));
+        if (string.IsNullOrWhiteSpace(request.Search) is false)
+            query = query.Where(x => x.Title.Contains(request.Search) || x.Category.Name.Contains(request.Search));
+        var sourceQuery = query.OrderBy(x => x.Created).ProjectTo<UserPostDto>(_configurationProvider);
 
-        return await new PaginationHelper<UserPostDto>(request.PageNumber, request.PageSize, query).CreateAsync(cancellationToken);
+        return await new PaginationHelper<UserPostDto>(request.PageNumber, request.PageSize, sourceQuery).CreateAsync(cancellationToken);
     }
     #endregion
 }

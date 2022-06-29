@@ -1,9 +1,11 @@
-﻿using Blog.Application.DTOS.Admin;
+﻿using Blog.Application.Commands;
+using Blog.Application.DTOS.Admin;
 using Blog.Application.Pagination;
 using Blog.Application.Queries.Admin;
 using Blog.Portal.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Blog.Portal.Pages.Admin;
@@ -27,9 +29,15 @@ public class PostsModel : PageModel
     #endregion
 
     #region Actions :
-    public async Task OnGet(int pageNumber, int pageSize)
+    public async Task OnGet(int pageNumber, int pageSize, string search)
     {
-        Posts = await _mediator.Send(new GetPostsByUser(pageNumber, pageSize, User.UserId()));
+        Posts = await _mediator.Send(new GetPostsByUser(pageNumber, pageSize, search, User.UserId()));
+        Posts.Search = search;
+    }
+    public async Task<IActionResult> OnPostDelete(Guid id)
+    {
+        var response = await _mediator.Send(new DeletePost(id));
+        return RedirectToPage("Posts");
     }
     #endregion
 }

@@ -34,6 +34,7 @@ internal sealed class PaginationHelper<TModel>
 
         var pageModel = new PaginationModel<TModel>
         {
+            PageSize = _pageSize,
             PageNumber = _pageNumber,
             HasPreviousPage = hasPreviousPage,
             HasNextPage = hasNextPage,
