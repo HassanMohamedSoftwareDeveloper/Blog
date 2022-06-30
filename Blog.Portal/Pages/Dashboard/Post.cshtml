@@ -12,12 +12,13 @@
 
 
 <style>
-     .vertical-scrollable {
-         height:400px;
-            position: relative;
-            overflow-x: hidden;
-            overflow-y: scroll;
-        }
+    .vertical-scrollable {
+        height: 400px;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
     .card-header {
         background-color: rgba(0,0,0,0.05) !important;
     }
@@ -201,9 +202,83 @@
         .latest-posts .comments::after {
             display: none;
         }
+
+    .share-btn-container {
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index:99999;
+    }
+
+        .share-btn-container a i {
+            font-size: 32px;
+        }
+
+        .share-btn-container a {
+            margin: 12px 0;
+            transition: 500ms;
+        }
+
+            .share-btn-container a :hover {
+                transform: scale(1.2);
+            }
+
+        .share-btn-container .fa-facebook {
+            color: #1877f2;
+        }
+
+        .share-btn-container .fa-twitter {
+            color: #1da1f2;
+        }
+
+        .share-btn-container .fa-linkedin {
+            color: #0077b5;
+        }
+
+        .share-btn-container .fa-whatsapp {
+            color: #075e54;
+        }
+    /*Media Queries*/
+    @@media (max-width: 550px) {
+        .share-btn-container {
+            transform: unset;
+            top: unset;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            flex-direction: row;
+            box-shadow: 4 0px 8px rgba(0,0,0,0.3);
+            padding: 16px 0;
+            justify-content: center;
+        }
+
+            .share-btn-container a {
+                margin: 0 32px;
+            }
 </style>
 <link rel="stylesheet" href="../../lib/select2/css/select2.min.css">
 <link rel="stylesheet" href="../../lib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+<div class="share-btn-container">
+    <a href="#" class="facebook-btn">
+        <i class="fab fa-facebook "></i>
+    </a>
+    <a href="#" class="twitter-btn">
+        <i class="fab fa-twitter "></i>
+    </a>
+    <a href="#" class="linkedin-btn">
+        <i class="fab fa-linkedin "></i>
+    </a>
+    <a href="#" class="whatsapp-btn">
+        <i class="fab fa-whatsapp "></i>
+    </a>
+</div>
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -233,14 +308,14 @@
                             <div class="card-body">
                                 <div class="row post-image-container">
                                     <a href="#" class="post-image">
-                                        <img src="@postImage" class="post-image img-fluid " alt="..">
+                                        <img id="p-image" src="@postImage" class="post-image img-fluid " alt="..">
                                     </a>
                                 </div>
 
                                 <div class="row" style="padding-right:.25rem;padding-left:.25rem;">
 
                                     <div class="col-sm-12 d-flex justify-content-between align-items-center">
-                                        <div >
+                                        <div>
                                             <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i> Share</button>
                                             <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
                                         </div>
@@ -373,7 +448,7 @@
                                         string latestPostImage = $"{basePath}/Image/{latestPost.Image}";
 
                                         <div class="latest-posts">
-                                            <a  asp-route-id="@latestPost.Id">
+                                            <a asp-route-id="@latestPost.Id">
                                                 <div class="item d-flex   align-items-center">
                                                     <div class="image">
                                                         <img src="@latestPostImage" alt="..." class="img-fluid">
@@ -453,6 +528,11 @@
     <script src="../../lib/select2/js/select2.full.min.js"></script>
     <script src="../../lib/bs-stepper/js/bs-stepper.min.js"></script>
     <script>
+        const facebookBtn = document.querySelector(".facebook-btn");
+        const twitterBtn = document.querySelector(".twitter-btn");
+        const linkedinBtn = document.querySelector(".linkedin-btn");
+        const whatsAppBtn = document.querySelector(".whatsapp-btn");
+
         $(document).ready(function () {
 
             var maxHeight = -1;
@@ -468,7 +548,23 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
+            init();
         });
+
+
+
+        function init() {
+            const img = document.querySelector("#p-image");
+            const hastag = "hassanBlog";
+            let postUrl = encodeURI(document.location.href);
+            let postTitle = encodeURI("Title");
+            let postImg = encodeURI(img.src);
+
+            facebookBtn.setAttribute("href", `https://www.facebook.com/sharer.php?u=${postUrl}`);
+            twitterBtn.setAttribute("href", `https://twitter.com/share?url=${postUrl}&text=${postTitle}&hashtags=${hastag}`);
+            linkedinBtn.setAttribute("href", `https://www.linkedin.com/shareArticle?url=${postUrl}&title=${postTitle}`);
+            whatsAppBtn.setAttribute("href", `https://api.whatsapp.com/send?text=${postTitle} ${postUrl}`);
+        }
     </script>
 
 }

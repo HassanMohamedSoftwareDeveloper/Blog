@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\fonts\blog.svg" />
-    <Content Remove="wwwroot\js\front.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +27,10 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="NLog" Version="5.0.1" />
+		<PackageReference Include="NLog.Database" Version="5.0.1" />
+		<PackageReference Include="NLog.Web.AspNetCore" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,7 +44,6 @@
 
 	<ItemGroup>
 	  <None Include="wwwroot\fonts\blog.svg" />
-	  <None Include="wwwroot\js\front.js" />
 	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
 	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
 	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
@@ -62,10 +64,6 @@
 	  </Content>
 	  <Content Update="wwwroot\Content\default\blog.jpg">
 	    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\css\style.default.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </Content>
 	</ItemGroup>
 </Project>

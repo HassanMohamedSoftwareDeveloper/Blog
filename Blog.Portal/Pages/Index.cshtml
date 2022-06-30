@@ -9,3 +9,49 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@section Scripts{
+    @*    <script>
+        /*
+        Social Share Links
+        WhatsApp
+        https://api.whatsapp.com/send?text=[post-title] [post-url]
+
+        Facebook
+        https://www.facebook.com/sharer.php?u=[post-url]
+
+        Twiiter
+        https://twitter.com/share?url=[post-url]&text=[post-title]&via=[via]&hashtags=[hashtags]
+
+        Google+
+        https://plus.google.com/share?url=[post-url]
+
+        Pinterest
+        https://pinterest.com/pin/create/bookmarklet/?media=[post-img]&url=[post-url]&is_video=[is_video]&description=[post-title]
+
+        LinkedIn
+        https://www.linkedin.com/shareArticle?url=[post-url]&title=[post-title]
+
+
+        */
+
+        const facebookBtn = document.querySelector(".facebook-btn");
+        const twitterBtn = document.querySelector(".twitter-btn");
+        const linkedinBtn = document.querySelector(".linkedin-btn");
+        const whatsAppBtn = document.querySelector(".whatsapp-btn");
+
+        function init() {
+            const img = document.querySelector(".img");
+            const hastag = "hassanBlog";
+            let postUrl = encodeURI(document.location.href);
+            let postTitle = encodeURI("Title");
+            let postImg = encodeURI(img.src);
+
+            facebookBtn.setAttribute("href", `https://www.facebook.com/sharer.php?u=${postUrl}`);
+            twitterBtn.setAttribute("href", `https://twitter.com/share?url=${postUrl}&text=${postTitle}&hashtags=${hastag}`);
+            linkedinBtn.setAttribute("href", `https://www.linkedin.com/shareArticle?url=${postUrl}&title=${postTitle}`);
+            whatsAppBtn.setAttribute("href", `https://api.whatsapp.com/send?text=${postTitle} ${postUrl}`);
+        }
+init();
+    </script>*@
+    }

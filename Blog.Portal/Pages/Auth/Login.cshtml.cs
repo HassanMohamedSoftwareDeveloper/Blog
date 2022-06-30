@@ -25,6 +25,6 @@ public class LoginModel : PageModel
     public async Task<IActionResult> OnGetLogout([FromServices] IUserManagerService userManagerService)
     {
         await userManagerService.LogoutAsync();
-        return Redirect("../../index");
+        return Redirect(Request.PathBase);
     }
 }

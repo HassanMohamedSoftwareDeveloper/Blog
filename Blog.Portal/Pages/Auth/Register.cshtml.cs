@@ -15,7 +15,7 @@ namespace Blog.Portal.Pages.Auth
         public async Task<IActionResult> OnPost([FromServices] IUserManagerService userManagerService)
         {
             await userManagerService.RegisterAsync(Register.Username, Register.Email, Register.FirstName, Register.LastName, Register.Password, Register.ImageFile.OpenReadStream());
-            return RedirectToPage("/dashboard/index");
+            return Redirect(Request.PathBase);
         }
     }
 }

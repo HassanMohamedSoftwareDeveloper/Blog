@@ -1,45 +1,73 @@
 using Blog.Infrastructure;
 using Blog.Infrastructure.Helpers;
+using Blog.Middlewares;
 using Blog.Portal.Validations;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using NLog;
+using NLog.Web;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-//options =>
-//{
-//    options.Conventions.AddPageRoute("/Dashboard/Index", "");
-//}
-builder.Services.AddRazorPages();
-builder.Services.AddControllers();
-builder.Services.AddInfrasturcture(builder.Configuration);
-builder.Services.AddValidators();
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
-builder.Services.ConfigureApplicationCookie(options =>
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+logger.Debug("init main");
+try
 {
-    options.LoginPath = "/Auth/Login";
-    options.LogoutPath = "/Auth/Logout";
-    options.AccessDeniedPath = "/Auth/Denied";
-});
-var app = builder.Build();
+    var builder = WebApplication.CreateBuilder(args);
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    builder.Services.AddRazorPages();
+    builder.Services.AddControllers(options =>
+    {
+        options.EnableEndpointRouting = false;
+        options.CacheProfiles.Add("Monthly", new Microsoft.AspNetCore.Mvc.CacheProfile
+        {
+            Duration = 60 * 60 * 24 * 7 * 4
+        });
+    });
+
+    builder.Services.AddInfrasturcture(builder.Configuration);
+    builder.Services.AddValidators();
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
+        options.AccessDeniedPath = "/Auth/Denied";
+    });
+
+    builder.Logging.ClearProviders();
+    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+    builder.Host.UseNLog();
+
+    var app = builder.Build();
+    app.UseMiddleware<ExceptionHandler>();
+    //if (app.Environment.IsDevelopment())
+    //{
+    //    app.UseDeveloperExceptionPage();
+    //}
+    if (!app.Environment.IsDevelopment())
+    {
+        //app.UseStatusCodePagesWithRedirects("/Error{0}");
+        //app.UseExceptionHandler("/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+    app.UseRouting();
+    app.UseAuthentication();
+
+    app.UseAuthorization();
+    app.MapDefaultControllerRoute();
+    app.MapRazorPages();
+    await SeedDataHelper.SeedAdmin(app.Services);
+    app.Run();
 }
-app.UseDeveloperExceptionPage();
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-app.UseAuthentication();
-
-app.UseAuthorization();
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
-await SeedDataHelper.SeedAdmin(app.Services);
-app.Run();
+catch (Exception exception)
+{
+    logger.Error(exception, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+    NLog.LogManager.Shutdown();
+}
 
 

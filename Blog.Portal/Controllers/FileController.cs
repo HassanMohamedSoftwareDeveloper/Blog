@@ -19,6 +19,7 @@ public class FileController : ControllerBase
 
     #region Actions :
     [HttpGet("/Image/{image}")]
+    [ResponseCache(CacheProfileName = "Monthly")]
     public IActionResult Image(string image) => new FileStreamResult(_fileManager.FileStream(image), $"image/{_fileManager.GetFileMime(image)}");
     #endregion
 }
