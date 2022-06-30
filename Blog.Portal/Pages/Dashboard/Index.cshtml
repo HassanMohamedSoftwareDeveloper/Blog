@@ -431,13 +431,13 @@
             $('.desc').each(function () {
                 $(this).height(maxHeight);
             });
-
+            var titleMaxHeight=-1
             $('.ph').each(function () {
-                maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+                titleMaxHeight = titleMaxHeight > $(this).height() ? maxHtitleMaxHeighteight : $(this).height();
             });
 
             $('.ph').each(function () {
-                $(this).height(maxHeight);
+                $(this).height(titleMaxHeight);
             });
 
             $('.select2bs4').select2({
