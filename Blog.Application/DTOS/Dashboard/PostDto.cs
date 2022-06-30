@@ -9,6 +9,7 @@ public class PostDto
     public string TimeAgo { get; set; }
     public string PostDate { get; set; }
     public string Image { get; set; }
+    public string Body { get; set; }
     public int ViewersCount { get; set; }
 
     public int CommentsCount { get; set; }

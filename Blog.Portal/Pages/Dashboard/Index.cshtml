@@ -216,7 +216,7 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <a href="#"> <h5 class="card-title m-0 post-title">@post.Title</h5></a>
+                                    <a asp-page="Post" asp-route-id="@post.Id"> <h5 class="card-title m-0 post-title">@post.Title</h5></a>
                                 </div>
                                 <div class="card-body">
                                     <div class="row post-image-container">
@@ -340,7 +340,7 @@
                                         string latestPostImage = $"{basePath}/Image/{latestPost.Image}";
 
                                         <div class="latest-posts">
-                                            <a href="#">
+                                            <a asp-page="Post" asp-route-id="@latestPost.Id">
                                                 <div class="item d-flex   align-items-center">
                                                     <div class="image">
                                                         <img src="@latestPostImage" alt="..." class="img-fluid">
