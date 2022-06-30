@@ -8,35 +8,12 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\fonts\blog.svg" />
-    <Content Remove="wwwroot\icons-reference\fonts\blog.svg" />
     <Content Remove="wwwroot\js\front.js" />
-    <Content Remove="wwwroot\vendor\bootstrap\js\bootstrap.bundle.js" />
-    <Content Remove="wwwroot\vendor\bootstrap\js\bootstrap.bundle.min.js" />
-    <Content Remove="wwwroot\vendor\bootstrap\js\bootstrap.js" />
-    <Content Remove="wwwroot\vendor\bootstrap\js\bootstrap.min.js" />
-    <Content Remove="wwwroot\vendor\fancyapps\fancybox\jquery.fancybox.js" />
-    <Content Remove="wwwroot\vendor\fancyapps\fancybox\jquery.fancybox.min.js" />
-    <Content Remove="wwwroot\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Remove="wwwroot\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
-    <Content Remove="wwwroot\vendor\jquery.cookie\jquery.cookie.js" />
-    <Content Remove="wwwroot\vendor\jquery\core.js" />
-    <Content Remove="wwwroot\vendor\jquery\jquery.js" />
-    <Content Remove="wwwroot\vendor\jquery\jquery.min.js" />
-    <Content Remove="wwwroot\vendor\jquery\jquery.slim.js" />
-    <Content Remove="wwwroot\vendor\jquery\jquery.slim.min.js" />
-    <Content Remove="wwwroot\vendor\popper.js\esm\popper-utils.js" />
-    <Content Remove="wwwroot\vendor\popper.js\esm\popper-utils.min.js" />
-    <Content Remove="wwwroot\vendor\popper.js\esm\popper.js" />
-    <Content Remove="wwwroot\vendor\popper.js\esm\popper.min.js" />
-    <Content Remove="wwwroot\vendor\popper.js\popper-utils.js" />
-    <Content Remove="wwwroot\vendor\popper.js\popper-utils.min.js" />
-    <Content Remove="wwwroot\vendor\popper.js\popper.js" />
-    <Content Remove="wwwroot\vendor\popper.js\popper.min.js" />
-    <Content Remove="wwwroot\vendor\popper.js\umd\popper-utils.js" />
-    <Content Remove="wwwroot\vendor\popper.js\umd\popper-utils.min.js" />
-    <Content Remove="wwwroot\vendor\popper.js\umd\popper.js" />
-    <Content Remove="wwwroot\vendor\popper.js\umd\popper.min.js" />
-    <Content Remove="wwwroot\vendor\popper.js\umd\poppper.js.flow" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\Smarter WebDeploy.pubxml" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -60,13 +37,10 @@
 	<ItemGroup>
 	  <Folder Include="wwwroot\Content\blog\" />
 	  <Folder Include="wwwroot\Content\user\" />
-	  <Folder Include="wwwroot\vendor\font-awesome\less\" />
-	  <Folder Include="wwwroot\vendor\font-awesome\scss\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Include="wwwroot\fonts\blog.svg" />
-	  <None Include="wwwroot\icons-reference\fonts\blog.svg" />
 	  <None Include="wwwroot\js\front.js" />
 	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
 	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
@@ -76,36 +50,13 @@
 	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
 	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
 	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
-	  <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.js" />
-	  <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.min.js" />
-	  <None Include="wwwroot\vendor\bootstrap\js\bootstrap.js" />
-	  <None Include="wwwroot\vendor\bootstrap\js\bootstrap.min.js" />
-	  <None Include="wwwroot\vendor\fancyapps\fancybox\jquery.fancybox.js" />
-	  <None Include="wwwroot\vendor\fancyapps\fancybox\jquery.fancybox.min.js" />
-	  <None Include="wwwroot\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
-	  <None Include="wwwroot\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
-	  <None Include="wwwroot\vendor\jquery.cookie\jquery.cookie.js" />
-	  <None Include="wwwroot\vendor\jquery\core.js" />
-	  <None Include="wwwroot\vendor\jquery\jquery.js" />
-	  <None Include="wwwroot\vendor\jquery\jquery.min.js" />
-	  <None Include="wwwroot\vendor\jquery\jquery.slim.js" />
-	  <None Include="wwwroot\vendor\jquery\jquery.slim.min.js" />
-	  <None Include="wwwroot\vendor\popper.js\esm\popper-utils.js" />
-	  <None Include="wwwroot\vendor\popper.js\esm\popper-utils.min.js" />
-	  <None Include="wwwroot\vendor\popper.js\esm\popper.js" />
-	  <None Include="wwwroot\vendor\popper.js\esm\popper.min.js" />
-	  <None Include="wwwroot\vendor\popper.js\popper-utils.js" />
-	  <None Include="wwwroot\vendor\popper.js\popper-utils.min.js" />
-	  <None Include="wwwroot\vendor\popper.js\popper.js" />
-	  <None Include="wwwroot\vendor\popper.js\popper.min.js" />
-	  <None Include="wwwroot\vendor\popper.js\umd\popper-utils.js" />
-	  <None Include="wwwroot\vendor\popper.js\umd\popper-utils.min.js" />
-	  <None Include="wwwroot\vendor\popper.js\umd\popper.js" />
-	  <None Include="wwwroot\vendor\popper.js\umd\popper.min.js" />
-	  <None Include="wwwroot\vendor\popper.js\umd\poppper.js.flow" />
 	</ItemGroup>
 
+	
 	<ItemGroup>
+		<!--<Content Update="wwwroot\content\blog\*.*" CopyToPublishDirectory="Never" />
+		<Content Update="wwwroot\lib\**\*.*" CopyToPublishDirectory="Never" />-->
+		<Content Update="wwwroot\lib\**\dist\**\*.*" CopyToPublishDirectory="Always" />
 	  <Content Update="wwwroot\Content\default\avatar.jpg">
 	    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
 	  </Content>
@@ -113,78 +64,6 @@
 	    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
 	  </Content>
 	  <Content Update="wwwroot\css\style.default.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\bootstrap\css\bootstrap-grid.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\bootstrap\css\bootstrap-grid.min.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\bootstrap\css\bootstrap-reboot.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\bootstrap\css\bootstrap-reboot.min.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\bootstrap\css\bootstrap.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\bootstrap\css\bootstrap.min.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\fancyapps\fancybox\jquery.fancybox.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\fancyapps\fancybox\jquery.fancybox.min.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\font-awesome\css\font-awesome.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\font-awesome\css\font-awesome.min.css">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\font-awesome\fonts\fontawesome-webfont.eot">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\font-awesome\fonts\fontawesome-webfont.ttf">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\font-awesome\fonts\fontawesome-webfont.woff">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\font-awesome\fonts\FontAwesome.otf">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\font-awesome\HELP-US-OUT.txt">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\jquery.cookie\component.json">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\jquery.cookie\cookie.jquery.json">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\vendor\jquery.cookie\MIT-LICENSE.txt">
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </Content>

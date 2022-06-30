@@ -215,12 +215,12 @@
                         string userImage = $"{basePath}/Image/{post.User.Image}";
                         <div class="col-lg-6">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header ph">
                                     <a asp-page="Post" asp-route-id="@post.Id"> <h5 class="card-title m-0 post-title">@post.Title</h5></a>
                                 </div>
                                 <div class="card-body">
                                     <div class="row post-image-container">
-                                        <a href="#" class="post-image"><img src="@postImage" class="post-image img-fluid " alt=".."></a>
+                                        <a asp-page="Post" asp-route-id="@post.Id" class="post-image"><img src="@postImage" class="post-image img-fluid " alt=".."></a>
                                     </div>
 
                                     <div class="row" style="padding-right:.25rem;padding-left:.25rem;">
@@ -429,6 +429,14 @@
             });
 
             $('.desc').each(function () {
+                $(this).height(maxHeight);
+            });
+
+            $('.ph').each(function () {
+                maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+            });
+
+            $('.ph').each(function () {
                 $(this).height(maxHeight);
             });
 
