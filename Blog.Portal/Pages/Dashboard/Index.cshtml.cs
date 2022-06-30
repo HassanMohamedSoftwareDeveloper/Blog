@@ -1,6 +1,5 @@
-using Blog.Application.DTOS.Dashboard;
-using Blog.Application.Pagination;
 using Blog.Application.Queries.Dashboard;
+using Blog.Portal.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -20,13 +19,16 @@ public class IndexModel : PageModel
     #endregion
 
     #region PROPS :
-    public PaginationModel<BlogPostDto> PostsModel { get; set; } = new();
+    public BlogViewModel BlogModel { get; set; } = new();
     #endregion
 
     #region Actions :
     public async Task OnGet()
     {
-        PostsModel = await _mediator.Send(new GetPosts(1, 10, Guid.Empty, String.Empty));
+        BlogModel.PaginatedPosts = await _mediator.Send(new GetPosts(1, 4, Guid.Empty, String.Empty));
+        BlogModel.LatestPosts = await _mediator.Send(new GetLatestPosts());
+        BlogModel.Categories = await _mediator.Send(new GetCategories());
+        BlogModel.Tags = await _mediator.Send(new GetTags());
     }
     #endregion
 }
