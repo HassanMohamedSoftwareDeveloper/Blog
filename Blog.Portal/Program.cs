@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//options =>
+//{
+//    options.Conventions.AddPageRoute("/Dashboard/Index", "");
+//}
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 builder.Services.AddInfrasturcture(builder.Configuration);
