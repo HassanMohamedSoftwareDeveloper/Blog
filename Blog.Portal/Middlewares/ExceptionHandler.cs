@@ -1,4 +1,5 @@
 ﻿using NLog;
+using Shared.Abstractions.Exceptions;
 using System.Net;
 using ILogger = NLog.ILogger;
 namespace Blog.Portal.Middlewares;
@@ -38,7 +39,10 @@ public class ExceptionHandler
         catch (Exception ex)
         {
             _logger.Error(ex, "Error occurred check the (Error Details) for more details.");
-            HandleException(context);
+            if (ex is BlogException)
+                context.Response.Redirect(Path.Combine("/", "Error400", ex.Message));
+            else
+                context.Response.Redirect(Path.Combine("/", "Error500"));
         }
     }
     #endregion
