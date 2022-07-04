@@ -18,13 +18,13 @@ public class LoginModel : PageModel
         if (ModelState.IsValid is false) return Page();
         var result = await userManagerService.LoginAsync(Login.Email, Login.Password, Login.RememberMe);
         if (result)
-            return Redirect(string.IsNullOrWhiteSpace(Login.ReturnUrl) ? "../../dashboard/index" : Login.ReturnUrl);
+            return Redirect(Path.Combine(string.IsNullOrWhiteSpace(Login.ReturnUrl) ? "/" : Login.ReturnUrl));
         ModelState.AddModelError("msg", "Invalid username or password");
         return Page();
     }
     public async Task<IActionResult> OnGetLogout([FromServices] IUserManagerService userManagerService)
     {
         await userManagerService.LogoutAsync();
-        return Redirect(Request.PathBase);
+        return Redirect(Path.Combine("/"));
     }
 }

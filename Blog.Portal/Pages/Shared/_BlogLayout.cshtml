@@ -40,10 +40,10 @@
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="@basePath/" class="nav-link">Home</a>
+                            <a href="/" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="@basePath/Blog" class="nav-link">Blog</a>
+                            <a href="/Blog" class="nav-link">Blog</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Dropdown</a>
@@ -74,12 +74,14 @@
                                 </li>
                             </ul>
                         </li>
+
                     </ul>
 
                 </div>
 
 
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item dropdown">
@@ -161,7 +163,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a href="#" class=" nav-link" data-toggle="dropdown">
-                                <img width="35" height="35" src="@userImage" class="img-circl" alt="..">
+                                <img width="35" height="35" src="@userImage" class="img-circle" alt="..">
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 <span class="dropdown-item dropdown-header">@User.UserFullName()</span>
@@ -181,6 +183,27 @@
                             <a class=" nav-link" asp-page="/Auth/Register"><i class="fas fa-user-plus"></i> SignUp</a>
                         </li>
                     }
+                    <!-- Navbar Search -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        <div class="navbar-search-block">
+                            <form class="form-inline">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-navbar" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                        <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>

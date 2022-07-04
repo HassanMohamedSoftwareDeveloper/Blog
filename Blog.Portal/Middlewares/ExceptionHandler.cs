@@ -2,6 +2,7 @@
 using Shared.Abstractions.Exceptions;
 using System.Net;
 using ILogger = NLog.ILogger;
+
 namespace Blog.Portal.Middlewares;
 
 public class ExceptionHandler
@@ -10,6 +11,7 @@ public class ExceptionHandler
     private readonly ILogger _logger;
     private readonly RequestDelegate _next;
     #endregion
+
     #region CTORS :
     public ExceptionHandler(RequestDelegate next)
     {
@@ -17,6 +19,7 @@ public class ExceptionHandler
         _logger = LogManager.GetCurrentClassLogger();
     }
     #endregion
+
     #region Methods :
     public async Task InvokeAsync(HttpContext context)
     {
@@ -46,6 +49,7 @@ public class ExceptionHandler
         }
     }
     #endregion
+
     #region Private Methods :
     private static void HandleException(HttpContext httpContext)
     {

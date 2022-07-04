@@ -43,7 +43,6 @@ internal sealed class UserManagerService : IUserManagerService
         };
         await _signInManager.SignInWithClaimsAsync(user, isPersistent, claims);
 
-        //await _signInManager.PasswordSignInAsync(user, password, isPersistent, false);
         return true;
     }
     public async Task LogoutAsync()
@@ -65,7 +64,12 @@ internal sealed class UserManagerService : IUserManagerService
 
         if (result.Succeeded)
         {
-            await _signInManager.SignInAsync(user, false);
+            IEnumerable<Claim> claims = new List<Claim>
+        {
+            new Claim(Claims.FullName,String.Join(" ",user.FirstName,user.LastName)),
+            new Claim(Claims.ImagePath,user.Image),
+        };
+            await _signInManager.SignInWithClaimsAsync(user, false, claims);
             await _emailService.SendEmailAsync(user.Email, "Welcome", "Thank you for registration");
         }
     }

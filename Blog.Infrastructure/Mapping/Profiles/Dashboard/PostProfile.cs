@@ -25,6 +25,9 @@ public class PostProfile : Profile
             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
             .ForMember(dest => dest.PostDate, opt => opt.MapFrom(src => src.Created.ToString("dd MMMMM yyyy")))
             .ForMember(dest => dest.TimeAgo, opt => opt.MapFrom(src => TimeAgoHelper.Create(src.Created)))
-            .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count));
+            .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count))
+            .ForMember(dest => dest.TagsList, opt => opt.Ignore());
     }
+
+
 }
