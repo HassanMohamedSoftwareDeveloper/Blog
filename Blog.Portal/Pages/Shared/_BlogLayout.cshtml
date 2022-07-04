@@ -28,7 +28,7 @@
 
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container-fluid">
-                <a href="@basePath/" class="navbar-brand">
+                <a href="/" class="navbar-brand">
                     <img src="~/Static/logo.ico" alt=".." class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">Blog</span>
                 </a>
@@ -189,9 +189,9 @@
                             <i class="fas fa-search"></i>
                         </a>
                         <div class="navbar-search-block">
-                            <form class="form-inline">
+                            <form method="get" class="form-inline">
                                 <div class="input-group input-group-sm">
-                                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                    <input name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                                     <div class="input-group-append">
                                         <button class="btn btn-navbar" type="submit">
                                             <i class="fas fa-search"></i>
