@@ -23,9 +23,14 @@ public class IndexModel : PageModel
     #endregion
 
     #region Actions :
-    public async Task OnGet()
+    public async Task OnGet(int pageNumber, Guid category, string tag)
     {
-        BlogModel.PaginatedPosts = await _mediator.Send(new GetPosts(1, 4, Guid.Empty, String.Empty));
+        BlogModel.PaginatedPosts = await _mediator.Send(new GetPosts(pageNumber, 4, category, String.Empty, tag));
+
+        string path = string.IsNullOrWhiteSpace(tag) ? category == default || category == Guid.Empty ? "Blog" : $"Tutorials/{category}" : tag;
+
+
+        BlogModel.PaginatedPosts.Route = $"{Path.Combine("/", path, "page")}/{{0}}";
         BlogModel.LatestPosts = await _mediator.Send(new GetLatestPosts());
         BlogModel.Categories = await _mediator.Send(new GetCategories());
         BlogModel.Tags = await _mediator.Send(new GetTags());

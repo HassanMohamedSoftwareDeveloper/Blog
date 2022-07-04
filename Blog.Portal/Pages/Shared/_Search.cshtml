@@ -1,0 +1,43 @@
+﻿@model SearchViewModel
+@{
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title m-0">Search the Blog</h5>
+            </div>
+            <div class="card-body" style="padding-top:1rem;">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    Category :
+                                </span>
+                            </div>
+                            <select asp-for="Category" asp-items='new SelectList(Model.Categories,"Id","Name")' class="form-control shadow-none select2bs4">
+                                <option value="@null">Select Category</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="Search" type="search" class="form-control" placeholder="Type your keywords here">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

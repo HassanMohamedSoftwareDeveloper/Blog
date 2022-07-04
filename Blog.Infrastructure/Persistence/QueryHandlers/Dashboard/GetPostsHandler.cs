@@ -30,10 +30,15 @@ internal sealed class GetPostsHandler : IRequestHandler<GetPosts, PaginationMode
     public async Task<PaginationModel<BlogPostDto>> Handle(GetPosts request, CancellationToken cancellationToken)
     {
         var query = _posts.AsNoTracking();
+
         if (request.CategoryId != default && request.CategoryId != Guid.Empty)
             query = query.Where(x => x.CategoryId.Equals(request.CategoryId));
+
         if (string.IsNullOrWhiteSpace(request.Search) is false)
             query = query.Where(x => (x.Title + x.Description + x.Category.Name).ToLower().Contains(request.Search.ToLower()));
+
+        if (string.IsNullOrWhiteSpace(request.Tag) is false)
+            query = query.Where(x => x.Tags.ToLower().Contains(request.Tag.ToLower()));
 
         var mappedQuery = query.OrderBy(x => x.Created).ProjectTo<BlogPostDto>(_configurationProvider);
 

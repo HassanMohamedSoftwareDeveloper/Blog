@@ -1,0 +1,33 @@
+﻿@using Blog.Application.Pagination
+
+@model Pagination
+
+
+@if (Model.PagesCount > 1)
+{
+    <div class="row">
+        <div class="col-sm-12" style="padding:2px !important;">
+            <nav aria-label="Page Navigation">
+                <ul class="pagination justify-content-center m-0">
+                    @{
+                        string prevDisabled = Model.HasPreviousPage ? "" : "disabled";
+                        string nextDisabled = Model.HasNextPage ? "" : "disabled";
+                    }
+                    <li class="page-item @prevDisabled"> <a class="page-link" href="@string.Format(Model.Route,1)">First</a></li>
+                    <li class="page-item @prevDisabled"> <a class="page-link" href="@string.Format(Model.Route,Model.PageNumber-1)"><i class="fas fa-chevron-left"></i></a></li>
+
+                    @foreach (var p in Model.Pages)
+                    {
+                        string activeClass = p == Model.PageNumber ? "active" : "";
+                        string linkDisabled = p == -1 ? "disabled" : "";
+                        string linkText = p == -1 ? "..." : p.ToString();
+                        <li class="page-item @activeClass @linkDisabled"><a class="page-link" href="@string.Format(Model.Route,linkText)">@linkText</a></li>
+                    }
+
+                    <li class="page-item @nextDisabled"> <a class="page-link" href="@string.Format(Model.Route,Model.PageNumber+1)"><i class="fas fa-chevron-right"></i></a></li>
+                    <li class="page-item @nextDisabled"> <a class="page-link" href="@string.Format(Model.Route,Model.PagesCount)">Last</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+}

@@ -1,0 +1,41 @@
+﻿@model LatestPostViewModel
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title m-0">Latest Posts</h5>
+            </div>
+            <div class="card-body" style="padding-top:1rem;">
+                <div class="col-sm-12">
+                    @foreach (var latestPost in Model.LatestPosts)
+                    {
+                        string latestPostImage = $"{Model.BasePath}/Image/{latestPost.Image}";
+
+                        <div class="latest-posts">
+                            <a asp-page="Post" asp-route-id="@latestPost.Id">
+                                <div class="item d-flex   align-items-center">
+                                    <div class="image">
+                                        <img src="@latestPostImage" alt="..." class="img-fluid">
+                                    </div>
+                                    <div class="title">
+                                        <strong>@latestPost.Title</strong>
+                                        <div class="d-flex align-items-center ">
+                                            <div class="views mr-3">
+                                                <i class="fas fa-eye mr-1"></i> @latestPost.ViewersCount
+                                            </div>
+                                            <div class="comments">
+                                                <i class="fas fa-comments mr-1"></i>@latestPost.CommentsCount
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

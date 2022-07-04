@@ -1,4 +1,5 @@
-﻿@page "/Blog"
+﻿@page
+
 @model Blog.Portal.Pages.Dashboard.IndexModel
 @{
     var basePath = Request.PathBase;
@@ -6,188 +7,259 @@
     Layout = "_BlogLayout";
 }
 <style>
-            .card-header {
-                background-color: rgba(0,0,0,0.05) !important;
-            }
+    .vertical-scrollable {
+    height: 400px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
 
-            .post-title {
-                color: #555;
-                font-weight:700!important;
-            }
+.card-header {
+    background-color: rgba(0,0,0,0.05) !important;
+}
 
-            .card-header a {
-                color: #555;
-            }
+.post-title {
+    color: #555;
+    font-weight: 700 !important;
+}
 
-            .post-description {
-                color: #6c757d !important;
-                font-weight: 400;
-                font-size: 0.95em;
-                clear: both;
-                text-align: justify;
-            }
+.card-header a {
+    color: #555;
+}
 
-            .post-image-container {
-                height: 200px;
-                margin-bottom: .5rem !important;
-            }
+.post-description {
+    color: #6c757d !important;
+    font-weight: 400;
+    font-size: 0.95em;
+    clear: both;
+    text-align: justify;
+}
 
-            .post-image {
-                width: -webkit-fill-available;
-                height: -webkit-fill-available;
-            }
+.post-image-container {
+    height: 300px;
+    margin-bottom: .5rem !important;
+}
 
-            .post-category {
-                color: #999;
-                letter-spacing: 0.05em;
-                font-weight: 700;
-                text-transform: uppercase;
-                text-decoration: none;
-                margin: 10px 0;
-                background-color: rgba(0,0,0,.06) !important;
-            }
+.post-image {
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+}
 
-                .post-category a {
-                    font-size: 13px;
-                    color: #999;
-                }
+.post-category {
+    color: #999;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 10px 0;
+    background-color: rgba(0,0,0,.06) !important;
+}
 
-            .post-date {
-                letter-spacing: 0.05em;
-                font-weight: 400;
-                color: #999;
-                text-transform: capitalize;
-                margin: 10px 0;
-                font-size: 0.8em;
-            }
+    .post-category a {
+        font-size: 13px;
+        color: #999;
+    }
 
-            .post-avatar {
-                max-width: 40px;
-                min-width: 40px;
-                height: 40px;
-                overflow: hidden;
-                border-radius: 50%;
-                margin-right: 10px;
-            }
+.post-date {
+    letter-spacing: 0.05em;
+    font-weight: 400;
+    color: #999;
+    text-transform: capitalize;
+    margin: 10px 0;
+    font-size: 0.8em;
+}
 
-            .user-title {
-                font-weight: 400;
-                color: #999;
-                text-transform: capitalize;
-            }
+.post-avatar {
+    max-width: 40px;
+    min-width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
-            .comments {
-                font-weight: 400;
-                color: #999;
-                text-transform: capitalize;
-                letter-spacing: 0.05em;
-            }
+.user-title {
+    font-weight: 400;
+    color: #999;
+    text-transform: capitalize;
+}
 
-            .card-body {
-                padding: 0 .5rem;
-            }
-            .tag{
-                transition-delay: 0s;
-                transition-timing-function: ease;
-                transition-duration: 0.3s;
-                transition-property: all;
-                display: inline-block;
-                padding: 5px 25px;
-                border: 1px solid #ddd;
-                margin: 5px 0;color: #777;
-                font-size: 0.75em;
-                text-transform: uppercase;
-                font-weight: 600;
-                text-decoration: none;
-                border-radius: 50px;
-            }
-        .category {
-          background: #fafafa;
-          padding: 10px;
-          color: #777;
-          font-weight: 700;
+.comments {
+    font-weight: 400;
+    color: #999;
+    text-transform: capitalize;
+    letter-spacing: 0.05em;
+}
+
+.card-body {
+    padding: 0 .5rem;
+}
+
+.tag {
+    transition-delay: 0s;
+    transition-timing-function: ease;
+    transition-duration: 0.3s;
+    transition-property: all;
+    display: inline-block;
+    padding: 5px 25px;
+    border: 1px solid #ddd;
+    margin: 5px 0;
+    color: #777;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+}
+
+.category {
+    background: #fafafa;
+    padding: 10px;
+    color: #777;
+    font-weight: 700;
+}
+
+    .category:nth-of-type(2n+2) {
+        background: none;
+    }
+
+    .category a {
+        color: inherit;
+        font-size: 0.95em;
+    }
+
+        .category a:hover {
+            color: #000;
+            text-decoration: none;
         }
 
-            .category:nth-of-type(2n+2) {
-          background: none;
-        }
-
-            .category a {
-          color: inherit;
-          font-size: 0.95em;
-        }
-
-            .category a:hover {
-          color: #000;
-          text-decoration: none;
-        }
-
-            .category span {
-          font-size: 0.9em;
-          color: #aaa;
-        }
-            .tag:hover{
-                    background: #999;
-            color: #fff;
-            border-color: #999;
-            }
-
-                .latest-posts a {
-      display: block;
-      color: #555;
-      text-decoration: none;
+    .category span {
+        font-size: 0.9em;
+        color: #aaa;
     }
 
-        .latest-posts a:hover {
-      color: #000;
+.tag:hover {
+    background: #999;
+    color: #fff;
+    border-color: #999;
+}
+
+.latest-posts a {
+    display: block;
+    color: #555;
+    text-decoration: none;
+}
+
+    .latest-posts a:hover {
+        color: #000;
     }
 
-        .latest-posts .image {
-      min-width: 60px;
-      max-width: 60px;
-      height: 60px;
-      overflow: hidden;
-      margin-right: 20px;
-    }
+.latest-posts .image {
+    min-width: 60px;
+    max-width: 60px;
+    height: 60px;
+    overflow: hidden;
+    margin-right: 20px;
+}
 
-    .latest-posts .item {
-      margin-bottom: 20px;
-    }
+.latest-posts .item {
+    margin-bottom: 20px;
+}
 
-        .latest-posts strong {
-      font-size: 0.95em;
-      display: block;
-      line-height: 1em;
-    }
+.latest-posts strong {
+    font-size: 0.95em;
+    display: block;
+    line-height: 1em;
+}
 
-    .latest-posts .views,
-    .latest-posts .comments {
-      font-size: 0.8em;
-      font-weight: 400;
-      color: #bbb;
-      margin-top: 10px;
-    }
+.latest-posts .views,
+.latest-posts .comments {
+    font-size: 0.8em;
+    font-weight: 400;
+    color: #bbb;
+    margin-top: 10px;
+}
 
-        .latest-posts .views i,
+    .latest-posts .views i,
     .latest-posts .comments i {
-      margin-right: 5px;
+        margin-right: 5px;
     }
 
-        .latest-posts .views::after,
+    .latest-posts .views::after,
     .latest-posts .comments::after {
-      content: '|';
-      display: inline-block;
-      margin: 0 7px;
-      font-size: 0.9em;
-      color: #ccc;
+        content: '|';
+        display: inline-block;
+        margin: 0 7px;
+        font-size: 0.9em;
+        color: #ccc;
     }
 
-        .latest-posts .comments::after {
-      display: none;
+    .latest-posts .comments::after {
+        display: none;
     }
+
+.share-btn-container {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99999;
+    opacity: 50%;
+}
+
+    .share-btn-container a i {
+        font-size: 32px;
+    }
+
+    .share-btn-container a {
+        margin: 12px 0;
+        transition: 500ms;
+    }
+
+        .share-btn-container a :hover {
+            transform: scale(1.2);
+        }
+
+    .share-btn-container .fa-facebook {
+        color: #1877f2;
+    }
+
+    .share-btn-container .fa-twitter {
+        color: #1da1f2;
+    }
+
+    .share-btn-container .fa-linkedin {
+        color: #0077b5;
+    }
+
+    .share-btn-container .fa-whatsapp {
+        color: #075e54;
+    }
+/*Media Queries*/
+@@media (max-width: 550px) {
+    .share-btn-container {
+        transform: unset;
+        top: unset;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        flex-direction: row;
+        box-shadow: 4px 0px 8px rgba(0,0,0,0.3);
+        padding: 16px 0;
+        justify-content: center;
+        visibility: visible;
+    }
+
+        .share-btn-container a {
+            margin: 0 32px;
+        }
+}
+
 </style>
-<link rel="stylesheet" href="../../lib/select2/css/select2.min.css">
-<link rel="stylesheet" href="../../lib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -203,6 +275,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="content">
     <div class="container-fluid">
@@ -228,7 +301,7 @@
                                         <div class="col-sm-12 d-flex justify-content-between align-items-center">
                                             <div class="post-date">@post.PostDate</div>
                                             <div class="post-category">
-                                                <a href="/Blog?category=Programming">@post.Category</a>
+                                                <a href="~/Tutorials/@post.CategoryId">@post.Category</a>
                                             </div>
                                         </div>
 
@@ -260,156 +333,21 @@
                         </div>
                     }
                 </div>
-
-                <div class="row">
-                    <div class="col-sm-12" style="padding:2px !important;">
-                        <nav aria-label="Page Navigation">
-                            <ul class="pagination justify-content-center m-0">
-                                @{
-                                    string prevDisabled = Model.BlogModel.PaginatedPosts.HasPreviousPage ? "" : "disabled";
-                                    string nextDisabled = Model.BlogModel.PaginatedPosts.HasNextPage ? "" : "disabled";
-                                }
-                                <li class="page-item @prevDisabled"> <a class="page-link" asp-page="Posts" asp-route-pageSize="@Model.BlogModel.PaginatedPosts.PageSize" asp-route-pageNumber="1">First</a></li>
-                                <li class="page-item @prevDisabled"> <a class="page-link" asp-page="Posts" asp-route-pageSize="@Model.BlogModel.PaginatedPosts.PageSize" asp-route-pageNumber="@Model.BlogModel.PaginatedPosts.PageNumber-1"><i class="fas fa-chevron-left"></i></a></li>
-
-                                @foreach (var p in Model.BlogModel.PaginatedPosts.Pages)
-                                {
-                                    string activeClass = p == Model.BlogModel.PaginatedPosts.PageNumber ? "active" : "";
-                                    string linkDisabled = p == -1 ? "disabled" : "";
-                                    string linkText = p == -1 ? "..." : p.ToString();
-                                    <li class="page-item @activeClass @linkDisabled"><a class="page-link" asp-page="Posts" asp-route-pageSize="@Model.BlogModel.PaginatedPosts.PageSize" asp-route-pageNumber="@linkText">@linkText</a></li>
-                                }
-
-                                <li class="page-item @nextDisabled"> <a class="page-link" asp-page="Posts" asp-route-pageSize="@Model.BlogModel.PaginatedPosts.PageSize" asp-route-pageNumber="@Model.BlogModel.PaginatedPosts.PageNumber+1"><i class="fas fa-chevron-right"></i></a></li>
-                                <li class="page-item @nextDisabled"> <a class="page-link" asp-route-pageSize="@Model.BlogModel.PaginatedPosts.PageSize" asp-route-pageNumber="@Model.BlogModel.PaginatedPosts.PagesCount">Last</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-
+                <!--Paging-->
+                <partial name="_Paging" model="Model.BlogModel.PaginatedPosts" />
             </div>
 
             <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title m-0">Search the Blog</h5>
-                            </div>
-                            <div class="card-body" style="padding-top:1rem;">
-                                <form>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    Category :
-                                                </span>
-                                            </div>
-                                            <select name="categoryId" asp-items='new SelectList(Model.BlogModel.Categories,"Id","Name")' class="form-control select2bs4">
-                                                <option value="@null">Select Category</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="search" class="form-control" placeholder="Type your keywords here">
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title m-0">Latest Posts</h5>
-                            </div>
-                            <div class="card-body" style="padding-top:1rem;">
-                                <div class="col-sm-12">
-                                    @foreach (var latestPost in Model.BlogModel.LatestPosts)
-                                    {
-                                        string latestPostImage = $"{basePath}/Image/{latestPost.Image}";
-
-                                        <div class="latest-posts">
-                                            <a asp-page="Post" asp-route-id="@latestPost.Id">
-                                                <div class="item d-flex   align-items-center">
-                                                    <div class="image">
-                                                        <img src="@latestPostImage" alt="..." class="img-fluid">
-                                                    </div>
-                                                    <div class="title">
-                                                        <strong>@latestPost.Title</strong>
-                                                        <div class="d-flex align-items-center ">
-                                                            <div class="views mr-3">
-                                                                <i class="fas fa-eye mr-1"></i> @latestPost.ViewersCount
-                                                            </div>
-                                                            <div class="comments">
-                                                                <i class="fas fa-comments mr-1"></i>@latestPost.CommentsCount
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title m-0">Categories</h5>
-                            </div>
-                            <div class="card-body" style="padding-top:1rem;">
-                                <div class="col-sm-12">
-                                    @foreach (var category in Model.BlogModel.Categories)
-                                    {
-                                        <div class="category d-flex justify-content-between mb-3">
-                                            <a href="#">@category.Name</a>
-                                            <span>@category.PostsCount</span>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title m-0">Tags</h5>
-                            </div>
-                            <div class="card-body" style="padding-top:1rem;">
-                                <div class="col-sm-12">
-                                    <ul class="list-inline" style="padding: 0;margin: 0;">
-                                        @foreach (var tag in Model.BlogModel.Tags)
-                                        {
-                                            <li class="list-inline-item">
-                                                <a class="tag" href="#">
-                                                    #@tag.Tag
-                                                </a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @*FollowUs*@
+                <partial name="_FollowUs" />
+                <!--Search-->
+                <partial name="_Search" model="new SearchViewModel{Categories=Model.BlogModel.Categories}" />
+                <!--Latest Posts-->
+                <partial name="_LatestPosts" model="new LatestPostViewModel{LatestPosts=Model.BlogModel.LatestPosts,BasePath=basePath}" />
+                <!--Categories-->
+                <partial name="_Categories" model="Model.BlogModel.Categories" />
+                <!--Tags-->
+                <partial name="_Tags" model="Model.BlogModel.Tags" />
             </div>
         </div>
     </div>
@@ -417,9 +355,8 @@
 
 
 @section Scripts{
-    <script src="../../lib/select2/js/select2.full.min.js"></script>
-    <script src="../../lib/bs-stepper/js/bs-stepper.min.js"></script>
     <script>
+
         $(document).ready(function () {
 
             var maxHeight = -1;
@@ -431,7 +368,7 @@
             $('.desc').each(function () {
                 $(this).height(maxHeight);
             });
-            var titleMaxHeight=-1
+            var titleMaxHeight = -1
             $('.ph').each(function () {
                 titleMaxHeight = titleMaxHeight > $(this).height() ? maxHtitleMaxHeighteight : $(this).height();
             });
@@ -445,5 +382,4 @@
             });
         });
     </script>
-
 }

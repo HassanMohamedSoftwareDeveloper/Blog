@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System.Net;
 using ILogger = NLog.ILogger;
-namespace Blog.Middlewares;
+namespace Blog.Portal.Middlewares;
 
 public class ExceptionHandler
 {
@@ -13,7 +13,7 @@ public class ExceptionHandler
     public ExceptionHandler(RequestDelegate next)
     {
         _next = next;
-        this._logger = LogManager.GetCurrentClassLogger();
+        _logger = LogManager.GetCurrentClassLogger();
     }
     #endregion
     #region Methods :

@@ -1,6 +1,6 @@
 using Blog.Infrastructure;
 using Blog.Infrastructure.Helpers;
-using Blog.Middlewares;
+using Blog.Portal.Middlewares;
 using Blog.Portal.Validations;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using NLog;
@@ -12,7 +12,15 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.AddRazorPages();
+    builder.Services.AddRazorPages(options =>
+    {
+        options.Conventions.AddPageRoute("/Dashboard/Index", "Blog");
+        options.Conventions.AddPageRoute("/Dashboard/Index", "Blog/page/{pageNumber:int}");
+        options.Conventions.AddPageRoute("/Dashboard/Index", "Tutorials/{category}");
+        options.Conventions.AddPageRoute("/Dashboard/Index", "Tutorials/{category}/page/{pageNumber:int}");
+        options.Conventions.AddPageRoute("/Dashboard/Index", "Tag/{tag}");
+        options.Conventions.AddPageRoute("/Dashboard/Index", "Tag/{tag}/page/{pageNumber:int}");
+    });
     builder.Services.AddControllers(options =>
     {
         options.EnableEndpointRouting = false;
