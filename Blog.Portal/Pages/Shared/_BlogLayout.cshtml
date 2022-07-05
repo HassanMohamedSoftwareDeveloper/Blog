@@ -17,10 +17,10 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="~/css/adminlte.min.css">
 
-   
+
 
     <link rel="stylesheet" href="~/css/Blog.css">
-   
+
 </head>
 <body class="hold-transition layout-top-nav">
 
@@ -209,12 +209,7 @@
         </nav>
 
         <div class="content-wrapper">
-            <div class="content-header" style="background-color: #cdd1d8;">
-                <div class="container-fluid">
-                    @await RenderSectionAsync("Header",required:false)
-                </div>
-            </div>
-
+            @await RenderSectionAsync("Header",required:false)
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">

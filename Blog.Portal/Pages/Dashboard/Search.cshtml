@@ -193,12 +193,17 @@
         }
 </style>
 @section Header{
-    <div class="col-sm-12">
-        <h1 class="m-0 text-muted">@(Model?.PostsWithPagination?.Data.Count() ?? 0)<span class="ml-2 text-muted">Search Results Found</span>  </h1>
-        <p class="text-muted">
-            You searched for: <strong>"@Model.Search"</strong>
-        </p>
+    <div class="content-header" style="background-color: #cdd1d8;">
+        <div class="container-fluid">
+            <div class="col-sm-12">
+                <h1 class="m-0 text-muted">@(Model?.PostsWithPagination?.Data.Count() ?? 0)<span class="ml-2 text-muted">Search Results Found</span>  </h1>
+                <p class="text-muted">
+                    You searched for: <strong>"@Model.Search"</strong>
+                </p>
+            </div>
+        </div>
     </div>
+
 }
 
 
