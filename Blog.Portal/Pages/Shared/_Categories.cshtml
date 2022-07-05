@@ -1,5 +1,6 @@
-﻿@model IEnumerable<CategoryDto>
+﻿@inject IMediator _mediator
 @{
+    var Categories = await _mediator.Send(new GetCategories());
 }
 <div class="row">
     <div class="col-sm-12">
@@ -9,10 +10,10 @@
             </div>
             <div class="card-body" style="padding-top:1rem;">
                 <div class="col-sm-12">
-                    @foreach (var category in Model)
+                    @foreach (var category in Categories)
                     {
                         <div class="category d-flex justify-content-between mb-3">
-                            <a href="~/Tutorials/@category.Id">@category.Name</a>
+                            <a href="~/Tutorials/@category.Id" title="@category.Name">@category.Name</a>
                             <span>@category.PostsCount</span>
                         </div>
                     }

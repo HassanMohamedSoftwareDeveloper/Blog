@@ -1,7 +1,7 @@
 using Blog.Application.Commands;
+using Blog.Application.DTOS.Dashboard;
 using Blog.Application.Queries.Dashboard;
 using Blog.Portal.Helpers;
-using Blog.Portal.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -22,7 +22,7 @@ public class PostModel : PageModel
     #endregion
 
     #region PROPS :
-    public BlogPostViewModel BlogPostModel { get; set; } = new();
+    public PostDto Post { get; set; } = new();
     #endregion
 
     #region Actions :
@@ -30,10 +30,7 @@ public class PostModel : PageModel
     {
         await _mediator.Send(new AddViewer(id));
 
-        BlogPostModel.Post = await _mediator.Send(new GetPostById(id));
-        BlogPostModel.LatestPosts = await _mediator.Send(new GetLatestPosts());
-        BlogPostModel.Categories = await _mediator.Send(new GetCategories());
-        BlogPostModel.Tags = await _mediator.Send(new GetTags());
+        Post = await _mediator.Send(new GetPostById(id));
 
     }
 

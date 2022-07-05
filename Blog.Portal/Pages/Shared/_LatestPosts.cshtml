@@ -1,5 +1,8 @@
-﻿@model LatestPostViewModel
+﻿@inject IMediator _mediator
 
+@{
+    var LatestPosts = await _mediator.Send(new GetLatestPosts());
+}
 
 <div class="row">
     <div class="col-sm-12">
@@ -9,12 +12,12 @@
             </div>
             <div class="card-body" style="padding-top:1rem;">
                 <div class="col-sm-12">
-                    @foreach (var latestPost in Model.LatestPosts)
+                    @foreach (var latestPost in LatestPosts)
                     {
-                        string latestPostImage = $"{Model.BasePath}/Image/{latestPost.Image}";
+                        string latestPostImage = $"/Image/{latestPost.Image}";
 
                         <div class="latest-posts">
-                            <a asp-page="Post" asp-route-id="@latestPost.Id">
+                            <a href="/tutorial/@latestPost.Id" title="@latestPost.Title">
                                 <div class="item d-flex   align-items-center">
                                     <div class="image">
                                         <img src="@latestPostImage" alt="..." class="img-fluid">

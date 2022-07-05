@@ -1,5 +1,6 @@
-﻿@model IEnumerable<TagDto>
+﻿@inject IMediator _mediator
 @{
+    var Tags = await _mediator.Send(new GetTags());
 }
 
 <div class="row">
@@ -11,10 +12,10 @@
             <div class="card-body" style="padding-top:1rem;">
                 <div class="col-sm-12">
                     <ul class="list-inline" style="padding: 0;margin: 0;">
-                        @foreach (var tag in Model)
+                        @foreach (var tag in Tags)
                         {
                             <li class="list-inline-item">
-                                <a class="tag" href="~/Tag/@tag.Tag">
+                                <a class="tag" href="~/Tag/@tag.Tag" title="@tag.Tag">
                                     #@tag.Tag
                                 </a>
                             </li>

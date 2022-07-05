@@ -1,0 +1,230 @@
+﻿@page "/search/{search}"
+@model Blog.Portal.Pages.Dashboard.SearchModel
+@{
+    ViewData["Title"] = $"Search results for {Model.Search}";
+    Layout = "_blogLayout";
+    var basePath = Request.PathBase;
+}
+
+
+<style>
+    .card-header {
+        background-color: rgba(0,0,0,0.05) !important;
+    }
+
+    .post-title {
+        color: #555;
+        font-weight: 700 !important;
+    }
+
+    .card-header a {
+        color: #555;
+    }
+
+    .post-description {
+        color: #6c757d !important;
+        font-weight: 400;
+        font-size: 0.95em;
+        clear: both;
+        text-align: justify;
+    }
+
+    .post-image-container {
+        height: 300px;
+        margin-bottom: .5rem !important;
+    }
+
+    .post-image {
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
+    }
+
+    .post-category {
+        color: #999;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        margin: 10px 0;
+        background-color: rgba(0,0,0,.06) !important;
+    }
+
+        .post-category a {
+            font-size: 13px;
+            color: #999;
+        }
+
+    .post-date {
+        letter-spacing: 0.05em;
+        font-weight: 400;
+        color: #999;
+        text-transform: capitalize;
+        margin: 10px 0;
+        font-size: 0.8em;
+    }
+
+    .post-avatar {
+        max-width: 40px;
+        min-width: 40px;
+        height: 40px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .user-title {
+        font-weight: 400;
+        color: #999;
+        text-transform: capitalize;
+    }
+
+    .comments {
+        font-weight: 400;
+        color: #999;
+        text-transform: capitalize;
+        letter-spacing: 0.05em;
+    }
+
+    .card-body {
+        padding: 0 .5rem;
+    }
+
+    .tag {
+        transition-delay: 0s;
+        transition-timing-function: ease;
+        transition-duration: 0.3s;
+        transition-property: all;
+        display: inline-block;
+        padding: 5px 25px;
+        border: 1px solid #ddd;
+        margin: 5px 0;
+        color: #777;
+        font-size: 0.75em;
+        text-transform: uppercase;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 50px;
+    }
+
+    .category {
+        background: #fafafa;
+        padding: 10px;
+        color: #777;
+        font-weight: 700;
+    }
+
+        .category:nth-of-type(2n+2) {
+            background: none;
+        }
+
+        .category a {
+            color: inherit;
+            font-size: 0.95em;
+        }
+
+            .category a:hover {
+                color: #000;
+                text-decoration: none;
+            }
+
+        .category span {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+    .tag:hover {
+        background: #999;
+        color: #fff;
+        border-color: #999;
+    }
+
+    .latest-posts a {
+        display: block;
+        color: #555;
+        text-decoration: none;
+    }
+
+        .latest-posts a:hover {
+            color: #000;
+        }
+
+    .latest-posts .image {
+        min-width: 60px;
+        max-width: 60px;
+        height: 60px;
+        overflow: hidden;
+        margin-right: 20px;
+    }
+
+    .latest-posts .item {
+        margin-bottom: 20px;
+    }
+
+    .latest-posts strong {
+        font-size: 0.95em;
+        display: block;
+        line-height: 1em;
+    }
+
+    .latest-posts .views,
+    .latest-posts .comments {
+        font-size: 0.8em;
+        font-weight: 400;
+        color: #bbb;
+        margin-top: 10px;
+    }
+
+        .latest-posts .views i,
+        .latest-posts .comments i {
+            margin-right: 5px;
+        }
+
+        .latest-posts .views::after,
+        .latest-posts .comments::after {
+            content: '|';
+            display: inline-block;
+            margin: 0 7px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .latest-posts .comments::after {
+            display: none;
+        }
+</style>
+@section Header{
+    <div class="col-sm-12">
+        <h1 class="m-0 text-muted">@(Model?.PostsWithPagination?.Data.Count() ?? 0)<span class="ml-2 text-muted">Search Results Found</span>  </h1>
+        <p class="text-muted">
+            You searched for: <strong>"@Model.Search"</strong>
+        </p>
+    </div>
+}
+
+
+@foreach (var post in Model.PostsWithPagination.Data)
+{
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <div class="card ml-2">
+                <div class="card-header">
+                    <a href="/tutorial/@post.Id" title="@post.Title">
+                        <h5 class="card-title m-0 post-title">@post.Title</h5>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="post-description mt-2 text-muted">
+                        @post.Description
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="/tutorial/@post.Id" title="Continue Reading">
+                        <span>Continue Reading</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!--Paging-->
+<partial name="_Paging" model="Model.PostsWithPagination" />

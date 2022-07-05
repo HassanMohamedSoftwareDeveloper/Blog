@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Persistence.QueryHandlers.Dashboard;
 
-internal sealed class GetPostsHandler : IRequestHandler<GetPosts, PaginationModel<BlogPostDto>>
+internal sealed class SearchPostsHandler : IRequestHandler<SearchPosts, PaginationModel<SearchDto>>
 {
     #region Fields :
     private readonly DbSet<PostReadModel> _posts;
@@ -19,7 +19,7 @@ internal sealed class GetPostsHandler : IRequestHandler<GetPosts, PaginationMode
     #endregion
 
     #region CTORS :
-    public GetPostsHandler(ReadDbContext context, IMapper mapper)
+    public SearchPostsHandler(ReadDbContext context, IMapper mapper)
     {
         _posts = context.Posts;
         _configurationProvider = mapper.ConfigurationProvider;
@@ -27,20 +27,16 @@ internal sealed class GetPostsHandler : IRequestHandler<GetPosts, PaginationMode
     #endregion
 
     #region Methods :
-    public async Task<PaginationModel<BlogPostDto>> Handle(GetPosts request, CancellationToken cancellationToken)
+    public async Task<PaginationModel<SearchDto>> Handle(SearchPosts request, CancellationToken cancellationToken)
     {
         var query = _posts.AsNoTracking();
 
-        if (request.CategoryId != default && request.CategoryId != Guid.Empty)
-            query = query.Where(x => x.CategoryId.Equals(request.CategoryId));
+        if (string.IsNullOrWhiteSpace(request.Search) is false)
+            query = query.Where(x => (x.Title + x.Description + x.Category.Name).ToLower().Contains(request.Search.ToLower()));
 
+        var sourceQuery = query.OrderBy(x => x.Created).ProjectTo<SearchDto>(_configurationProvider);
 
-        if (string.IsNullOrWhiteSpace(request.Tag) is false)
-            query = query.Where(x => x.Tags.ToLower().Contains(request.Tag.ToLower()));
-
-        var mappedQuery = query.OrderBy(x => x.Created).ProjectTo<BlogPostDto>(_configurationProvider);
-
-        return await new PaginationHelper<BlogPostDto>(request.PageNumber, request.PageSize, mappedQuery).CreateAsync(cancellationToken);
+        return await new PaginationHelper<SearchDto>(request.PageNumber, request.PageSize, sourceQuery).CreateAsync(cancellationToken);
     }
     #endregion
 }

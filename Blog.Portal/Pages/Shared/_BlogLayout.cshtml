@@ -17,10 +17,10 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="~/css/adminlte.min.css">
 
-    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css">
-    <link rel="stylesheet" href="~/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+   
 
     <link rel="stylesheet" href="~/css/Blog.css">
+   
 </head>
 <body class="hold-transition layout-top-nav">
 
@@ -188,10 +188,10 @@
                         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                             <i class="fas fa-search"></i>
                         </a>
-                        <div class="navbar-search-block">
-                            <form method="get" class="form-inline">
+                        <div class="navbar-search-block" id="SearchFormDiv">
+                            <form method="get" class="form-inline" id="SearchForm">
                                 <div class="input-group input-group-sm">
-                                    <input name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                    <input id="SearchFormSearch" name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                                     <div class="input-group-append">
                                         <button class="btn btn-navbar" type="submit">
                                             <i class="fas fa-search"></i>
@@ -207,9 +207,35 @@
                 </ul>
             </div>
         </nav>
-        <div class="content-wrapper">
 
-            @RenderBody()
+        <div class="content-wrapper">
+            <div class="content-header" style="background-color: #cdd1d8;">
+                <div class="container-fluid">
+                    @await RenderSectionAsync("Header",required:false)
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-8" style="border:solid 1px rgba(0,0,0,.06)">
+                            @RenderBody()
+                        </div>
+
+                        <div class="col-lg-4">
+                            @*FollowUs*@
+
+                            <partial name="_FollowUs" />
+                            <!--Latest Posts-->
+                            <partial name="_LatestPosts" />
+                            <!--Categories-->
+                            <partial name="_Categories" />
+                            <!--Tags-->
+                            <partial name="_Tags" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
@@ -226,9 +252,16 @@
     <!-- AdminLTE App -->
     <script src="~/js/adminlte.min.js"></script>
 
-    <script src="~/lib/select2/js/select2.full.min.js"></script>
     <script src="~/lib/bs-stepper/js/bs-stepper.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $("#SearchFormDiv").on('submit', '#SearchForm', function (e) {
+                e.preventDefault();
+                window.location.href = "/search/" + $("#SearchFormSearch").val();
+            });
+        });
+    </script>
 </body>
 </html>

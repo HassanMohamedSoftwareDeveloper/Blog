@@ -3,425 +3,147 @@
 @model Blog.Portal.Pages.Dashboard.PostModel
 @{
     var basePath = Request.PathBase;
-    string postImage = $"{basePath}/Image/{Model.BlogPostModel.Post.Image}";
-    string userImage = $"{basePath}/Image/{Model.BlogPostModel.Post.User.Image}";
+    string postImage = $"{basePath}/Image/{Model.Post.Image}";
+    string userImage = $"{basePath}/Image/{Model.Post.User.Image}";
     string loginedUserImage = $"{basePath}/Image/{User.UserImage()}";
-    ViewData["Title"] = "Blog";
+    ViewData["Title"] = Model.Post.Title;
     Layout = "_BlogLayout";
 }
 
-<style>
-        .vertical-scrollable {
-        height: 400px;
-        position: relative;
-        overflow-x: hidden;
-        overflow-y: scroll;
-    }
-
-    .card-header {
-        background-color: rgba(0,0,0,0.05) !important;
-    }
-
-    .post-title {
-        color: #555;
-        font-weight: 700 !important;
-    }
-
-    .card-header a {
-        color: #555;
-    }
-
-    .post-description {
-        color: #6c757d !important;
-        font-weight: 400;
-        font-size: 0.95em;
-        clear: both;
-        text-align: justify;
-    }
-
-    .post-image-container {
-        height: 300px;
-        margin-bottom: .5rem !important;
-    }
-
-    .post-image {
-        width: -webkit-fill-available;
-        height: -webkit-fill-available;
-    }
-
-    .post-category {
-        color: #999;
-        letter-spacing: 0.05em;
-        font-weight: 700;
-        text-transform: uppercase;
-        text-decoration: none;
-        margin: 10px 0;
-        background-color: rgba(0,0,0,.06) !important;
-    }
-
-        .post-category a {
-            font-size: 13px;
-            color: #999;
-        }
-
-    .post-date {
-        letter-spacing: 0.05em;
-        font-weight: 400;
-        color: #999;
-        text-transform: capitalize;
-        margin: 10px 0;
-        font-size: 0.8em;
-    }
-
-    .post-avatar {
-        max-width: 40px;
-        min-width: 40px;
-        height: 40px;
-        overflow: hidden;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-
-    .user-title {
-        font-weight: 400;
-        color: #999;
-        text-transform: capitalize;
-    }
-
-    .comments {
-        font-weight: 400;
-        color: #999;
-        text-transform: capitalize;
-        letter-spacing: 0.05em;
-    }
-
-    .card-body {
-        padding: 0 .5rem;
-    }
-
-    .tag {
-        transition-delay: 0s;
-        transition-timing-function: ease;
-        transition-duration: 0.3s;
-        transition-property: all;
-        display: inline-block;
-        padding: 5px 25px;
-        border: 1px solid #ddd;
-        margin: 5px 0;
-        color: #777;
-        font-size: 0.75em;
-        text-transform: uppercase;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 50px;
-    }
-
-    .category {
-        background: #fafafa;
-        padding: 10px;
-        color: #777;
-        font-weight: 700;
-    }
-
-        .category:nth-of-type(2n+2) {
-            background: none;
-        }
-
-        .category a {
-            color: inherit;
-            font-size: 0.95em;
-        }
-
-            .category a:hover {
-                color: #000;
-                text-decoration: none;
-            }
-
-        .category span {
-            font-size: 0.9em;
-            color: #aaa;
-        }
-
-    .tag:hover {
-        background: #999;
-        color: #fff;
-        border-color: #999;
-    }
-
-    .latest-posts a {
-        display: block;
-        color: #555;
-        text-decoration: none;
-    }
-
-        .latest-posts a:hover {
-            color: #000;
-        }
-
-    .latest-posts .image {
-        min-width: 60px;
-        max-width: 60px;
-        height: 60px;
-        overflow: hidden;
-        margin-right: 20px;
-    }
-
-    .latest-posts .item {
-        margin-bottom: 20px;
-    }
-
-    .latest-posts strong {
-        font-size: 0.95em;
-        display: block;
-        line-height: 1em;
-    }
-
-    .latest-posts .views,
-    .latest-posts .comments {
-        font-size: 0.8em;
-        font-weight: 400;
-        color: #bbb;
-        margin-top: 10px;
-    }
-
-        .latest-posts .views i,
-        .latest-posts .comments i {
-            margin-right: 5px;
-        }
-
-        .latest-posts .views::after,
-        .latest-posts .comments::after {
-            content: '|';
-            display: inline-block;
-            margin: 0 7px;
-            font-size: 0.9em;
-            color: #ccc;
-        }
-
-        .latest-posts .comments::after {
-            display: none;
-        }
-
-    .share-btn-container {
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        padding: 16px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 99999;
-        opacity: 50%;
-    }
-
-        .share-btn-container a i {
-            font-size: 32px;
-        }
-
-        .share-btn-container a {
-            margin: 12px 0;
-            transition: 500ms;
-        }
-
-            .share-btn-container a :hover {
-                transform: scale(1.2);
-            }
-
-        .share-btn-container .fa-facebook {
-            color: #1877f2;
-        }
-
-        .share-btn-container .fa-twitter {
-            color: #1da1f2;
-        }
-
-        .share-btn-container .fa-linkedin {
-            color: #0077b5;
-        }
-
-        .share-btn-container .fa-whatsapp {
-            color: #075e54;
-        }
-    /*Media Queries*/
-    @@media (max-width: 550px) {
-        .share-btn-container {
-            transform: unset;
-            top: unset;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            flex-direction: row;
-            box-shadow: 4px 0px 8px rgba(0,0,0,0.3);
-            padding: 16px 0;
-            justify-content: center;
-            visibility: visible;
-        }
-
-            .share-btn-container a {
-                margin: 0 32px;
-            }
-    }
-
-</style>
 
 
-<div class="share-btn-container">
-    <a href="#" class="facebook-btn">
-        <i class="fab fa-facebook "></i>
-    </a>
-    <a href="#" class="twitter-btn">
-        <i class="fab fa-twitter "></i>
-    </a>
-    <a href="#" class="linkedin-btn">
-        <i class="fab fa-linkedin "></i>
-    </a>
-    <a href="#" class="whatsapp-btn">
-        <i class="fab fa-whatsapp "></i>
-    </a>
-</div>
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0"> Blog <small>Posts</small></h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="@Request.PathBase/">Home</a></li>
-                    <li class="breadcrumb-item active">Blog</li>
-                </ol>
-            </div>
+@section Header{
+
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0"> Blog <small>Posts</small></h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="@Request.PathBase/">Home</a></li>
+                <li class="breadcrumb-item active">Blog</li>
+            </ol>
         </div>
     </div>
-</div>
+}
 
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title m-0 post-title">@Model.BlogPostModel.Post.Title</h5>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title m-0 post-title">@Model.Post.Title</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row post-image-container">
+                        <img id="p-image" src="@postImage" class="post-image img-fluid " alt="..">
+                    </div>
+
+                    <div class="row" style="padding-right:.25rem;padding-left:.25rem;">
+
+                        <div class="col-sm-12 d-flex justify-content-between align-items-center">
+                            <div>
+                                <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
                             </div>
-                            <div class="card-body">
-                                <div class="row post-image-container">
-                                    <a href="#" class="post-image">
-                                        <img id="p-image" src="@postImage" class="post-image img-fluid " alt="..">
-                                    </a>
-                                </div>
-
-                                <div class="row" style="padding-right:.25rem;padding-left:.25rem;">
-
-                                    <div class="col-sm-12 d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i> Share</button>
-                                            <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
-                                        </div>
-                                        <div class="post-date">@Model.BlogPostModel.Post.PostDate</div>
-                                        <div class="post-category">
-                                            <a href="~/Tutorials/@Model.BlogPostModel.Post.CategoryId">@Model.BlogPostModel.Post.Category</a>
-                                        </div>
-                                    </div>
-
-                                    <div style="background-color: rgba(0,0,0,.03);" class="col-sm-12 d-flex justify-content-between align-items-center">
-                                        <a class="d-flex align-items-center flex-wrap" href="#">
-                                            <div class="post-avatar">
-                                                <img src="@userImage" class="img-fluid" alt="..">
-                                            </div>
-                                            <div class="user-title">
-                                                <span>@Model.BlogPostModel.Post.User.FullName</span>
-                                            </div>
-                                        </a>
-                                        <div class="post-date ">
-                                            <span><i class="fas fa-clock"></i> @Model.BlogPostModel.Post.TimeAgo</span>
-                                        </div>
-                                        <div class="comments ">
-                                            <i class="fas fa-eye"></i><b>@Model.BlogPostModel.Post.ViewersCount</b>
-                                        </div>
-                                        <div class="comments ">
-                                            <i class="fas fa-comments"></i><b>@Model.BlogPostModel.Post.CommentsCount</b>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-12 mb-2">
-                                        <p class="post-description mt-2 text-muted">
-                                            @Model.BlogPostModel.Post.Description
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 vertical-scrollable" style="background-color: rgba(0,0,0,.03);border-bottom-style: solid;border-bottom-color: rgba(0,0,0,.1);">
-                                        @Html.Raw(Model.BlogPostModel.Post.Body)
-                                    </div>
-                                    <div class="col-sm-12 mt-2">
-                                        <ul class="list-inline" style="padding: 0;margin: 0;">
-                                            @foreach (var tag in Model.BlogPostModel.Post.TagsList)
-                                            {
-                                                <li class="list-inline-item">
-                                                    <a class="tag" href="~/Tag/@tag.Tag">
-                                                        #@tag.Tag
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-footer card-comments">
-                                @foreach (var comment in Model.BlogPostModel.Post.Comments)
-                                {
-                                    string commentUserImage = $"{basePath}/Image/{comment.User.Image}";
-                                    <div class="card-comment">
-                                        <img class="img-circle img-sm" src="@commentUserImage" alt="..">
-                                        <div class="comment-text">
-                                            <span class="username">
-                                                @comment.User.FullName
-                                                <span class="text-muted float-right"><span class="mr-2">@comment.TimeAgo</span>  @comment.CommentDate </span>
-                                            </span>
-                                            @comment.Message
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                            <div class="card-footer">
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    <form asp-page="Post" asp-page-handler="Comment" method="post">
-                                        <input type="hidden" name="postId" asp-for="BlogPostModel.Post.Id" />
-                                        <img class="img-fluid img-circle img-sm" src="@loginedUserImage" alt="..">
-                                        <div class="img-push">
-                                            <input name="comment" type="text" class="form-control form-control-sm" placeholder="Press enter to post comment">
-                                        </div>
-                                    </form>
-                                }
-                                else
-                                {
-                                    <div>
-                                        <a asp-page="/Auth/Login" class="btn btn-default btn-sm"><i class="fas fa-sign-in-alt"></i> Login</a>
-                                        <a asp-page="/Auth/Register" class="btn btn-default btn-sm"><i class="fas fa-user-plus"></i> SignUp</a>
-                                        <label>To be able to write a Comment.</label>
-                                    </div>
-                                }
+                            <div class="post-date">@Model.Post.PostDate</div>
+                            <div class="post-category">
+                                <a href="~/Tutorials/@Model.Post.CategoryId" title="@Model.Post.Category">@Model.Post.Category</a>
                             </div>
                         </div>
+
+                        <div style="background-color: rgba(0,0,0,.03);" class="col-sm-12 d-flex justify-content-between align-items-center">
+                            <a class="d-flex align-items-center flex-wrap" href="#">
+                                <div class="post-avatar">
+                                    <img src="@userImage" class="img-fluid" alt="..">
+                                </div>
+                                <div class="user-title">
+                                    <span>@Model.Post.User.FullName</span>
+                                </div>
+                            </a>
+                            <div class="post-date ">
+                                <span><i class="fas fa-clock"></i> @Model.Post.TimeAgo</span>
+                            </div>
+                            <div class="comments ">
+                                <i class="fas fa-eye"></i><b>@Model.Post.ViewersCount</b>
+                            </div>
+                            <div class="comments ">
+                                <i class="fas fa-comments"></i><b>@Model.Post.CommentsCount</b>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="share-btn-container d-flex justify-content-center align-items-center">
+                                <a href="#" class="facebook-btn">
+                                    <i class="fab fa-facebook "></i>
+                                </a>
+                                <a href="#" class="twitter-btn">
+                                    <i class="fab fa-twitter "></i>
+                                </a>
+                                <a href="#" class="linkedin-btn">
+                                    <i class="fab fa-linkedin "></i>
+                                </a>
+                                <a href="#" class="whatsapp-btn">
+                                    <i class="fab fa-whatsapp "></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <p class="post-description mt-2 text-muted">
+                                @Model.Post.Description
+                            </p>
+                        </div>
+                        <div class="col-sm-12 vertical-scrollable" style="background-color: rgba(0,0,0,.03);border-bottom-style: solid;border-bottom-color: rgba(0,0,0,.1);">
+                            @Html.Raw(Model.Post.Body)
+                        </div>
+                        <div class="col-sm-12 mt-2">
+                            <ul class="list-inline" style="padding: 0;margin: 0;">
+                            @foreach (var tag in Model.Post.TagsList)
+                            {
+                                <li class="list-inline-item">
+                                    <a class="tag" href="~/Tag/@tag.Tag" title="@tag.Tag">
+                                        #@tag.Tag
+                                    </a>
+                                </li>
+                            }
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                @*FollowUs*@
-                <partial name="_FollowUs" />
-                <!--Search-->
-               @* <partial name="_Search" model="new SearchViewModel{Categories=Model.BlogPostModel.Categories}" />*@
-                <!--Latest Posts-->
-                <partial name="_LatestPosts" model="new LatestPostViewModel{LatestPosts=Model.BlogPostModel.LatestPosts,BasePath=basePath}" />
-                <!--Categories-->
-                <partial name="_Categories" model="Model.BlogPostModel.Categories" />
-                <!--Tags-->
-                <partial name="_Tags" model="Model.BlogPostModel.Tags" />
+            <div class="card-footer card-comments">
+                @foreach (var comment in Model.Post.Comments)
+                {
+                    string commentUserImage = $"{basePath}/Image/{comment.User.Image}";
+                    <div class="card-comment">
+                        <img class="img-circle img-sm" src="@commentUserImage" alt="..">
+                        <div class="comment-text">
+                            <span class="username">
+                                @comment.User.FullName
+                                <span class="text-muted float-right"><span class="mr-2">@comment.TimeAgo</span>  @comment.CommentDate </span>
+                            </span>
+                            @comment.Message
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="card-footer">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form asp-page="Post" asp-page-handler="Comment" method="post">
+                        <input type="hidden" name="postId" asp-for="@Model.Post.Id" />
+                        <img class="img-fluid img-circle img-sm" src="@loginedUserImage" alt="..">
+                        <div class="img-push">
+                            <input name="comment" type="text" class="form-control form-control-sm" placeholder="Press enter to post comment">
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div>
+                        <a asp-page="/Auth/Login" class="btn btn-default btn-sm"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        <a asp-page="/Auth/Register" class="btn btn-default btn-sm"><i class="fas fa-user-plus"></i> SignUp</a>
+                        <label>To be able to write a Comment.</label>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -440,7 +162,7 @@
         });
         function init() {
             let postUrl = encodeURI(document.location.href);
-            let postTitle = encodeURI('@Model.BlogPostModel.Post.Title');
+            let postTitle = encodeURI('@Model.Post.Title');
             let postImg = encodeURI('@postImage');
 
             facebookBtn.setAttribute("href", `https://www.facebook.com/sharer.php?u=${postUrl}`);

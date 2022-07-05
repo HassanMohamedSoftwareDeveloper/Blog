@@ -6,352 +6,77 @@
     ViewData["Title"] = "Blog";
     Layout = "_BlogLayout";
 }
-<style>
-    .vertical-scrollable {
-    height: 400px;
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
 
-.card-header {
-    background-color: rgba(0,0,0,0.05) !important;
-}
 
-.post-title {
-    color: #555;
-    font-weight: 700 !important;
-}
-
-.card-header a {
-    color: #555;
-}
-
-.post-description {
-    color: #6c757d !important;
-    font-weight: 400;
-    font-size: 0.95em;
-    clear: both;
-    text-align: justify;
-}
-
-.post-image-container {
-    height: 300px;
-    margin-bottom: .5rem !important;
-}
-
-.post-image {
-    width: -webkit-fill-available;
-    height: -webkit-fill-available;
-}
-
-.post-category {
-    color: #999;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-decoration: none;
-    margin: 10px 0;
-    background-color: rgba(0,0,0,.06) !important;
-}
-
-    .post-category a {
-        font-size: 13px;
-        color: #999;
-    }
-
-.post-date {
-    letter-spacing: 0.05em;
-    font-weight: 400;
-    color: #999;
-    text-transform: capitalize;
-    margin: 10px 0;
-    font-size: 0.8em;
-}
-
-.post-avatar {
-    max-width: 40px;
-    min-width: 40px;
-    height: 40px;
-    overflow: hidden;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.user-title {
-    font-weight: 400;
-    color: #999;
-    text-transform: capitalize;
-}
-
-.comments {
-    font-weight: 400;
-    color: #999;
-    text-transform: capitalize;
-    letter-spacing: 0.05em;
-}
-
-.card-body {
-    padding: 0 .5rem;
-}
-
-.tag {
-    transition-delay: 0s;
-    transition-timing-function: ease;
-    transition-duration: 0.3s;
-    transition-property: all;
-    display: inline-block;
-    padding: 5px 25px;
-    border: 1px solid #ddd;
-    margin: 5px 0;
-    color: #777;
-    font-size: 0.75em;
-    text-transform: uppercase;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 50px;
-}
-
-.category {
-    background: #fafafa;
-    padding: 10px;
-    color: #777;
-    font-weight: 700;
-}
-
-    .category:nth-of-type(2n+2) {
-        background: none;
-    }
-
-    .category a {
-        color: inherit;
-        font-size: 0.95em;
-    }
-
-        .category a:hover {
-            color: #000;
-            text-decoration: none;
-        }
-
-    .category span {
-        font-size: 0.9em;
-        color: #aaa;
-    }
-
-.tag:hover {
-    background: #999;
-    color: #fff;
-    border-color: #999;
-}
-
-.latest-posts a {
-    display: block;
-    color: #555;
-    text-decoration: none;
-}
-
-    .latest-posts a:hover {
-        color: #000;
-    }
-
-.latest-posts .image {
-    min-width: 60px;
-    max-width: 60px;
-    height: 60px;
-    overflow: hidden;
-    margin-right: 20px;
-}
-
-.latest-posts .item {
-    margin-bottom: 20px;
-}
-
-.latest-posts strong {
-    font-size: 0.95em;
-    display: block;
-    line-height: 1em;
-}
-
-.latest-posts .views,
-.latest-posts .comments {
-    font-size: 0.8em;
-    font-weight: 400;
-    color: #bbb;
-    margin-top: 10px;
-}
-
-    .latest-posts .views i,
-    .latest-posts .comments i {
-        margin-right: 5px;
-    }
-
-    .latest-posts .views::after,
-    .latest-posts .comments::after {
-        content: '|';
-        display: inline-block;
-        margin: 0 7px;
-        font-size: 0.9em;
-        color: #ccc;
-    }
-
-    .latest-posts .comments::after {
-        display: none;
-    }
-
-.share-btn-container {
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 99999;
-    opacity: 50%;
-}
-
-    .share-btn-container a i {
-        font-size: 32px;
-    }
-
-    .share-btn-container a {
-        margin: 12px 0;
-        transition: 500ms;
-    }
-
-        .share-btn-container a :hover {
-            transform: scale(1.2);
-        }
-
-    .share-btn-container .fa-facebook {
-        color: #1877f2;
-    }
-
-    .share-btn-container .fa-twitter {
-        color: #1da1f2;
-    }
-
-    .share-btn-container .fa-linkedin {
-        color: #0077b5;
-    }
-
-    .share-btn-container .fa-whatsapp {
-        color: #075e54;
-    }
-/*Media Queries*/
-@@media (max-width: 550px) {
-    .share-btn-container {
-        transform: unset;
-        top: unset;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        flex-direction: row;
-        box-shadow: 4px 0px 8px rgba(0,0,0,0.3);
-        padding: 16px 0;
-        justify-content: center;
-        visibility: visible;
-    }
-
-        .share-btn-container a {
-            margin: 0 32px;
-        }
-}
-
-</style>
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0"> Blog <small>Posts</small></h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="@basePath/">Home</a></li>
-                    <li class="breadcrumb-item active">Blog</li>
-                </ol>
-            </div>
+@section Header{
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0"> Blog <small>Posts</small></h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="@basePath/">Home</a></li>
+                <li class="breadcrumb-item active">Blog</li>
+            </ol>
         </div>
     </div>
-</div>
+}
 
 
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="row">
-                    @foreach (var post in Model.BlogModel.PaginatedPosts.Data)
-                    {
-                        string postImage = $"{basePath}/Image/{post.Image}";
-                        string userImage = $"{basePath}/Image/{post.User.Image}";
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header ph">
-                                    <a asp-page="Post" asp-route-id="@post.Id"> <h5 class="card-title m-0 post-title">@post.Title</h5></a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row post-image-container">
-                                        <a asp-page="Post" asp-route-id="@post.Id" class="post-image"><img src="@postImage" class="post-image img-fluid " alt=".."></a>
-                                    </div>
+    <div class="row">
+    @foreach (var post in Model.PaginatedPosts.Data)
+    {
+        string postImage = $"{basePath}/Image/{post.Image}";
+        string userImage = $"{basePath}/Image/{post.User.Image}";
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header ph">
+                    <a asp-page="Post" asp-route-id="@post.Id" title="@post.Title"> <h5 class="card-title m-0 post-title">@post.Title</h5></a>
+                </div>
+                <div class="card-body">
+                    <div class="row post-image-container">
+                        <a asp-page="Post" asp-route-id="@post.Id" class="post-image" title="@post.Title"><img src="@postImage" class="post-image img-fluid " alt=".."></a>
+                    </div>
 
-                                    <div class="row" style="padding-right:.25rem;padding-left:.25rem;">
+                    <div class="row" style="padding-right:.25rem;padding-left:.25rem;">
 
-                                        <div class="col-sm-12 d-flex justify-content-between align-items-center">
-                                            <div class="post-date">@post.PostDate</div>
-                                            <div class="post-category">
-                                                <a href="~/Tutorials/@post.CategoryId">@post.Category</a>
-                                            </div>
-                                        </div>
-
-                                        <div style="background-color: rgba(0,0,0,.03);" class="col-sm-12 d-flex justify-content-between align-items-center">
-                                            <a class="d-flex align-items-center flex-wrap" href="#">
-                                                <div class="post-avatar">
-                                                    <img src="@userImage" class="img-fluid" alt="..">
-                                                </div>
-                                                <div class="user-title">
-                                                    <span>@post.User.FullName</span>
-                                                </div>
-                                            </a>
-                                            <div class="post-date ">
-                                                <span><i class="fas fa-clock"></i> @post.TimeAgo</span>
-                                            </div>
-                                            <div class="comments ">
-                                                <i class="fas fa-comments"></i><b>@post.CommentsCount</b>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 desc">
-                                            <p class="post-description mt-2 text-muted">
-                                                @post.Description
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-sm-12 d-flex justify-content-between align-items-center">
+                            <div class="post-date">@post.PostDate</div>
+                            <div class="post-category">
+                                <a href="~/Tutorials/@post.CategoryId" title="@post.Category">@post.Category</a>
                             </div>
                         </div>
-                    }
-                </div>
-                <!--Paging-->
-                <partial name="_Paging" model="Model.BlogModel.PaginatedPosts" />
-            </div>
 
-            <div class="col-lg-4">
-                @*FollowUs*@
-                <partial name="_FollowUs" />
-                <!--Search-->
-               @* <partial name="_Search" model="new SearchViewModel{Categories=Model.BlogModel.Categories}" />*@
-                <!--Latest Posts-->
-                <partial name="_LatestPosts" model="new LatestPostViewModel{LatestPosts=Model.BlogModel.LatestPosts,BasePath=basePath}" />
-                <!--Categories-->
-                <partial name="_Categories" model="Model.BlogModel.Categories" />
-                <!--Tags-->
-                <partial name="_Tags" model="Model.BlogModel.Tags" />
+                        <div style="background-color: rgba(0,0,0,.03);" class="col-sm-12 d-flex justify-content-between align-items-center">
+                            <a class="d-flex align-items-center flex-wrap" href="#">
+                                <div class="post-avatar">
+                                    <img src="@userImage" class="img-fluid" alt="..">
+                                </div>
+                                <div class="user-title">
+                                    <span>@post.User.FullName</span>
+                                </div>
+                            </a>
+                            <div class="post-date ">
+                                <span><i class="fas fa-clock"></i> @post.TimeAgo</span>
+                            </div>
+                            <div class="comments ">
+                                <i class="fas fa-comments"></i><b>@post.CommentsCount</b>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 desc">
+                            <p class="post-description mt-2 text-muted">
+                                @post.Description
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
+<!--Paging-->
+<partial name="_Paging" model="Model.PaginatedPosts" />
 
 
 @section Scripts{

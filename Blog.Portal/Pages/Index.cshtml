@@ -1,19 +1,8 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = string.IsNullOrWhiteSpace(Model.Search) ? "Home page" : $"Search results for {Model.Search}";
+    ViewData["Title"] = "Home page";
     Layout = "_blogLayout";
+    var basePath = Request.PathBase;
 }
-
-@if (string.IsNullOrWhiteSpace(Model.Search))
-{
-    <h1>Home Page</h1>
-}
-else
-{
-
-}
-
-@section Scripts{
-
-    }
+<h1>Home Page</h1>
