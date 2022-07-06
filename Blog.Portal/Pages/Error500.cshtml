@@ -1,26 +1,9 @@
 ﻿@page
 @model Blog.Portal.Pages.Error500Model
 @{
-    var basePath = Request.PathBase;
     ViewData["Title"] = "500 Error";
-    Layout = "_BlogLayout";
+    Layout = "_ErrorLayout";
 }
-
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>500 Error Page</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="@basePath">Home</a></li>
-                    <li class="breadcrumb-item active">500 Error Page</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
 
 <section class="content">
     <div class="error-page">
@@ -31,7 +14,7 @@
 
             <p>
                 We will work on fixing that right away.
-                Meanwhile, you may <a href="@basePath">return to home</a> or try using the search form.
+                Meanwhile, you may <a href="~/" title="Home">return to home</a> or try using the search form.
             </p>
 
             <form class="search-form">

@@ -74,9 +74,13 @@
                                 </li>
                             </ul>
                         </li>
-
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a href="~/Admin/Posts" class="nav-link">Portal</a>
+                            </li>
+                        }
                     </ul>
-
                 </div>
 
 
