@@ -14,6 +14,7 @@ internal class PostReadModel
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
     public virtual ICollection<CommentReadModel> Comments { get; set; }
+    public virtual ICollection<LikeReadModel> Likes { get; set; }
     public virtual CategoryReadModel Category { get; set; }
     public virtual UserReadModel User { get; set; }
 }

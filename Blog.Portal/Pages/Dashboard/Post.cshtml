@@ -23,11 +23,18 @@
                 </div>
 
                 <div class="row" style="padding-right:.25rem;padding-left:.25rem;">
-
                     <div class="col-sm-12 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
-                        </div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div>
+                                <form asp-page="Post" asp-page-handler="@(Model.CurrentUserIsLikeThisPost?"DisLike":"Like")" method="post">
+                                    <input type="hidden" name="postId" asp-for="@Model.Post.Id" />
+                                    <button type="submit" class="btn btn-default btn-sm" style="background-color: transparent;;border:none; @(Model.CurrentUserIsLikeThisPost?"color: blue;":"")">
+                                        <strong><i class="far fa-thumbs-up mr-2"></i>Like</strong>
+                                    </button>
+                                </form>
+                            </div>
+                        }
                         <div class="post-date">@Model.Post.PostDate</div>
                         <div class="post-category">
                             <a href="~/Tutorials/@Model.Post.CategoryId" title="@Model.Post.Category">@Model.Post.Category</a>
@@ -56,16 +63,16 @@
                     <div class="col-sm-12">
                         <div class="share-btn-container d-flex justify-content-center align-items-center">
                             <a href="#" class="facebook-btn">
-                                <i class="fab fa-facebook "></i>
+                                <i style="color: #1877f2;" class="fab fa-facebook-square"></i>
                             </a>
                             <a href="#" class="twitter-btn">
-                                <i class="fab fa-twitter "></i>
+                                <i style="color: #1da1f2;" class="fab fa-twitter-square"></i>
                             </a>
                             <a href="#" class="linkedin-btn">
-                                <i class="fab fa-linkedin "></i>
+                                <i style="color: #0077b5;" class="fab fa-linkedin"></i>
                             </a>
                             <a href="#" class="whatsapp-btn">
-                                <i class="fab fa-whatsapp "></i>
+                                <i style="color: #075e54;" class="fab fa-whatsapp-square"></i>
                             </a>
                         </div>
                     </div>
@@ -111,11 +118,20 @@
             <div class="card-footer">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <form asp-page="Post" asp-page-handler="Comment" method="post">
+                    <form id="CommentForm" asp-page="Post" asp-page-handler="Comment" method="post">
                         <input type="hidden" name="postId" asp-for="@Model.Post.Id" />
-                        <img class="img-fluid img-circle img-sm" src="@loginedUserImage" alt="..">
-                        <div class="img-push">
-                            <input name="comment" type="text" class="form-control form-control-sm" placeholder="Press enter to post comment">
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <img class="img-fluid img-circle img-sm mt-1 mr-2" src="@loginedUserImage" alt="..">
+                                </div>
+                                <input id="CommentInput" name="comment" type="text" class="form-control" placeholder="Press enter to post comment">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span style="cursor: pointer;" onclick="Comment()"><i class="fas fa-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 }
@@ -152,6 +168,12 @@
             twitterBtn.setAttribute("href", `https://twitter.com/share?url=${postUrl}&text=${postTitle}`);
             linkedinBtn.setAttribute("href", `https://www.linkedin.com/shareArticle?url=${postUrl}&title=${postTitle}`);
             whatsAppBtn.setAttribute("href", `https://api.whatsapp.com/send?text=${postTitle} ${postUrl}`);
+        }
+
+        function Comment() {
+            if ($("#CommentInput").val()) {
+                $("#CommentForm").submit();
+            }
         }
     </script>
 

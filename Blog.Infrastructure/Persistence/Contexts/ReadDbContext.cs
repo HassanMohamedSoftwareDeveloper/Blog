@@ -18,6 +18,7 @@ internal sealed class ReadDbContext : IdentityDbContext<UserReadModel>
     public DbSet<CategoryReadModel> Categories { get; set; }
     public DbSet<CommentReadModel> Comments { get; set; }
     public DbSet<ReplyReadModel> Replies { get; set; }
+    public DbSet<LikeReadModel> Likes { get; set; }
     #endregion
 
     #region Methods :
@@ -29,6 +30,7 @@ internal sealed class ReadDbContext : IdentityDbContext<UserReadModel>
         builder.ApplyConfiguration(new CommentConfiguration());
         builder.ApplyConfiguration(new ReplyConfiguration());
         builder.ApplyConfiguration(new UserConfiguration());
+        builder.ApplyConfiguration(new LikeConfiguration());
     }
     #endregion
 }

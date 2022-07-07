@@ -37,6 +37,7 @@ internal sealed class PostConfiguration : IEntityTypeConfiguration<Post>
         builder.Property(typeof(DateTime?), "_updated").HasColumnName("Updated").IsRequired(false);
 
         builder.HasMany(typeof(Comment), "_comments");
+        builder.HasMany(typeof(Like), "_likes");
 
     }
 }

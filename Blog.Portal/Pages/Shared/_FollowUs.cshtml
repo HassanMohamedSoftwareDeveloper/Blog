@@ -1,4 +1,33 @@
-﻿<div class="row">
+﻿<style>
+    .follow-us a {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        margin: 3px;
+        transition: 500ms;
+    }
+
+        .follow-us a :hover {
+            transform: scale(1.2);
+        }
+
+        .follow-us a i {
+            font-size: 32px;
+        }
+
+    @@media (max-width: 550px) {
+        .follow-us {
+            transform: unset;
+            width: 100%;
+            flex-direction: row;
+            padding: 16px 0;
+            justify-content: center;
+            visibility: visible;
+        }
+    }
+</style>
+<div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
@@ -7,9 +36,26 @@
             <div class="card-body" style="padding-top:1rem;">
                 <div class="col-sm-12">
                     <ul style="padding-left:0px;" class="d-flex justify-content-between align-items-center">
-                        <li class="list-inline-item"><a style="font-size:32px; width:32px;height:32px; line-height:32px;margin:3px" href="https://www.facebook.com/HassanMohamedSoftwareDeveloper"><i style="color: #1877f2;" class="fab fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a style="font-size:32px; width:32px;height:32px; line-height:32px;margin:3px" href="https://twitter.com/HMSoftwareDev"><i style="color: #1da1f2;" class="fab fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a style="font-size:32px; width:32px;height:32px; line-height:32px;margin:3px" href="https://www.linkedin.com/in/hassanmohamedsoftwaredeveloper/"><i style="color: #0077b5;" class="fab fa-linkedin"></i></a></li>
+                        <li class="list-inline-item follow-us">
+                            <a href="https://www.facebook.com/HassanMohamedSoftwareDeveloper" target="_blank">
+                                <i style="color: #1877f2;" class="fab fa-facebook-square"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item follow-us">
+                            <a href="https://twitter.com/HMSoftwareDev" target="_blank">
+                                <i style="color: #1da1f2;" class="fab fa-twitter-square"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item follow-us">
+                            <a href="https://www.linkedin.com/in/hassanmohamedsoftwaredeveloper/" target="_blank">
+                                <i style="color: #0077b5;" class="fab fa-linkedin"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item follow-us">
+                            <a href="http://wa.me/+201014983543/" target="_blank">
+                                <i style="color: #075e54;" class="fab fa-whatsapp-square"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

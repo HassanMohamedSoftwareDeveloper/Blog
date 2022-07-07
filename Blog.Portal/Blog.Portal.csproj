@@ -38,6 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="wwwroot\Content\blog\" />
 	  <Folder Include="wwwroot\Content\user\" />
 	</ItemGroup>
 

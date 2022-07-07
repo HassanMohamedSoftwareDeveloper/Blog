@@ -20,6 +20,7 @@ internal class WriteDbContext : IdentityDbContext<User>
     public DbSet<Category> Categories { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Reply> Replies { get; set; }
+    public DbSet<Like> Likes { get; set; }
     #endregion
 
     #region Methods :
@@ -30,6 +31,7 @@ internal class WriteDbContext : IdentityDbContext<User>
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new CommentConfiguration());
         builder.ApplyConfiguration(new ReplyConfiguration());
+        builder.ApplyConfiguration(new LikeConfiguration());
     }
     #endregion
 }

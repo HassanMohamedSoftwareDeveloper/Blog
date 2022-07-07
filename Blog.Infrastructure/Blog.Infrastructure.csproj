@@ -13,7 +13,6 @@
 
 	<ItemGroup>
 		<Folder Include="Mapping\Managers\" />
-		<Folder Include="Persistence\Migrations\" />
 	</ItemGroup>
 
 	<ItemGroup>

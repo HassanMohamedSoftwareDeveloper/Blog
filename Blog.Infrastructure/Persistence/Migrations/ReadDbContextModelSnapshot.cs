@@ -17,7 +17,7 @@ namespace Blog.Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -48,7 +48,7 @@ namespace Blog.Infrastructure.Persistence.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PostReadModelId")
+                    b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
@@ -56,11 +56,35 @@ namespace Blog.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostReadModelId");
+                    b.HasIndex("PostId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments", (string)null);
+                });
+
+            modelBuilder.Entity("Blog.Infrastructure.Persistence.Models.Read.LikeReadModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("Blog.Infrastructure.Persistence.Models.Read.PostReadModel", b =>
@@ -114,7 +138,7 @@ namespace Blog.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CommentReadModelId")
+                    b.Property<Guid>("CommentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
@@ -128,7 +152,7 @@ namespace Blog.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentReadModelId");
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("UserId");
 
@@ -344,13 +368,34 @@ namespace Blog.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Blog.Infrastructure.Persistence.Models.Read.CommentReadModel", b =>
                 {
-                    b.HasOne("Blog.Infrastructure.Persistence.Models.Read.PostReadModel", null)
+                    b.HasOne("Blog.Infrastructure.Persistence.Models.Read.PostReadModel", "Post")
                         .WithMany("Comments")
-                        .HasForeignKey("PostReadModelId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Blog.Infrastructure.Persistence.Models.Read.UserReadModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Blog.Infrastructure.Persistence.Models.Read.LikeReadModel", b =>
+                {
+                    b.HasOne("Blog.Infrastructure.Persistence.Models.Read.PostReadModel", "Post")
+                        .WithMany("Likes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Blog.Infrastructure.Persistence.Models.Read.UserReadModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
@@ -374,13 +419,17 @@ namespace Blog.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Blog.Infrastructure.Persistence.Models.Read.ReplyReadModel", b =>
                 {
-                    b.HasOne("Blog.Infrastructure.Persistence.Models.Read.CommentReadModel", null)
+                    b.HasOne("Blog.Infrastructure.Persistence.Models.Read.CommentReadModel", "Comment")
                         .WithMany("Replies")
-                        .HasForeignKey("CommentReadModelId");
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Blog.Infrastructure.Persistence.Models.Read.UserReadModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Comment");
 
                     b.Navigation("User");
                 });
@@ -449,6 +498,8 @@ namespace Blog.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Blog.Infrastructure.Persistence.Models.Read.PostReadModel", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Likes");
                 });
 #pragma warning restore 612, 618
         }

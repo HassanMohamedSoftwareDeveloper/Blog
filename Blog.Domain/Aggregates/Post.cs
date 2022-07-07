@@ -22,6 +22,7 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
     private DateTime? _updated;
     private int _viewersCount;
     private List<Comment> _comments = new();
+    private List<Like> _likes = new();
     #endregion
 
     #region CTORS :
@@ -51,6 +52,8 @@ public class Post : AggregateRoot<PostId>, IAggregateRoot<PostId>
         comment.AddReply(reply);
     }
     public void AddViewer() => _viewersCount += 1;
+    public void Like(Like like) => _likes.Add(like);
+    public Like UnLike(UserId userId) => _likes.Where(x => x._userId.Equals(userId)).FirstOrDefault();
     #endregion
 
     #region Helpers :

@@ -206,21 +206,6 @@
         transform: scale(1.2);
     }
 
-.share-btn-container .fa-facebook {
-    color: #1877f2;
-}
-
-.share-btn-container .fa-twitter {
-    color: #1da1f2;
-}
-
-.share-btn-container .fa-linkedin {
-    color: #0077b5;
-}
-
-.share-btn-container .fa-whatsapp {
-    color: #075e54;
-}
 /*Media Queries*/
 @media (max-width: 550px) {
     .share-btn-container {

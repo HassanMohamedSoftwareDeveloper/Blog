@@ -13,6 +13,7 @@ internal sealed class PostConfiguration : IEntityTypeConfiguration<PostReadModel
 
         builder.HasOne(p => p.Category).WithMany(c => c.Posts).HasForeignKey(p => p.CategoryId);
         builder.HasOne(p => p.User);
-        builder.HasMany(p => p.Comments).WithOne(x=>x.Post).HasForeignKey(x=>x.PostId);
+        builder.HasMany(p => p.Comments).WithOne(x => x.Post).HasForeignKey(x => x.PostId);
+        builder.HasMany(p => p.Likes).WithOne(x => x.Post).HasForeignKey(x => x.PostId);
     }
 }

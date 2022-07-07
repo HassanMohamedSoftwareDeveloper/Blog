@@ -8,7 +8,7 @@ public abstract class Repository<TRoot, TKey> : IRepository<TRoot, TKey> where T
 {
     #region Fields :
     protected readonly DbSet<TRoot> _entities;
-    private readonly DbContext _context;
+    protected readonly DbContext _context;
     #endregion
 
     #region CTORS :

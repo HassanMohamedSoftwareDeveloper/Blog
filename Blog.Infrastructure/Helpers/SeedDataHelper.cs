@@ -15,9 +15,7 @@ public static class SeedDataHelper
             var ctx = scope.ServiceProvider.GetRequiredService<WriteDbContext>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
             ctx.Database.EnsureCreated();
-
             var adminRole = new IdentityRole("Admin");
 
             if (ctx.Roles.Any() is false)
