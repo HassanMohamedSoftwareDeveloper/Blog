@@ -145,21 +145,29 @@
                         @foreach (var post in Model.LatestPosts)
                         {
                             string postImage = $"{basePath}/Image/{post.Image}";
+                            string userPostImage = $"{basePath}/Image/{post.User.Image}";
                             <div class="col-md-4 mr-2">
                                 <div class="row post-image-container">
-                                    <a class="post-image" href="~/tutrial/@post.Id" title="@post.Title">
+                                    <a class="post-image" href="~/Tutorial/@post.Id" title="@post.Title">
                                         <img src="@postImage" class="post-image img-fluid " alt="..">
                                     </a>
                                 </div>
                                 <div class="row">
-                                    <a href="~/tutrial/@post.Id" title="@post.Title">
+                                    <a href="~/Tutorial/@post.Id" title="@post.Title">
                                         <h5 class="card-title m-0 post-title">@post.Title</h5>
                                     </a>
                                 </div>
                                 <div class="row ">
-                                    <div class="post-date">
-                                        <span class="mr-3"><i class="fas fa-user mr-2"></i> hassan mohamed</span>
-                                        <span><i class="fas fa-clock mr-2"></i> 2022-02-02</span>
+                                    <div class="post-date d-flex justify-content-between align-items-center">
+                                        <a class="d-flex align-items-center flex-wrap mr-3" href="#">
+                                            <div class="post-avatar">
+                                                <img src="@userPostImage" class="img-fluid" alt="..">
+                                            </div>
+                                            <div class="user-title ">
+                                                <span>@post.User.FullName</span>
+                                            </div>
+                                        </a>
+                                        <span><i class="fas fa-clock mr-2"></i> @post.PostDate</span>
                                     </div>
                                 </div>
                             </div>

@@ -17,7 +17,8 @@ public class PostProfile : Profile
 
         CreateMap<PostReadModel, LatestPostDto>()
             .ForMember(dest => dest.ViewersCount, opt => opt.MapFrom(src => src.ViewersCount))
-            .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count));
+            .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count))
+            .ForMember(dest => dest.PostDate, opt => opt.MapFrom(src => src.Created.ToString("dd MMMMM yyyy")));
 
         CreateMap<PostReadModel, NextPrevPostDto>();
 
