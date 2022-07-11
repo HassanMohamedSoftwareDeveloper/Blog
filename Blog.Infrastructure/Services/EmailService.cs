@@ -12,10 +12,11 @@ public class EmailService : IEmailService
     private readonly SmtpSettings _settings;
     private readonly SmtpClient _client;
     private readonly ILogger<EmailService> _logger;
+    private readonly HttpClient _httpClient;
     #endregion
 
     #region CTORS :
-    public EmailService(IOptions<SmtpSettings> options, ILogger<EmailService> logger)
+    public EmailService(IOptions<SmtpSettings> options, ILogger<EmailService> logger, HttpClient httpClient)
     {
         _settings = options.Value;
         _client = new SmtpClient(_settings.Server, _settings.Port)
@@ -25,6 +26,7 @@ public class EmailService : IEmailService
             UseDefaultCredentials = false
         };
         _logger = logger;
+        _httpClient = httpClient;
     }
     #endregion
 

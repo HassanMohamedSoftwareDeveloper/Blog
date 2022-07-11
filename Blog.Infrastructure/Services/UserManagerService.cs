@@ -73,5 +73,16 @@ internal sealed class UserManagerService : IUserManagerService
             await _emailService.SendEmailAsync(user.Email, "Welcome", "Thank you for registration");
         }
     }
+    public async Task SubscribeAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user is not null) return;
+        user = new User
+        {
+            Email = email,
+            UserName = email
+        };
+        await _userManager.CreateAsync(user);
+    }
     #endregion
 }

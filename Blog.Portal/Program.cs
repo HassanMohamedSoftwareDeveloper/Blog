@@ -32,7 +32,10 @@ try
 
     builder.Services.AddInfrasturcture(builder.Configuration);
     builder.Services.AddValidators();
-    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
     builder.Services.ConfigureApplicationCookie(options =>
     {
         options.LoginPath = "/Auth/Login";

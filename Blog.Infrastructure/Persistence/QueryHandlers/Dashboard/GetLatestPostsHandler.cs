@@ -27,7 +27,7 @@ internal sealed class GetLatestPostsHandler : IRequestHandler<GetLatestPosts, Li
     #region Methods :
     public async Task<List<LatestPostDto>> Handle(GetLatestPosts request, CancellationToken cancellationToken)
     {
-        return await _posts.AsNoTracking().OrderByDescending(x => x.Created).Take(3)
+        return await _posts.AsNoTracking().OrderByDescending(x => x.Created).Take(request.Count)
             .ProjectTo<LatestPostDto>(_configurationProvider)
             .ToListAsync(cancellationToken);
     }

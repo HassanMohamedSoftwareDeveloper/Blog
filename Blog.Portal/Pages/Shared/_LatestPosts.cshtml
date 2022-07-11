@@ -1,7 +1,7 @@
 ﻿@inject IMediator _mediator
 
 @{
-    var LatestPosts = await _mediator.Send(new GetLatestPosts());
+    var LatestPosts = await _mediator.Send(new GetLatestPosts(4));
 }
 
 <div class="row">

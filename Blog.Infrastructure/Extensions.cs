@@ -22,9 +22,10 @@ public static class Extensions
         @this.AddScoped<IFileManagerService, FileManagerService>();
         @this.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        @this.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<WriteDbContext>();
+        @this.AddIdentity<User, IdentityRole>(opt => opt.SignIn.RequireConfirmedAccount = false)
+            .AddEntityFrameworkStores<WriteDbContext>();
 
-
+        @this.AddHttpClient();
 
         return @this;
     }

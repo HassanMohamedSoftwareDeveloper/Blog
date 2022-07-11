@@ -26,8 +26,11 @@ internal sealed class FileManagerService : IFileManagerService
     #region Methods :
     public FileStream FileStream(string fileName)
     {
-        string filePath = GetFilePath(fileName);
-        return new FileStream(Path.Combine(filePath, fileName), FileMode.Open, FileAccess.Read);
+        string fileBasePath = GetFilePath(fileName);
+        string fileFullPath = Path.Combine(fileBasePath, fileName);
+        if (File.Exists(fileFullPath) is false)
+            fileFullPath = Path.Combine(GetDefaultPath(), DefaultFileName(fileName));
+        return new FileStream(fileFullPath, FileMode.Open, FileAccess.Read);
     }
     public bool RemoveFile(string fileName)
     {
@@ -107,7 +110,7 @@ internal sealed class FileManagerService : IFileManagerService
         {
             FileType.BlogImage => Path.Combine(_configuration["Path:BlogImages"]),
             FileType.UserImage => Path.Combine(_configuration["Path:UserImages"]),
-            _ => Path.Combine(_configuration["Path:DefaultImages"]),
+            _ => GetDefaultPath(),
         };
     }
     private string GetFilePath(string fileName)
@@ -117,7 +120,7 @@ internal sealed class FileManagerService : IFileManagerService
         {
             FileNamePrefix.BlogPrefix => Path.Combine(_configuration["Path:BlogImages"]),
             FileNamePrefix.UserPrefix => Path.Combine(_configuration["Path:UserImages"]),
-            _ => Path.Combine(_configuration["Path:DefaultImages"]),
+            _ => GetDefaultPath(),
         };
     }
 
@@ -130,6 +133,19 @@ internal sealed class FileManagerService : IFileManagerService
             _ => string.Empty
         };
     }
-
+    private static string DefaultFileName(string fileName)
+    {
+        var filePrefix = fileName[0..(fileName.IndexOf('_') + 1)];//Range Operator
+        return filePrefix switch
+        {
+            FileNamePrefix.BlogPrefix => DefaultFileNames.Blog,
+            FileNamePrefix.UserPrefix => DefaultFileNames.User,
+            _ => string.Empty
+        };
+    }
+    private string GetDefaultPath()
+    {
+        return Path.Combine(_configuration["Path:DefaultImages"]);
+    }
     #endregion
 }
