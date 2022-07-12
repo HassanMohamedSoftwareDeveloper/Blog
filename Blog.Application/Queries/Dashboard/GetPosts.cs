@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Blog.Application.Queries.Dashboard;
 
-public record GetPosts(int PageNumber, int PageSize, Guid CategoryId, string Tag) : IRequest<PaginationModel<BlogPostDto>>;
+public record GetPosts(int PageNumber, int PageSize, Guid CategoryId, string Tag, string UserId) : IRequest<PaginationModel<BlogPostDto>>;

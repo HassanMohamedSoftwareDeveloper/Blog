@@ -38,6 +38,9 @@ internal sealed class GetPostsHandler : IRequestHandler<GetPosts, PaginationMode
         if (string.IsNullOrWhiteSpace(request.Tag) is false)
             query = query.Where(x => x.Tags.ToLower().Contains(request.Tag.ToLower()));
 
+        if (string.IsNullOrWhiteSpace(request.UserId) is false)
+            query = query.Where(x => x.UserId.Equals(request.UserId));
+
         var mappedQuery = query.OrderBy(x => x.Created).ProjectTo<BlogPostDto>(_configurationProvider);
 
         return await new PaginationHelper<BlogPostDto>(request.PageNumber, request.PageSize, mappedQuery).CreateAsync(cancellationToken);

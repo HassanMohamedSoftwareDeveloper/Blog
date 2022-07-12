@@ -1,0 +1,90 @@
+﻿@using Blog.Portal.Helpers
+@{
+    var basePath = Context.Request.PathBase;
+    string userImage = $"{basePath}/Image/{User.UserImage()}";
+}
+
+<style>
+    @@media (max-width: 550px) {
+        .navbar-search-block {
+            width: 100%;
+            bottom: 8px;
+            top: unset;
+            padding: 0px;
+        }
+    }
+</style>
+
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand">
+            <img src="~/Static/logo.ico" alt=".." class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Blog</span>
+        </a>
+
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse order-md-3 order-3  " id="navbarCollapse">
+            <ul class="navbar-nav order-1 order-md-3 ml-auto">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Blog" class="nav-link">Blog</a>
+                </li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item dropdown">
+                        <a href="#" class=" nav-link" data-toggle="dropdown">
+                            <img width="35" height="35" src="@userImage" style="margin-top: -4px;" class="img-circle" alt="..">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-item dropdown-header">@User.UserFullName()</span>
+                            <div class="dropdown-divider"></div>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a href="~/Admin/Posts" class="dropdown-item">Portal</a>
+                            }
+                            <div class="dropdown-divider"></div>
+                            <a asp-page="/Auth/Login" asp-page-handler="Logout" class="dropdown-item">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
+                            </a>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class=" nav-item">
+                        <a class=" nav-link" asp-page="/Auth/Login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                    <li class=" nav-item">
+                        <a class=" nav-link" asp-page="/Auth/Register"><i class="fas fa-user-plus"></i> SignUp</a>
+                    </li>
+                }
+                <!-- Navbar Search -->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <div class="navbar-search-block " id="SearchFormDiv">
+                        <form method="get" class="form-inline" id="SearchForm">
+                            <div class="input-group input-group-sm">
+                                <input id="SearchFormSearch" name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

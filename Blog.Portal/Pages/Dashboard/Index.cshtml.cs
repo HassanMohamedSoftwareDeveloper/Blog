@@ -24,11 +24,13 @@ public class IndexModel : PageModel
     #endregion
 
     #region Actions :
-    public async Task OnGet(int pageNumber, Guid category, string tag)
+    public async Task OnGet(int pageNumber, Guid category, string tag, string author)
     {
-        PaginatedPosts = await _mediator.Send(new GetPosts(pageNumber, 4, category, tag));
+        PaginatedPosts = await _mediator.Send(new GetPosts(pageNumber, 4, category, tag, author));
 
-        string path = string.IsNullOrWhiteSpace(tag) ? category == default || category == Guid.Empty ? "Blog" : $"Tutorials/{category}" : tag;
+        string path = string.IsNullOrWhiteSpace(tag) ?
+            category == default || category == Guid.Empty ?
+              string.IsNullOrWhiteSpace(author) is false ? $"Author/{author}" : "Blog" : $"Tutorials/{category}" : tag;
 
         PaginatedPosts.Route = $"{Path.Combine("/", path, "page")}/{{0}}";
     }

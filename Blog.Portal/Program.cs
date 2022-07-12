@@ -20,6 +20,8 @@ try
         options.Conventions.AddPageRoute("/Dashboard/Index", "Tutorials/{category}/page/{pageNumber:int}");
         options.Conventions.AddPageRoute("/Dashboard/Index", "Tag/{tag}");
         options.Conventions.AddPageRoute("/Dashboard/Index", "Tag/{tag}/page/{pageNumber:int}");
+        options.Conventions.AddPageRoute("/Dashboard/Index", "Author/{author}");
+        options.Conventions.AddPageRoute("/Dashboard/Index", "Author/{author}/page/{pageNumber:int}");
     });
     builder.Services.AddControllers(options =>
     {

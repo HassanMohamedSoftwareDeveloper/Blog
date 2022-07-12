@@ -1,8 +1,8 @@
-﻿.vertical-scrollable {
-    height: 400px;
+﻿.vertical-scrollable  {
+    max-height: 400px;
     position: relative;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .card-header {

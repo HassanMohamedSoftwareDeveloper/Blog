@@ -42,7 +42,7 @@
                     </div>
 
                     <div style="background-color: rgba(0,0,0,.03);" class="col-sm-12 d-flex justify-content-between align-items-center">
-                        <a class="d-flex align-items-center flex-wrap" href="#">
+                        <a class="d-flex align-items-center flex-wrap" href="~/Author/@Model.Post.User.Id" title="@Model.Post.User.FullName">
                             <div class="post-avatar">
                                 <img src="@userImage" class="img-fluid" alt="..">
                             </div>
@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="card-footer card-comments">
+            <div class="card-footer card-comments vertical-scrollable">
                 @foreach (var comment in Model.Post.Comments)
                 {
                     string commentUserImage = $"{basePath}/Image/{comment.User.Image}";
