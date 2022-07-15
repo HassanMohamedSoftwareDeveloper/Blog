@@ -27,10 +27,11 @@ public static class SeedDataHelper
                 var adminUser = new User
                 {
                     UserName = "admin",
-                    Email = "admin@test.com",
+                    Email = "admin@hassanmohamed.website",
                     FirstName = "Hassan",
                     LastName = "Mohamed",
-                    Image = "avatar.jpg"
+                    Image = "avatar.jpg",
+                    EmailConfirmed = true,
                 };
                 await userManager.CreateAsync(adminUser, "P@ssw0rd");
                 await userManager.AddToRoleAsync(adminUser, adminRole.Name);

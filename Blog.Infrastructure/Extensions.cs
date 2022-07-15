@@ -17,13 +17,15 @@ public static class Extensions
     {
         @this.AddPersistence(configuration);
         @this.Configure<SmtpSettings>(configuration.GetSection(nameof(SmtpSettings)));
+        @this.Configure<MailGunEmailConfig>(configuration.GetSection(nameof(MailGunEmailConfig)));
         @this.AddScoped<IEmailService, EmailService>();
         @this.AddScoped<IUserManagerService, UserManagerService>();
         @this.AddScoped<IFileManagerService, FileManagerService>();
         @this.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         @this.AddIdentity<User, IdentityRole>(opt => opt.SignIn.RequireConfirmedAccount = false)
-            .AddEntityFrameworkStores<WriteDbContext>();
+            .AddEntityFrameworkStores<WriteDbContext>()
+             .AddDefaultTokenProviders(); ;
 
         @this.AddHttpClient();
 

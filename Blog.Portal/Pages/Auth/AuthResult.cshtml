@@ -1,0 +1,18 @@
+﻿@page
+@model Blog.Portal.Pages.Auth.AuthResultModel
+@{
+    Layout = "_AuthLayout";
+}
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="@Request.PathBase/"><b>Hassan</b>Blog</a>
+    </div>
+    <div class="card">
+        <div class="card-body ">
+            <h1 class="login-box-msg">Thanks for Registeration</h1>
+            <p class="text-bold  text-justify">@Model.Message</p>
+        </div>
+    </div>
+</div>
+

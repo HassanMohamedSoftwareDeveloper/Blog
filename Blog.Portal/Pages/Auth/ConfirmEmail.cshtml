@@ -1,0 +1,12 @@
+﻿@page
+@model Blog.Portal.Pages.Auth.ConfirmEmailModel
+@{
+    Layout = "_AuthLayout";
+}
+@if (Model.ConfirmationResult.IsConfirmed)
+{
+    <h1>@Model.ConfirmationResult.Message</h1>
+}
+else{
+    <h1>@Model.ConfirmationResult.Message</h1>
+}

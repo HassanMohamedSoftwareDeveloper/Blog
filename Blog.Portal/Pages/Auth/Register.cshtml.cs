@@ -14,7 +14,9 @@ public class RegisterModel : PageModel
     }
     public async Task<IActionResult> OnPost([FromServices] IUserManagerService userManagerService)
     {
-        await userManagerService.RegisterAsync(Register.Username, Register.Email, Register.FirstName, Register.LastName, Register.Password, Register.ImageFile.OpenReadStream());
-        return Redirect(Path.Combine("/"));
+        var user = await userManagerService.RegisterAsync(Register.Username, Register.Email, Register.FirstName, Register.LastName, Register.Password, Register.ImageFile.OpenReadStream());
+        var callback = $"{Request.Scheme}://{Request.Host}/Auth/ConfirmEmail";
+        await userManagerService.VerifyEmailAddressAsync(user, callback);
+        return RedirectToPage("AuthResult", new { Message = "Please verify your email, through the verification email we have just sent." });
     }
 }
