@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>disable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="wwwroot\fonts\blog.svg" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="wwwroot\fonts\blog.svg" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <_WebToolingArtifacts Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <_WebToolingArtifacts Remove="Properties\PublishProfiles\Smarter WebDeploy.pubxml" />
-  </ItemGroup>
+	<ItemGroup>
+		<_WebToolingArtifacts Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
+		<_WebToolingArtifacts Remove="Properties\PublishProfiles\Smarter WebDeploy.pubxml" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="FluentValidation.AspNetCore" Version="11.0.3" />
@@ -34,35 +34,35 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Blog.Infrastructure\Blog.Infrastructure.csproj" />
+		<ProjectReference Include="..\Blog.Infrastructure\Blog.Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="wwwroot\Content\user\" />
+		<Folder Include="wwwroot\Content\user\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="wwwroot\fonts\blog.svg" />
-	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
-	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
-	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
-	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
-	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
-	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
-	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
-	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+		<None Include="wwwroot\fonts\blog.svg" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
 	</ItemGroup>
 
-	
+
 	<ItemGroup>
-		<!--<Content Update="wwwroot\content\blog\*.*" CopyToPublishDirectory="Never" />
-		<Content Update="wwwroot\lib\**\*.*" CopyToPublishDirectory="Never" />-->
-		<Content Update="wwwroot\lib\**\dist\**\*.*" CopyToPublishDirectory="Always" />
-	  <Content Update="wwwroot\Content\default\avatar.jpg">
-	    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\Content\default\blog.jpg">
-	    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-	  </Content>
+		<Content Update="wwwroot\Content\blog\*.*" CopyToPublishDirectory="Never" />
+		<Content Update="wwwroot\Content\user\*.*" CopyToPublishDirectory="Never" />
+		<Content Update="wwwroot\Content\default\*.*" CopyToPublishDirectory="Always" />
+
+
+		<!--<Content Update="wwwroot\lib\**\*.*" CopyToPublishDirectory="Never" />
+		
+		<Content Update="wwwroot\lib\**\dist\**\*.*" CopyToPublishDirectory="Always" />-->
+
 	</ItemGroup>
 </Project>
