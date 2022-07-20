@@ -2,7 +2,6 @@ using Blog.Infrastructure;
 using Blog.Infrastructure.Helpers;
 using Blog.Portal.Middlewares;
 using Blog.Portal.Validations;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using NLog;
 using NLog.Web;
 
@@ -34,16 +33,17 @@ try
 
     builder.Services.AddInfrasturcture(builder.Configuration);
     builder.Services.AddValidators();
-    builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
-    builder.Services.ConfigureApplicationCookie(options =>
-    {
-        options.LoginPath = "/Auth/Login";
-        options.LogoutPath = "/Auth/Logout";
-        options.AccessDeniedPath = "/Auth/Denied";
-    });
+    //builder.Services.AddAuthentication(options =>
+    //{
+    //    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    //}).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
+
+    //builder.Services.ConfigureApplicationCookie(options =>
+    //{
+    //    options.LoginPath = "/Auth/Login";
+    //    options.LogoutPath = "/Auth/Logout";
+    //    options.AccessDeniedPath = "/Auth/Denied";
+    //});
 
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);

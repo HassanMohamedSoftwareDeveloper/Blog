@@ -1,4 +1,5 @@
 ﻿using Blog.Application.Services;
+using Blog.Infrastructure.Installers;
 using Blog.Infrastructure.Persistence;
 using Blog.Infrastructure.Persistence.Contexts;
 using Blog.Infrastructure.Persistence.Models.Write;
@@ -22,6 +23,10 @@ public static class Extensions
         @this.AddScoped<IUserManagerService, UserManagerService>();
         @this.AddScoped<IFileManagerService, FileManagerService>();
         @this.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+        new FacebookAuthInstaller().InstallServices(@this, configuration);
+
+        new AuthInstaller().InstallServices(@this, configuration);
 
         @this.AddIdentity<User, IdentityRole>(opt => opt.SignIn.RequireConfirmedAccount = false)
             .AddEntityFrameworkStores<WriteDbContext>()

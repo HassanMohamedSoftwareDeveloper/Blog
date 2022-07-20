@@ -2,6 +2,7 @@
 using Blog.Application.Services;
 using Blog.Infrastructure.Consts;
 using Blog.Infrastructure.Persistence.Models.Write;
+using Blog.Infrastructure.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
@@ -16,15 +17,17 @@ internal sealed class UserManagerService : IUserManagerService
     private readonly UserManager<User> _userManager;
     private readonly IEmailService _emailService;
     private readonly IFileManagerService _fileManager;
+    private readonly IFacebookAuthService _facebookAuthService;
     #endregion
 
     #region CTORS :
-    public UserManagerService(SignInManager<User> signInManager, UserManager<User> userManager, IEmailService emailService, IFileManagerService fileManager)
+    public UserManagerService(SignInManager<User> signInManager, UserManager<User> userManager, IEmailService emailService, IFileManagerService fileManager, IFacebookAuthService facebookAuthService)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _emailService = emailService;
         _fileManager = fileManager;
+        _facebookAuthService = facebookAuthService;
     }
     #endregion
 
@@ -88,7 +91,6 @@ internal sealed class UserManagerService : IUserManagerService
         };
         await _userManager.CreateAsync(user);
     }
-
     public async Task VerifyEmailAddressAsync(User user, string callbackURL)
     {
         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -115,7 +117,6 @@ internal sealed class UserManagerService : IUserManagerService
         await _emailService.SendEmailAsync(user.Email, $"Hi {string.Join(" ", user.FirstName, user.LastName)}, please verify your account", emailBody);
         //await _emailService.SendVerificationEmailAsync(user.Email, $"Hi {string.Join(" ", user.FirstName, user.LastName)}, please verify your account", emailBody);
     }
-
     public async Task<(bool IsConfirmed, string Message)> ConfirmAccountAsync(string userId, string code)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -128,6 +129,47 @@ internal sealed class UserManagerService : IUserManagerService
 
         return (IsConfirmed: result.Succeeded, Message: result.Succeeded ? "Thank you for confirming your mail"
             : "Your email is not confirmed, please try again later");
+    }
+    public async Task<AuthenticationResult> LoginWithFacebookAsync(string accessToken)
+    {
+        var validationTokenResult = await _facebookAuthService.ValidateAccessTokenAsync(accessToken);
+        if (validationTokenResult.Data.IsValid is false)
+            return new AuthenticationResult
+            {
+                Errors = new List<string> { "Invalid Facebook token" },
+            };
+
+        var userInfo = await _facebookAuthService.GetUserInfoAsync(accessToken);
+        var user = await _userManager.FindByEmailAsync(userInfo.Email);
+        if (user is null)
+        {
+            user = new User
+            {
+                Email = userInfo.Email,
+                UserName = userInfo.Email,
+                FirstName = userInfo.FirstName,
+                LastName = userInfo.LastName,
+                EmailConfirmed = true,
+                Image = await _fileManager.SaveFileAsync(new StreamReader(userInfo.FacebookPicture.Data.Url.ToString()).BaseStream
+                , FileType.UserImage)
+            };
+            var createdResult = await _userManager.CreateAsync(user);
+            if (createdResult.Succeeded is false)
+                return new AuthenticationResult
+                {
+                    Errors = new List<string> { "Something went wrong" },
+                };
+        }
+        IEnumerable<Claim> claims = new List<Claim>
+        {
+            new Claim(Claims.FullName,String.Join(" ",user.FirstName,user.LastName)),
+            new Claim(Claims.ImagePath,user.Image),
+        };
+        await _signInManager.SignInWithClaimsAsync(user, false, claims);
+        return new AuthenticationResult
+        {
+            Succeeded = true
+        };
     }
     #endregion
 }
